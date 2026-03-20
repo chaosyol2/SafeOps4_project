@@ -1,0 +1,57 @@
+/* การตั้งค่าพื้นฐาน */
+body {
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+    min-height: 100vh;
+}
+
+/* สไตล์ปุ่มเมนู (ตอนยังไม่ถูกเลือก) */
+.tab-link {
+    font-family: 'Orbitron', sans-serif;
+    color: rgba(255, 255, 255, 0.5); /* สีขาวจางๆ */
+    padding: 10px 24px;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px; /* มุมเหลี่ยมเล็กน้อยดูเป็นอุตสาหกรรม */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect */
+.tab-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* สไตล์ตอนเลือกเมนู (Active Tab) */
+.active-tab {
+    color: #ffffff !important;
+    background: rgba(16, 185, 129, 0.15) !important;
+    border: 1px solid #10b981 !important; /* กรอบเขียว Emerald */
+    font-weight: bold;
+    /* แสงเรืองแสงภายนอกและภายใน */
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3),
+                inset 0 0 8px rgba(16, 185, 129, 0.2);
+    /* ตัวหนังสือขาวสว่างขึ้น */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ตกแต่ง Card เพิ่มเติมให้ดูเข้าเซ็ต */
+.kpi-card {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+/* เพิ่มใน style.css */
+.tab-content {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

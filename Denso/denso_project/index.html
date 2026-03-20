@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeOps 4.0 - Factory Overview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#0f172a] p-6 text-white font-['Inter']">
+
+    <header class="mb-8">
+        <h1 class="font-['Orbitron'] text-3xl font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.7)] tracking-widest uppercase">
+            SafeOps 4.0
+        </h1>
+
+        <nav class="flex flex-wrap gap-4 mt-8">
+            <button onclick="openTab(event, 'dashboard')" class="tab-link active-tab">Real-time Dashboard</button>
+            <button onclick="openTab(event, 'detail')" class="tab-link">Machine Detail</button>
+            <button onclick="openTab(event, 'ai-risk')" class="tab-link">AI Risk</button>
+            <button onclick="openTab(event, 'alerts')" class="tab-link">Alerts</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Dashboard - OK -->
+        <div id="dashboard" class="tab-content block">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="kpi-card bg-slate-800/50 p-6 rounded-lg border-l-4 border-emerald-500 backdrop-blur-sm">
+                    <p class="text-slate-400 font-semibold uppercase text-xs tracking-wider">Machine A Status</p>
+                    <p class="text-2xl font-bold text-red-500 mt-2">🔴 82% Danger Zone</p>
+                </div>
+                </div>
+
+            <div class="factory-map-container relative overflow-hidden rounded-xl border border-slate-700 bg-slate-900/50 p-2">
+                <div class="absolute inset-0 pointer-events-none border-[1px] border-emerald-500/20 z-10 rounded-xl"></div>
+
+                <h3 class="font-['Orbitron'] text-sm text-emerald-400 mb-2 ml-2 tracking-widest">
+                    // LIVE_FACTORY_FLOOR_PLAN_V4.0
+                </h3>
+
+                <img
+                    src="source/factory_plan.jpg"
+                    alt="Factory Plan"
+                    class="w-full h-auto rounded-lg opacity-80 hover:opacity-100 transition-opacity duration-500 grayscale-[20%] hover:grayscale-0"
+                >
+
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-emerald-500"></div>
+                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-emerald-500"></div>
+                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-emerald-500"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-emerald-500"></div>
+            </div>
+        </div>
+
+        <!-- Detail - OK -->
+        <div id="detail" class="tab-content hidden"> ... </div>
+
+        <!-- แก้จาก id="risk" เป็น id="ai-risk" -->
+        <div id="ai-risk" class="tab-content hidden">
+            <h2 class="text-2xl font-['Orbitron'] font-bold text-white">AI Risk Calculation</h2>
+            <p class="mt-4 text-slate-400">System scanning for risks... Please wait.</p>
+        </div>
+
+        <!-- แก้จาก id="alert" เป็น id="alerts" -->
+        <div id="alerts" class="tab-content hidden">
+            <h2 class="text-2xl font-['Orbitron'] font-bold text-white">Alert System</h2>
+            <p class="mt-4 text-slate-400">Loading active alerts...</p>
+        </div>
+    </main>
+
+    <script>
+        function openTab(evt, tabName) {
+            // 1. ซ่อนเนื้อหาทั้งหมด
+            const tabContent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.add("hidden");
+                tabContent[i].classList.remove("block");
+            }
+
+            // 2. เอาคลาส active ออกจากปุ่มทั้งหมด
+            const tabLinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active-tab");
+            }
+
+            // 3. แสดงเนื้อหาที่เลือก และใส่คลาส active ให้ปุ่มที่คลิก
+            document.getElementById(tabName).classList.remove("hidden");
+            document.getElementById(tabName).classList.add("block");
+            evt.currentTarget.classList.add("active-tab");
+        }
+    </script>
+</body>
+</html>
