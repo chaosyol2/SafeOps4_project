@@ -1,0 +1,210 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div>
+    <img src="source/app_logo.jpg"  height="50"
+             class="object-contain"
+             alt="Logo">
+    </div>
+
+
+    <div class="push-right">
+         <img src="source/live_logo_on.png" height="40"
+             class="object-contain opacity-70"
+             alt="time">
+       <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest transform translate-y-[1px]">
+            00:00:00
+        </span>
+            <img src="source/Unnoti_bell.png" height="30"
+                class="object-contain opacity-70"
+                alt="notification">
+
+            <img src="source/Denso_logo.png" height="30"
+                class="object-contain opacity-70"
+                alt="notification">
+    </div>
+
+</div>
+
+
+
+
+<div class="machine-widget">
+    <div class="machine-info">
+        <span class="machine-label">Total Machines</span>
+        <div class="machine-count-box">
+            <span id="total-machines-count">25</span>
+        </div>
+    </div>
+    <div class="machine-info">
+        <span class="machine-label">Alert</span>
+        <div class="machine-count-box">
+            <span id="total-alert-count">5</span>
+        </div>
+    </div>
+        <div class="machine-info">
+        <span class="machine-label">Avg.Risk</span>
+        <div class="machine-count-box">
+            <span id="avg-risk-count">30</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="robot-canvas">
+    <div class="group group-top-left">
+        <div class="box big-box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <div class="group group-mid-left">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <div class="group group-bottom-left">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <div class="group-l-shape">
+        <div class="l-vertical">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <div class="l-horizontal">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </div>
+
+    <div class="group-vertical-bar">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+</div>
+
+
+<p>Flexbox must have a parent element with the display property set to flex or inline-flex.</p>
+<p>Direct child elements of the flex container automatically becomes flex items.</p>
+
+</body>
+
+
+
+
+
+<script>
+    function updateClock() {
+        const now = new Date();
+
+        // แปลงเวลาเป็นรูปแบบ HH:mm:ss
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const timeString = `${hours}:${minutes}:${seconds}`;
+
+        // ใส่เวลาลงใน Element ที่มี id="live-clock"
+        const clockElement = document.getElementById('live-clock');
+        if (clockElement) {
+            clockElement.textContent = timeString;
+        }
+    }
+
+    // เรียกฟังก์ชันทุกๆ 1,000 มิลลิวินาที (1 วินาที)
+    setInterval(updateClock, 1000);
+
+    // เรียกใช้งานทันที 1 ครั้งตอนโหลดหน้าจอ เพื่อไม่ให้ขึ้น 00:00:00 รอ
+    updateClock();
+</script>
+
+
+<script>
+    /**
+     * ฟังก์ชันสำหรับอัปเดตจำนวนเครื่องจักร
+     * @param {number} newCount - จำนวนเครื่องจักรใหม่ที่ต้องการแสดง
+     */
+    function updateTotalMachines(newCount) {
+        // หา Element ที่มี ID เป็น 'total-machines-count'
+        const countElement = document.getElementById('total-machines-count');
+
+        // ตรวจสอบว่ามี Element นี้อยู่จริงไหม
+        if (countElement) {
+            // อัปเดตเนื้อหาข้างในด้วยตัวเลขใหม่
+            // ใช้ .padStart เพื่อให้เป็นเลข 2 หลักเสมอ (เช่น 05, 10, 25)
+            countElement.textContent = String(newCount).padStart(2, '0');
+
+            // แถม: ใส่เอฟเฟกต์กะพริบเล็กน้อยเวลาเลขเปลี่ยน (เพื่อดึงดูดสายตา)
+            countElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                countElement.classList.remove('animate-pulse');
+            }, 1000); // กะพริบ 1 วินาทีแล้วหยุด
+        }
+    }
+
+    // --- วิธีเรียกใช้งาน (ตัวอย่าง) ---
+
+    // 1. เรียกใช้งานทันทีตอนโหลดหน้า (เช่น ตั้งค่าเริ่มต้นเป็น 30)
+    window.onload = function() {
+        updateTotalMachines(20);
+    };
+
+    // 2. ตัวอย่างการเปลี่ยนค่าแบบ Real-time (สมมติว่ามีข้อมูลใหม่มาทุก 5 วินาที)
+    // setInterval(() => {
+    //     // สุ่มเลขระหว่าง 20-40 มาโชว์
+    //     const randomNumber = Math.floor(Math.random() * (40 - 20 + 1)) + 20;
+    //     updateTotalMachines(randomNumber);
+    // }, 5000);
+
+</script>
+
+<script>
+    function updateTotalAlert(newCount) {
+        const countElement = document.getElementById('total-alert-count');
+        if (countElement) {
+            countElement.textContent = String(newCount).padStart(2, '0');
+            countElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                countElement.classList.remove('animate-pulse');
+            }, 1000);
+        }
+    }
+    window.onload = function() {
+        updateTotalAlert(5);
+    };
+
+</script>
+
+
+<script>
+    function updateAvgRisk(newCount) {
+        const countElement = document.getElementById('avg-risk-count');
+        if (countElement) {
+            countElement.textContent = String(newCount).padStart(2, '0');
+            countElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                countElement.classList.remove('animate-pulse');
+            }, 1000);
+        }
+    }
+    window.onload = function() {
+        updateAvgRisk(30);
+    };
+
+</script>
