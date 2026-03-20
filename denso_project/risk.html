@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment | Smart Factory</title>
 
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <a href="index.html">
+            <img src="source/app_logo.jpg" height="50" class="object-contain" alt="Logo">
+        </a>
+    </div>
+
+    <div class="push-right">
+         <div class="history-link-container">
+            <a href="history.html" class="history-link"> | &nbsp; History &nbsp; | </a>
+        </div>
+         <div class="history-link-container">
+            <a href="risk.html" class="history-link" style="color: #ffcc00;"> | &nbsp; Risk &nbsp; | </a>
+        </div>
+        <img src="source/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
+        <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest">
+            00:00:00
+        </span>
+        <img id="notiIcon" src="source/Unnoti_bell.png" height="30" style="cursor: pointer;" onclick="toggleNoti()" alt="Notification">
+        <img src="source/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
+    </div>
+</div>
+
+<!-- ส่วนเนื้อหาหลักของหน้า Risk -->
+<div class="info-panel" style="flex-direction: column; margin-top: 20px;">
+
+    <div class="panel-header" style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+        <span style="color: #ffcc00;">> PREDICTIVE RISK ANALYSIS</span>
+        <span style="font-size: 12px; color: rgba(255,255,255,0.5);">Real-time AI Prediction</span>
+    </div>
+
+    <!-- แผงแสดงระดับความเสี่ยง (Risk Cards) -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; margin-bottom: 20px;">
+
+        <!-- High Risk -->
+        <div class="alert-row" style="border-left: 4px solid #ff3333; background: rgba(255,51,51,0.05); flex-direction: column; align-items: flex-start;">
+            <span style="color: #ff3333; font-size: 10px; margin-bottom: 5px;">CRITICAL LEVEL</span>
+            <h2 style="margin: 0; color: #fff;">02</h2>
+            <p style="font-size: 11px; margin: 5px 0 0 0; opacity: 0.7;">Machines need immediate check</p>
+        </div>
+
+        <!-- Medium Risk -->
+        <div class="alert-row" style="border-left: 4px solid #ffcc00; background: rgba(255,204,0,0.05); flex-direction: column; align-items: flex-start;">
+            <span style="color: #ffcc00; font-size: 10px; margin-bottom: 5px;">WARNING LEVEL</span>
+            <h2 style="margin: 0; color: #fff;">05</h2>
+            <p style="font-size: 11px; margin: 5px 0 0 0; opacity: 0.7;">Anomalies detected in last 24h</p>
+        </div>
+
+        <!-- Low Risk -->
+        <div class="alert-row" style="border-left: 4px solid #00ff88; background: rgba(0,255,136,0.05); flex-direction: column; align-items: flex-start;">
+            <span style="color: #00ff88; font-size: 10px; margin-bottom: 5px;">STABLE LEVEL</span>
+            <h2 style="margin: 0; color: #fff;">18</h2>
+            <p style="font-size: 11px; margin: 5px 0 0 0; opacity: 0.7;">Systems operating normally</p>
+        </div>
+    </div>
+
+    <!-- ตารางวิเคราะห์ความเสี่ยงรายเครื่อง -->
+    <div style="width: 100%; background: rgba(255,255,255,0.02); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+        <table style="width: 100%; border-collapse: collapse; font-family: 'Orbitron', sans-serif; font-size: 11px;">
+            <thead>
+                <tr style="background: rgba(255, 204, 0, 0.1); color: #ffcc00; text-align: left;">
+                    <th style="padding: 15px;">MACHINE</th>
+                    <th style="padding: 15px;">RISK FACTOR</th>
+                    <th style="padding: 15px;">PROBABILITY</th>
+                    <th style="padding: 15px;">IMPACT</th>
+                    <th style="padding: 15px;">ACTION</th>
+                </tr>
+            </thead>
+            <tbody style="color: rgba(255,255,255,0.8);">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 12px 15px;">CNC-01</td>
+                    <td style="padding: 12px 15px;">Overheating</td>
+                    <td style="padding: 12px 15px; color: #ff3333;">85%</td>
+                    <td style="padding: 12px 15px;">High</td>
+                    <td style="padding: 12px 15px;"><button style="background: #ff3333; border: none; color: #fff; padding: 5px 10px; border-radius: 4px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer;">INSPECT</button></td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 12px 15px;">ROBOT-A2</td>
+                    <td style="padding: 12px 15px;">Vibration</td>
+                    <td style="padding: 12px 15px; color: #ffcc00;">40%</td>
+                    <td style="padding: 12px 15px;">Medium</td>
+                    <td style="padding: 12px 15px;"><button style="background: #555; border: none; color: #fff; padding: 5px 10px; border-radius: 4px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer;">MONITOR</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ":" +
+                           now.getMinutes().toString().padStart(2, '0') + ":" +
+                           now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('live-clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleNoti() {
+        const notiElement = document.getElementById('notiIcon');
+        if (notiElement.src.includes('Unnoti_bell.png')) {
+            notiElement.src = 'source/Noti_bell.png';
+        } else {
+            notiElement.src = 'source/Unnoti_bell.png';
+        }
+    }
+</script>
+
+</body>
+</html>

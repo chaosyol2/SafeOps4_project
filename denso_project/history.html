@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event History | Smart Factory</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <a href="index.html">
+            <img src="source/app_logo.jpg" height="50" class="object-contain" alt="Logo">
+        </a>
+    </div>
+
+    <div class="push-right">
+         <div class="history-link-container">
+            <a href="history.html" class="history-link" style="color: #00f2fe;"> | &nbsp; History &nbsp; | </a>
+        </div>
+         <div class="history-link-container">
+            <a href="team.html" class="history-link"> | &nbsp; Team &nbsp; | </a>
+        </div>
+        <img src="source/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
+        <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest">
+            00:00:00
+        </span>
+        <img id="notiIcon" src="source/Unnoti_bell.png" height="30" style="cursor: pointer;" onclick="toggleNoti()" alt="Notification">
+        <img src="source/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
+    </div>
+</div>
+
+<!-- ส่วนเนื้อหาหลักของหน้า History -->
+<div class="info-panel" style="flex-direction: column; margin-top: 20px;">
+
+    <div class="panel-header" style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+        <span style="color: #00f2fe;">> SYSTEM EVENT LOGS</span>
+        <span style="font-size: 12px; color: rgba(255,255,255,0.5);">Showing last 100 events</span>
+    </div>
+
+    <!-- ตารางประวัติ (History Table) -->
+    <div style="width: 100%; background: rgba(255,255,255,0.02); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+        <table style="width: 100%; border-collapse: collapse; font-family: 'Orbitron', sans-serif; font-size: 11px;">
+            <thead>
+                <tr style="background: rgba(0, 242, 254, 0.1); color: #00f2fe; text-align: left;">
+                    <th style="padding: 15px;">TIMESTAMP</th>
+                    <th style="padding: 15px;">MACHINE ID</th>
+                    <th style="padding: 15px;">EVENT TYPE</th>
+                    <th style="padding: 15px;">STATUS</th>
+                    <th style="padding: 15px;">OPERATOR</th>
+                </tr>
+            </thead>
+            <tbody style="color: rgba(255,255,255,0.8);">
+                <!-- แถวข้อมูลตัวอย่าง 1 -->
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 12px 15px;">2024-05-20 14:30:05</td>
+                    <td style="padding: 12px 15px;">CNC-01</td>
+                    <td style="padding: 12px 15px;">Temp Threshold Exceeded</td>
+                    <td style="padding: 12px 15px; color: #ff3333;">WARNING</td>
+                    <td style="padding: 12px 15px;">System Auto</td>
+                </tr>
+                <!-- แถวข้อมูลตัวอย่าง 2 -->
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 12px 15px;">2024-05-20 13:15:22</td>
+                    <td style="padding: 12px 15px;">ROBOT-A2</td>
+                    <td style="padding: 12px 15px;">Scheduled Maintenance</td>
+                    <td style="padding: 12px 15px; color: #ffcc00;">PENDING</td>
+                    <td style="padding: 12px 15px;">Admin_04</td>
+                </tr>
+                <!-- แถวข้อมูลตัวอย่าง 3 -->
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 12px 15px;">2024-05-20 10:02:45</td>
+                    <td style="padding: 12px 15px;">CNC-01</td>
+                    <td style="padding: 12px 15px;">System Startup</td>
+                    <td style="padding: 12px 15px; color: #00ff88;">NORMAL</td>
+                    <td style="padding: 12px 15px;">Admin_01</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ":" +
+                           now.getMinutes().toString().padStart(2, '0') + ":" +
+                           now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('live-clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleNoti() {
+        const notiElement = document.getElementById('notiIcon');
+        if (notiElement.src.includes('Unnoti_bell.png')) {
+            notiElement.src = 'source/Noti_bell.png';
+        } else {
+            notiElement.src = 'source/Unnoti_bell.png';
+        }
+    }
+</script>
+
+</body>
+</html>

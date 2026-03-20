@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Status | Smart Factory</title>
+
+    <!-- ดึง Style เดิมมาใช้ทั้งหมด -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Script สำหรับ Clock และ Noti -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <a href="index.html">
+            <img src="source/app_logo.jpg" height="50" class="object-contain" alt="Logo">
+        </a>
+    </div>
+
+    <div class="push-right">
+         <div class="history-link-container">
+            <a href="history.html" class="history-link"> | &nbsp; History &nbsp; | </a>
+        </div>
+         <div class="history-link-container">
+            <a href="team.html" class="history-link"> | &nbsp; Team &nbsp; | </a>
+        </div>
+        <img src="source/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
+        <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest">
+            00:00:00
+        </span>
+        <img id="notiIcon" src="source/Unnoti_bell.png" height="30" style="cursor: pointer;" onclick="toggleNoti()" alt="Notification">
+        <img src="source/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
+    </div>
+</div>
+
+<!-- ส่วนเนื้อหาหลักของหน้า Machines -->
+<div class="info-panel" style="flex-direction: column; margin-top: 20px;">
+
+    <div class="panel-header" style="margin-bottom: 15px;">
+        <span style="color: #00f2fe;"> MACHINE MONITORING SYSTEM</span>
+    </div>
+
+    <!-- ส่วนแสดงรายการเครื่องจักร (สไตล์เดียวกับ Alert Row) -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%;">
+
+        <!-- Machine Item 01 -->
+        <div class="alert-row" style="border-left: 4px solid #00ff88; background: rgba(255,255,255,0.03); padding: 20px;">
+            <div style="font-size: 24px; margin-right: 15px;">🏭</div>
+            <div class="alert-content">
+                <p style="color: #fff; font-weight: bold; font-size: 16px;">CNC MACHINE #01</p>
+                <small style="color: #00ff88;">STATUS: OPERATIONAL</small>
+            </div>
+        </div>
+
+        <!-- Machine Item 02 -->
+        <div class="alert-row" style="border-left: 4px solid #ff3333; background: rgba(255,255,255,0.03); padding: 20px;">
+            <div style="font-size: 24px; margin-right: 15px;">🤖</div>
+            <div class="alert-content">
+                <p style="color: #fff; font-weight: bold; font-size: 16px;">ROBOTIC ARM #A2</p>
+                <small style="color: #ff3333;">STATUS: CRITICAL ERROR</small>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // ฟังก์ชันนาฬิกา
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ":" +
+                           now.getMinutes().toString().padStart(2, '0') + ":" +
+                           now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('live-clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ฟังก์ชันสลับรูปกระดิ่ง
+    function toggleNoti() {
+        const notiElement = document.getElementById('notiIcon');
+        if (notiElement.src.includes('Unnoti_bell.png')) {
+            notiElement.src = 'source/Noti_bell.png'; // เช็คชื่อไฟล์ให้ตรงนะครับ
+        } else {
+            notiElement.src = 'source/Unnoti_bell.png';
+        }
+    }
+</script>
+
+</body>
+</html>

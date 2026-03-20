@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Alerts | Smart Factory</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <a href="index.html">
+            <img src="source/app_logo.jpg" height="50" class="object-contain" alt="Logo">
+        </a>
+    </div>
+
+    <div class="push-right">
+         <div class="history-link-container">
+            <a href="history.html" class="history-link"> | &nbsp; History &nbsp; | </a>
+        </div>
+         <div class="history-link-container">
+            <a href="alert.html" class="history-link" style="color: #ff3333;"> | &nbsp; Alerts &nbsp; | </a>
+        </div>
+        <img src="source/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
+        <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest">
+            00:00:00
+        </span>
+        <img id="notiIcon" src="source/Unnoti_bell.png" height="30" style="cursor: pointer;" onclick="toggleNoti()" alt="Notification">
+        <img src="source/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
+    </div>
+</div>
+
+<!-- ส่วนเนื้อหาหลักของหน้า Alert -->
+<div class="info-panel" style="flex-direction: column; margin-top: 20px;">
+
+    <div class="panel-header" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #ff3333; animation: blink 1.5s infinite;">> ACTIVE SYSTEM ALERTS</span>
+        <div style="background: rgba(255, 51, 51, 0.2); padding: 5px 15px; border-radius: 20px; border: 1px solid #ff3333;">
+            <span style="color: #ff3333; font-size: 12px; font-weight: bold;">TOTAL ISSUES: 03</span>
+        </div>
+    </div>
+
+    <!-- รายการแจ้งเตือนแบบละเอียด -->
+    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+
+        <!-- Alert Item: Critical -->
+        <div class="alert-row" style="border-left: 5px solid #ff3333; background: rgba(255, 51, 51, 0.08); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="font-size: 30px;">🚨</div>
+                <div>
+                    <h3 style="margin: 0; color: #fff; font-family: 'Orbitron'; font-size: 16px;">CRITICAL TEMPERATURE EXCEEDED</h3>
+                    <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.6); font-size: 12px;">Machine ID: CNC-M01 | Current: 89.5°C (Threshold: 85°C)</p>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <span style="color: #ff3333; font-size: 11px; display: block; margin-bottom: 5px;">TIME: 14:30:12</span>
+                <button style="background: #ff3333; border: none; color: white; padding: 6px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer;">ACKNOWLEDGE</button>
+            </div>
+        </div>
+
+        <!-- Alert Item: Warning -->
+        <div class="alert-row" style="border-left: 5px solid #ffcc00; background: rgba(255, 204, 0, 0.08); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="font-size: 30px;">⚠️</div>
+                <div>
+                    <h3 style="margin: 0; color: #fff; font-family: 'Orbitron'; font-size: 16px;">VIBRATION ANOMALY DETECTED</h3>
+                    <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.6); font-size: 12px;">Machine ID: ARM-R2 | Pattern: Irregular Sinusoidal</p>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <span style="color: #ffcc00; font-size: 11px; display: block; margin-bottom: 5px;">TIME: 14:28:45</span>
+                <button style="background: #ffcc00; border: none; color: black; padding: 6px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer; font-weight: bold;">INVESTIGATE</button>
+            </div>
+        </div>
+
+        <!-- Alert Item: System -->
+        <div class="alert-row" style="border-left: 5px solid #00f2fe; background: rgba(0, 242, 254, 0.08); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="font-size: 30px;">ℹ️</div>
+                <div>
+                    <h3 style="margin: 0; color: #fff; font-family: 'Orbitron'; font-size: 16px;">MAINTENANCE SCHEDULE REMINDER</h3>
+                    <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.6); font-size: 12px;">Machine ID: PRESS-04 | Due in: 24 Operating Hours</p>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <span style="color: #00f2fe; font-size: 11px; display: block; margin-bottom: 5px;">TIME: 14:15:00</span>
+                <button style="background: #00f2fe; border: none; color: black; padding: 6px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer; font-weight: bold;">VIEW DETAILS</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* เพิ่ม Animation ไฟกระพริบสำหรับหัวข้อ Alert */
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+</style>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ":" +
+                           now.getMinutes().toString().padStart(2, '0') + ":" +
+                           now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('live-clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleNoti() {
+        const notiElement = document.getElementById('notiIcon');
+        if (notiElement.src.includes('Unnoti_bell.png')) {
+            notiElement.src = 'source/Noti_bell.png';
+        } else {
+            notiElement.src = 'source/Unnoti_bell.png';
+        }
+    }
+</script>
+
+</body>
+</html>
