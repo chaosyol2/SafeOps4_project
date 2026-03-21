@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Risk Analysis | M1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f2fe;
+            --neon-green: #00ff88;
+            --neon-yellow: #ffcc00;
+            --neon-red: #ff4444;
+            --bg-dark: #001637;
+            --panel-bg: rgba(13, 25, 48, 0.95);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 20px;
+        }
+
+        .header-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .machine-title { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--neon-blue); }
+
+        /* Metrics Grid */
+        .env-grid {
+            display: grid; grid-template-columns: repeat(6, 1fr);
+            gap: 10px; margin-bottom: 20px;
+        }
+
+        .stat-panel {
+            background: var(--panel-bg); border-radius: 8px; padding: 12px;
+            border: 1px solid rgba(255,255,255,0.1); text-align: center;
+        }
+
+        .label { font-family: 'Orbitron', sans-serif; font-size: 8px; color: #889; display: block; margin-bottom: 5px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; }
+
+        /* Main Layout */
+        .main-layout { display: grid; grid-template-columns: 0.8fr 3.2fr; gap: 20px; }
+        .panel { background: var(--panel-bg); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+
+        .total-display {
+            text-align: center; padding: 20px; border-radius: 10px;
+            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, transparent 80%);
+        }
+
+        #liveTotal { font-family: 'Orbitron'; font-size: 48px; line-height: 1; margin: 10px 0; }
+
+        /* Table Style - Optimized for many columns */
+        .history-container { max-height: 550px; overflow-y: auto; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; white-space: nowrap; }
+        thead { position: sticky; top: 0; background: #0a1a35; z-index: 10; }
+        th { text-align: center; padding: 12px 8px; color: var(--neon-blue); font-family: 'Orbitron'; border-bottom: 2px solid #1a2a4a; font-size: 9px; }
+        td { padding: 10px 8px; border-bottom: 1px solid #1a2a4a; text-align: center; }
+
+        .raw-val { color: #6a7a95; font-family: monospace; }
+        .back-btn {
+            text-decoration: none; color: var(--neon-blue); border: 1px solid var(--neon-blue);
+            padding: 6px 12px; border-radius: 4px; font-size: 10px; font-family: 'Orbitron';
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #001637; }
+        ::-webkit-scrollbar-thumb { background: #1a2a4a; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : ENV RISK DIAGNOSTIC</span>
+            <div style="font-size: 10px; color: #568;">Comprehensive Environmental Factor Analysis</div>
+        </div>
+        <a href="m1_insight.html" class="back-btn">← RETURN</a>
+    </div>
+
+    <div class="env-grid">
+        <div class="stat-panel"><span class="label">Temp (°C)</span><div class="value" id="val_t">--</div></div>
+        <div class="stat-panel"><span class="label">Humid (%)</span><div class="value" id="val_h">--</div></div>
+        <div class="stat-panel"><span class="label">Air (AQI)</span><div class="value" id="val_a">--</div></div>
+        <div class="stat-panel"><span class="label">Light (lx)</span><div class="value" id="val_l">--</div></div>
+        <div class="stat-panel"><span class="label">Noise (dB)</span><div class="value" id="val_n">--</div></div>
+        <div class="stat-panel"><span class="label">Vib (mm/s)</span><div class="value" id="val_v">--</div></div>
+    </div>
+
+    <div class="main-layout">
+        <div class="panel">
+            <h3 style="color:var(--neon-blue); font-family:'Orbitron'; font-size:12px; margin-top:0;">RISK SUMMARY</h3>
+            <div class="total-display">
+                <div class="label">ADJUSTED INDEX</div>
+                <div id="liveTotal">0.0</div>
+                <div id="riskStatus" style="font-weight:bold; font-size:11px; letter-spacing:1px;">--</div>
+            </div>
+            <div style="font-size: 9px; color: #4a5a75; margin-top: 20px; font-family: monospace; line-height: 1.5;">
+                <b style="color:#6a7a95">SCALING LOGIC:</b><br>
+                Raw to 0-100% Mapping<br>
+                Baseline: -1200 (Min)
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3 style="color:var(--neon-blue); font-family:'Orbitron'; font-size:12px; margin-top:0;">20-HOUR PARAMETER LOG</h3>
+            <div class="history-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TIME</th>
+                            <th>TEMP</th>
+                            <th>HUM</th>
+                            <th>AIR</th>
+                            <th>LIGHT</th>
+                            <th>NOISE</th>
+                            <th>VIB</th>
+                            <th>RAW</th>
+                            <th>RISK %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="envTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const envTable = document.getElementById('envTable');
+
+        function calculateRisk(t, h, a, l, n, v) {
+            // สมการจริงของคุณ
+            let raw = (5.618 * t) + (2.893 * h) + (4.831 * a) - (2.816 * l) + (4.756 * n) + (5.758 * v) + 42.706;
+
+            // ปรับ Scale ให้ออกมาเมคเซนส์ (0-100)
+            const minRaw = -1200;
+            const maxRaw = 600;
+            let scaled = ((raw - minRaw) / (maxRaw - minRaw)) * 100;
+
+            return {
+                raw: raw.toFixed(1),
+                final: Math.min(Math.max(scaled, 0), 100).toFixed(1)
+            };
+        }
+
+        let rows = '';
+        for(let i=0; i<20; i++) {
+            let h_val = (19-i < 0 ? 24+(19-i) : 19-i);
+            let time = (h_val < 10 ? '0'+h_val : h_val) + ":00";
+
+            // สุ่มค่าจำลอง (Mock Data)
+            let temp = (Math.random() * 6 + 24).toFixed(1);
+            let humid = (Math.random() * 25 + 45).toFixed(0);
+            let air = (Math.random() * 20 + 8).toFixed(1);
+            let light = (Math.random() * 150 + 320).toFixed(0);
+            let noise = (Math.random() * 15 + 60).toFixed(1);
+            let vib = (Math.random() * 0.5 + 0.05).toFixed(2);
+
+            let res = calculateRisk(temp, humid, air, light, noise, vib);
+            let color = res.final > 75 ? 'var(--neon-red)' : (res.final > 45 ? 'var(--neon-yellow)' : 'var(--neon-green)');
+
+            rows += `<tr>
+                <td style="color:#568; font-size:10px;">${time}</td>
+                <td>${temp}°</td>
+                <td>${humid}%</td>
+                <td>${air}</td>
+                <td>${light}</td>
+                <td>${noise}</td>
+                <td>${vib}</td>
+                <td class="raw-val">${res.raw}</td>
+                <td style="color:${color}; font-weight:bold; font-size:13px;">${res.final}%</td>
+            </tr>`;
+
+            if(i === 0) {
+                // อัปเดตส่วน Dashboard
+                document.getElementById('liveTotal').innerText = res.final + "%";
+                document.getElementById('liveTotal').style.color = color;
+                document.getElementById('riskStatus').innerText = res.final > 75 ? 'CRITICAL' : (res.final > 45 ? 'WARNING' : 'STABLE');
+                document.getElementById('riskStatus').style.color = color;
+
+                // อัปเดตค่า Live ด้านบน
+                document.getElementById('val_t').innerText = temp;
+                document.getElementById('val_h').innerText = humid;
+                document.getElementById('val_a').innerText = air;
+                document.getElementById('val_l').innerText = light;
+                document.getElementById('val_n').innerText = noise;
+                document.getElementById('val_v').innerText = vib;
+            }
+        }
+        envTable.innerHTML = rows;
+    </script>
+</body>
+</html>

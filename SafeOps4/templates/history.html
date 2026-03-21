@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event History | Smart Factory</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -75,9 +75,9 @@
 
 <div class="container">
     <div>
-        <a href="index.html">
-            <img src="source/app_logo.jpg" height="50" class="object-contain" alt="Logo">
-        </a>
+        <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='images/app_logo.jpg') }}" height="50" class="object-contain" alt="Logo">
+    </a>
     </div>
 
     <div class="push-right">
@@ -87,12 +87,12 @@
         <div class="history-link-container">
             <a href="team.html" class="history-link"> | &nbsp; Team &nbsp; | </a>
         </div>
-        <img src="source/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
+        <img src="./static/images/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
         <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest">
             00:00:00
         </span>
-        <img id="notiIcon" src="source/Unnoti_bell.png" height="30" style="cursor: pointer;" onclick="toggleNoti()" alt="Notification">
-        <img src="source/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
+        <img id="notiIcon" src="./static/images/Unnoti_bell.png" height="30" style="cursor: pointer;" onclick="toggleNoti()" alt="Notification">
+        <img src="./static/images/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
     </div>
 </div>
 
@@ -390,9 +390,9 @@
     function toggleNoti() {
         const notiElement = document.getElementById('notiIcon');
         if (notiElement.src.includes('Unnoti_bell.png')) {
-            notiElement.src = 'source/Noti_bell.png';
+            notiElement.src = './static/images/Noti_bell.png';
         } else {
-            notiElement.src = 'source/Unnoti_bell.png';
+            notiElement.src = './static/images/Unnoti_bell.png';
         }
     }
 

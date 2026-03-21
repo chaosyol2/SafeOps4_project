@@ -1,0 +1,4 @@
+risk_id,machine_id,sensor_id,operator_behavior_id,score,category,calculated_at,notes
+1,1,1,1,8.5,Sudden,2025-03-01 08:30:00,High temp + PhoneUse detected
+2,2,3,2,7.2,Gradual,2025-03-01 08:35:00,Pressure spike + WrongZone
+3,3,5,3,4.1,Intermittent,2025-03-01 08:40:00,Vibration above threshold

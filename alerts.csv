@@ -1,0 +1,4 @@
+alert_id,risk_id,operator_id,alert_type,message,sent_at,read_status
+1,1,1,LINE,CRITICAL: Machine CNC A temp at 92.5C - immediate action required,2025-03-01 08:31:00,True
+2,2,2,LINE,WARNING: Hydraulic Press B pressure spike detected,2025-03-01 08:36:00,False
+3,3,3,Dashboard,INFO: Assembly Robot C vibration intermittent - monitor closely,2025-03-01 08:41:00,True

@@ -1,0 +1,4 @@
+machine_id,name,location,type,install_date,last_maintenance,status
+1,CNC Machine A,Zone A,Mechanical,2025-07-01,2025-09-15,Critical
+2,Hydraulic Press B,Zone B,Hydraulic,2025-07-21,2025-09-15,Warning
+3,Assembly Robot C,Zone C,Electrical,2025-08-13,2025-09-15,Normal

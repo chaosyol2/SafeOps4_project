@@ -888,3 +888,265 @@ th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255
     color: rgba(255,255,255,0.5);
     font-size: 11px;
 }
+
+
+
+/*avg risk*/
+
+/* ===== AVG RISK PAGE ===== */
+
+.risk-header-row {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.risk-subtext {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+}
+
+.avg-risk-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background: rgba(0, 10, 30, 0.82);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 18px;
+}
+
+.avg-risk-left {
+    flex: 1;
+}
+
+.avg-risk-date {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    margin-bottom: 12px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.avg-risk-title {
+    color: #ffffff;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.avg-risk-score-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 14px;
+}
+
+.avg-risk-score {
+    font-size: 42px;
+    font-weight: bold;
+    color: #00ff88;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1;
+}
+
+.avg-risk-badge {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+.avg-risk-badge.low {
+    color: #00ff88;
+    background: rgba(0,255,136,0.12);
+    border: 1px solid rgba(0,255,136,0.5);
+}
+
+.avg-risk-note {
+    color: rgba(255,255,255,0.75);
+    max-width: 620px;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.avg-risk-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 230px;
+}
+
+.risk-ring-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.risk-ring {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: conic-gradient(#00ff88 0deg 130deg, rgba(255,255,255,0.08) 130deg 360deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 18px rgba(0,255,136,0.12);
+}
+
+.risk-ring-inner {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: #06142d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.risk-ring-label {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* risk cards */
+.risk-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.risk-card {
+    background: rgba(0, 10, 30, 0.82);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 18px;
+    min-height: 180px;
+}
+
+.risk-card.machine {
+    border-top: 3px solid #00f2fe;
+}
+
+.risk-card.human {
+    border-top: 3px solid #ffcc00;
+}
+
+.risk-card.env {
+    border-top: 3px solid #ff3333;
+}
+
+.risk-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.risk-card-title {
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.risk-card-value {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.risk-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.risk-fill {
+    height: 100%;
+    border-radius: 999px;
+}
+
+.machine-fill {
+    background: linear-gradient(90deg, #00f2fe, #00a8ff);
+}
+
+.human-fill {
+    background: linear-gradient(90deg, #ffcc00, #ff9f1a);
+}
+
+.env-fill {
+    background: linear-gradient(90deg, #ff3333, #ff6b6b);
+}
+
+.risk-card-desc {
+    color: rgba(255,255,255,0.78);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* bottom panel */
+.risk-bottom-panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.risk-bottom-box {
+    background: rgba(0, 10, 30, 0.82);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.bottom-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.bottom-value {
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.env-text {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+    .avg-risk-summary {
+        flex-direction: column;
+    }
+
+    .risk-card-grid,
+    .risk-bottom-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .avg-risk-right {
+        justify-content: flex-start;
+    }
+}
+
