@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M1 AI Insight | Smart Factory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --neon-blue: #00f2fe;
+            --neon-yellow: #ffcc00;
+            --neon-red: #ff4444;
+            --bg-dark: #0d0e12;
+            --panel-bg: rgba(26, 27, 35, 0.98);
+            --text-main: #e0e0e0;
+        }
+
+        body {
+            background-color: #001637;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif; /* Clean font for readability */
+            margin: 0;
+            padding: 25px;
+            line-height: 1.6;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .machine-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .full-width { grid-column: span 2; }
+
+        h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Risk Cards */
+        .score-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--neon-blue);
+        }
+
+        .score-label { font-weight: 600; font-size: 14px; }
+        .score-sub { font-size: 11px; color: #888; display: block; }
+        .score-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #fff; }
+
+        /* Recommendation Section */
+        .rec-box {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px dashed var(--neon-green);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .rec-item {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .rec-bullet { color: var(--neon-green); font-weight: bold; }
+
+        .total-risk-display {
+            text-align: center;
+            padding: 30px;
+            background: radial-gradient(circle at center, rgba(0,255,136,0.15) 0%, transparent 70%);
+            border-radius: 15px;
+            border: 1px solid rgba(0,255,136,0.3);
+        }
+
+        .total-score {
+            font-size: 72px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            margin: 10px 0;
+        }
+
+        /* Back Button */
+        .back-btn {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .back-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 15px var(--neon-blue); }
+
+        table { width: 100%; font-size: 12px; border-collapse: collapse; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #aaa; }
+        .formula-val { color: var(--neon-blue); font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : CNC LASER CUTTING | AI ANALYTICS</span>
+            <div style="font-size: 13px; color: #888; margin-top: 4px;">Precision Manufacturing Intelligence System</div>
+        </div>
+        <a href="index.html" class="back-btn">RETURN TO OVERVIEW</a>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="panel">
+            <h3><span style="color:var(--neon-green)">●</span> RISK ASSESSMENT BREAKDOWN</h3>
+
+            <div class="score-card" style="border-color: var(--neon-blue);">
+                <div><span class="score-label">Machine Risk (40%)</span><span class="score-sub">Vib, Temp, Pressure, Voltage, Error Codes</span></div>
+                <div class="score-value">45.8</div>
+            </div>
+
+            <div class="score-card" style="border-color: var(--neon-yellow);">
+                <div><span class="score-label">Human Risk (30%)</span><span class="score-sub">Behavior, Phone Usage, Task Sequence</span></div>
+                <div class="score-value">32.1</div>
+            </div>
+
+            <div class="score-card" style="border-color: var(--neon-red);">
+                <div><span class="score-label">Environment Risk (20%)</span><span class="score-sub">Humidity, Air Quality, Noise, Ambient Temp</span></div>
+                <div class="score-value">48.2</div>
+            </div>
+
+            <div class="score-card" style="border-color: #a29bfe;">
+                <div><span class="score-label">Historical Risk (10%)</span><span class="score-sub">Repair Logs, Past Downtime, Failure Types</span></div>
+                <div class="score-value">25.5</div>
+            </div>
+
+            <div class="total-risk-display" style="margin-top: 25px;">
+                <div style="font-size: 12px; letter-spacing: 3px; color: #aaa;">AGGREGATED AI RISK SCORE</div>
+                <div class="total-score">38.7</div>
+                <div style="color: var(--neon-green); font-weight: 700; letter-spacing: 1px;">STATUS: LOW RISK (CLASS 0)</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3><span style="color:var(--neon-blue)">●</span> PREDICTIVE TREND & INSIGHTS</h3>
+            <div style="height: 250px; margin-bottom: 20px;">
+                <canvas id="predictionChart"></canvas>
+            </div>
+
+            <div class="rec-box">
+                <div style="font-weight: 700; margin-bottom: 15px; color: var(--neon-green); font-size: 15px;">
+                    AI MAINTENANCE RECOMMENDATIONS
+                </div>
+
+                <div class="rec-item">
+                    <span class="rec-bullet">01</span>
+                    <div><strong>Cooling System Check:</strong> AI predicts a 15% temperature rise in the next 4 hours. Ensure coolant levels are optimal to avoid "Medium Risk" escalation.</div>
+                </div>
+
+                <div class="rec-item">
+                    <span class="rec-bullet">02</span>
+                    <div><strong>Optics Calibration:</strong> Based on historical vibration (4.29 factor), laser lens alignment should be checked within the next 48 operating hours.</div>
+                </div>
+
+                <div class="rec-item">
+                    <span class="rec-bullet">03</span>
+                    <div><strong>Operator Alert:</strong> Current "Human Risk" is elevated due to task sequence errors. Suggest a 5-minute safety briefing for the next shift transition.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel full-width">
+            <h3><span style="color:var(--neon-yellow)">●</span> AI MATHEMATICAL MODELS (REAL-TIME)</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <table>
+                    <tr><td>Machine Risk Eq.</td><td class="formula-val">4.29(Vib) + 0.4167(Temp) - 0.8(Pres) + 0.375(Volt) + 0.067(Err) - 15.57</td></tr>
+                    <tr><td>Env Risk Eq.</td><td class="formula-val">5.618(Temp) + 2.893(Hum) + 4.831(Air) - 2.816(Light) + 4.756(Noise) + 42.7</td></tr>
+                </table>
+                <table>
+                    <tr><td>Aggregated Score</td><td class="formula-val">(0.4×M) + (0.3×H) + (0.2×E) + (0.1×Hist)</td></tr>
+                    <tr><td>Human Risk (z₂)</td><td class="formula-val">1.52(Walk) + 1.59(Unsafe) + 2.16(Tool) + 2.21(Phone) + 7.462</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('predictionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '10:00', '12:00', '14:00', '16:00 (NOW)', '18:00 (P)', '20:00 (P)'],
+                datasets: [{
+                    label: 'Risk Level Trend',
+                    data: [30, 32, 35, 38, 38.7, 44, 41],
+                    borderColor: '#00f2fe',
+                    backgroundColor: 'rgba(0, 242, 254, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
+                    x: { grid: { display: false }, ticks: { color: '#888' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
