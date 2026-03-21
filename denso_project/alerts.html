@@ -24,7 +24,7 @@
             <a href="history.html" class="history-link"> | &nbsp; History &nbsp; | </a>
         </div>
         <div class="history-link-container">
-            <a href="alert.html" class="history-link" style="color: #ff3333;"> | &nbsp; Alerts &nbsp; | </a>
+            <a href="alerts.html" class="history-link" style="color: #ff3333;"> | &nbsp; Alerts &nbsp; | </a>
         </div>
         <img src="source/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
         <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest">
@@ -40,26 +40,80 @@
     <div class="panel-header" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <span style="color: #ff3333; animation: blink 1.5s infinite;">> ACTIVE SYSTEM ALERTS & LINE NOTIFICATION</span>
         <div style="background: rgba(255, 51, 51, 0.2); padding: 5px 15px; border-radius: 20px; border: 1px solid #ff3333;">
-            <span style="color: #ff3333; font-size: 12px; font-weight: bold;">TOTAL ISSUES: 03</span>
+            <span style="color: #ff3333; font-size: 12px; font-weight: bold;">TOTAL ISSUES: 02</span>
         </div>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
 
-        <div class="alert-row" style="border-left: 5px solid #ff3333; background: rgba(255, 51, 51, 0.08); padding: 20px; display: flex; flex-direction: column; gap: 15px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <div style="font-size: 30px;">🚨</div>
-                    <div>
-                        <h3 style="margin: 0; color: #fff; font-family: 'Orbitron'; font-size: 16px;">CRITICAL TEMPERATURE EXCEEDED</h3>
-                        <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.6); font-size: 12px;">Machine ID: CNC-M01 | Status: Shutdown</p>
+
+                    <div class="alert-detail-card">
+
+                <!-- TOP -->
+                <div class="alert-detail-top">
+                    <div class="alert-icon">🚨</div>
+                    <div class="alert-main-text">
+                        <h2>High Risk Alert (82%)</h2>
+                        <p>Machine A overheating</p>
                     </div>
                 </div>
-                <div style="text-align: right;">
-                    <span style="color: #ff3333; font-size: 11px; display: block; margin-bottom: 5px;">TIME: 14:30:12</span>
-                    <button style="background: #ff3333; border: none; color: white; padding: 6px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer;">ACKNOWLEDGE</button>
+
+                <!-- META -->
+                <div class="alert-meta-grid">
+                    <div class="meta-box">
+                        <span class="meta-label">TIME</span>
+                        <span class="meta-value">14:30:12</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">MACHINE</span>
+                        <span class="meta-value">Machine A</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">RISK</span>
+                        <span class="meta-value risk-red">82%</span>
+                    </div>
                 </div>
+
+                <!-- MESSAGE -->
+                <div class="detail-section">
+                    <div class="detail-label">ALERT MESSAGE</div>
+                    <div class="detail-box">
+                        🚨 High Risk Alert (82%)<br>
+                        Machine A overheating
+                    </div>
+                </div>
+
+                <!-- PREDICTION -->
+                <div class="detail-section">
+                    <div class="detail-label">PREDICTION</div>
+                    <div class="detail-box">
+                        Failure within 2 hours
+                    </div>
+                </div>
+
+                <!-- RECOMMENDATION -->
+                <div class="detail-section">
+                    <div class="detail-label">RECOMMENDATION</div>
+                    <div class="detail-box recommendation-box">
+                        👉 STOP immediately
+                    </div>
+                </div>
+
+                <!-- LINE SECTION (คลีนๆ) -->
+                <div class="line-section">
+                    <div class="line-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/124/124027.png" height="20">
+                        <span>LINE ALERT SENT</span>
+                    </div>
+
+                    <div class="line-right">
+                        <span class="line-time">14:31</span>
+                        <span class="line-status success">DELIVERED</span>
+                    </div>
+                </div>
+
             </div>
+
 
             <div style="display: flex; align-items: center; gap: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
                 <div style="display: flex; align-items: center; gap: 8px;">
