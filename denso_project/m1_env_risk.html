@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Risk Analysis | M1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --neon-blue: #00f2fe;
+            --neon-yellow: #ffcc00;
+            --neon-red: #ff4444;
+            --bg-dark: #001637;
+            --panel-bg: rgba(13, 25, 48, 0.95);
+            --text-main: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 25px;
+            line-height: 1.4;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        .machine-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: var(--neon-blue);
+            letter-spacing: 1px;
+        }
+
+        /* --- Environment Metrics Grid --- */
+        .env-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-panel {
+            background: var(--panel-bg);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .label { font-family: 'Orbitron', sans-serif; font-size: 9px; color: #888; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 20px; color: #fff; }
+        .weight { font-size: 9px; color: #556; margin-top: 5px; display: block; }
+
+        /* --- Main Analysis Layout --- */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 2.5fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .total-display {
+            text-align: center;
+            padding: 30px 10px;
+            border-radius: 12px;
+            margin-top: 15px;
+            background: radial-gradient(circle at center, rgba(0, 242, 254, 0.1) 0%, transparent 80%);
+        }
+
+        .formula-box {
+            font-family: monospace;
+            font-size: 11px;
+            color: #667788;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #222;
+            word-break: break-all;
+        }
+
+        /* Table Styling */
+        .history-container {
+            max-height: 550px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #0d1930;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .risk-val { font-weight: bold; font-family: 'Orbitron'; }
+        .high { color: var(--neon-red); }
+        .low { color: var(--neon-green); }
+
+        .back-btn {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : ENVIRONMENT RISK ANALYSIS</span>
+            <div style="font-size: 12px; color: #556688;">External Factor Modeling: Regression Analysis v1.2</div>
+        </div>
+        <a href="m1_insight.html" class="back-btn">← RETURN</a>
+    </div>
+
+    <div class="env-grid">
+        <div class="stat-panel"><span class="label">Temperature</span><div class="value">28.5°C</div><span class="weight">w: 5.618</span></div>
+        <div class="stat-panel"><span class="label">Humidity</span><div class="value">65%</div><span class="weight">w: 2.893</span></div>
+        <div class="stat-panel"><span class="label">Air Quality</span><div class="value">12.0</div><span class="weight">w: 4.831</span></div>
+        <div class="stat-panel"><span class="label">Light</span><div class="value">450lx</div><span class="weight">w: -2.816</span></div>
+        <div class="stat-panel"><span class="label">External Vib.</span><div class="value">0.12</div><span class="weight">w: 5.758</span></div>
+    </div>
+
+    <div class="main-layout">
+        <div class="panel">
+            <h3 style="color:var(--neon-blue); font-family:'Orbitron'; font-size:14px; margin-top:0;">RISK ASSESSMENT</h3>
+            <div class="total-display">
+                <div class="label" style="letter-spacing: 2px;">ENV RISK INDEX</div>
+                <div style="font-family:'Orbitron'; font-size:48px; color:var(--neon-blue); margin:10px 0;">48.2</div>
+                <div style="color: var(--neon-green); font-size: 11px; font-weight: bold;">STABLE CONDITIONS</div>
+            </div>
+
+            <div class="formula-box">
+                <div style="margin-bottom:8px; color:#fff;">ACTIVE FORMULA:</div>
+                5.618(Temp) + 2.893(Hum) + 4.831(Air) - 2.816(Light) + 5.758(Vib) + 42.7
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3 style="color:var(--neon-blue); font-family:'Orbitron'; font-size:14px; margin-top:0;">HOURLY ENVIRONMENT LOG (20 ROWS)</h3>
+            <div class="history-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TIME</th>
+                            <th>TEMP</th>
+                            <th>HUM</th>
+                            <th>AIR</th>
+                            <th>LIGHT</th>
+                            <th>EXT.VIB</th>
+                            <th>RISK INDEX</th>
+                        </tr>
+                    </thead>
+                    <tbody id="envLogBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tableBody = document.getElementById('envLogBody');
+
+        for (let i = 0; i < 20; i++) {
+            let hour = (19 - i);
+            if (hour < 0) hour += 24;
+            let displayTime = (hour < 10 ? '0' + hour : hour) + ":00";
+
+            // Generate simulated data points
+            let t = (Math.random() * (30 - 24) + 24).toFixed(1);
+            let h = (Math.random() * (75 - 45) + 45).toFixed(0);
+            let a = (Math.random() * (20 - 5) + 5).toFixed(1);
+            let l = (Math.random() * (500 - 350) + 350).toFixed(0);
+            let v = (Math.random() * (0.8 - 0.05) + 0.05).toFixed(2);
+
+            // Calculation based on your provided formula
+            let rawIndex = (5.618 * t) + (2.893 * h) + (4.831 * a) - (2.816 * l) + (5.758 * v) + 42.7;
+            // Scaling for display (assuming index needs to be simplified)
+            let riskIndex = (rawIndex / 10).toFixed(1);
+            let statusClass = riskIndex > 50 ? 'high' : 'low';
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td style="color:#667;">21 Mar - ${displayTime}</td>
+                    <td>${t}°C</td>
+                    <td>${h}%</td>
+                    <td>${a}</td>
+                    <td>${l}lx</td>
+                    <td>${v}</td>
+                    <td class="risk-val ${statusClass}">${riskIndex}</td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>

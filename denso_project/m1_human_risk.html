@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Risk AI Analysis | M1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --neon-blue: #00f2fe;
+            --neon-yellow: #ffcc00;
+            --neon-red: #ff4444;
+            --bg-dark: #001637;
+            --panel-bg: rgba(13, 25, 48, 0.95);
+            --text-main: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 25px;
+            line-height: 1.4;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        .machine-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: var(--neon-yellow);
+            letter-spacing: 1px;
+        }
+
+        /* --- Behavioral Metrics Grid --- */
+        .behavior-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-panel {
+            background: var(--panel-bg);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .label { font-family: 'Orbitron', sans-serif; font-size: 9px; color: #888; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 20px; color: #fff; }
+
+        /* --- Main Analysis Layout --- */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 2.5fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Classification Result Styling */
+        .class-result {
+            text-align: center;
+            padding: 30px 10px;
+            border-radius: 12px;
+            margin-top: 15px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .z-score-list {
+            font-family: monospace;
+            font-size: 12px;
+            color: #667788;
+            margin-top: 20px;
+            text-align: left;
+            border-top: 1px solid #222;
+            padding-top: 15px;
+        }
+
+        /* Table Styling */
+        .history-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #0d1930;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .risk-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .tag-low { background: rgba(0, 255, 136, 0.1); color: var(--neon-green); border: 1px solid var(--neon-green); }
+        .tag-med { background: rgba(255, 204, 0, 0.1); color: var(--neon-yellow); border: 1px solid var(--neon-yellow); }
+        .tag-high { background: rgba(255, 68, 68, 0.1); color: var(--neon-red); border: 1px solid var(--neon-red); }
+
+        .back-btn {
+            background: rgba(255, 204, 0, 0.1);
+            border: 1px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : HUMAN BEHAVIOR ANALYSIS</span>
+            <div style="font-size: 12px; color: #556688;">Neural Classification Model: Class 0 | 1 | 2</div>
+        </div>
+        <a href="m1_insight.html" class="back-btn">← RETURN</a>
+    </div>
+
+    <!-- 5 Key Metrics for $z$ calculation -->
+    <div class="behavior-grid">
+        <div class="stat-panel"><span class="label">Phone Usage</span><div class="value">2.21</div></div>
+        <div class="stat-panel"><span class="label">Tool Usage</span><div class="value">1.42</div></div>
+        <div class="stat-panel"><span class="label">Unsafe Move.</span><div class="value">1.59</div></div>
+        <div class="stat-panel"><span class="label">Walking Viol.</span><div class="value">0.83</div></div>
+        <div class="stat-panel"><span class="label">Past Incidents</span><div class="value">2.39</div></div>
+    </div>
+
+    <div class="main-layout">
+        <!-- Sidebar: Current Prediction -->
+        <div class="panel">
+            <h3 style="color:var(--neon-yellow); font-family:'Orbitron'; font-size:14px; margin-top:0;">LIVE PREDICTION</h3>
+            <div class="class-result">
+                <div class="label">AI CLASSIFIED AS</div>
+                <div style="font-family:'Orbitron'; font-size:24px; color:var(--neon-red); margin:10px 0;">CLASS 2</div>
+                <div class="risk-tag tag-high">HIGH RISK LEVEL</div>
+            </div>
+
+            <div class="z-score-list">
+                <div style="margin-bottom:5px; color:#fff;">Calculated Coefficients:</div>
+                <div>z₀ (Low): <span id="z0_val">-12.45</span></div>
+                <div>z₁ (Med): <span id="z1_val">-4.12</span></div>
+                <div>z₂ (High): <span id="z2_val">+8.66</span></div>
+                <p style="font-size:10px; margin-top:15px; color:#556;">*Decision based on Max(z) probability.</p>
+            </div>
+        </div>
+
+        <!-- Main Body: 20 Rows History -->
+        <div class="panel">
+            <h3 style="color:var(--neon-blue); font-family:'Orbitron'; font-size:14px; margin-top:0;">HOURLY BEHAVIOR LOG (20 ROWS)</h3>
+            <div class="history-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TIME</th>
+                            <th>WALK</th>
+                            <th>UNSAFE</th>
+                            <th>TOOL</th>
+                            <th>PHONE</th>
+                            <th>DISTRACTION</th>
+                            <th>RISK CLASS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- Rows generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tableBody = document.getElementById('logTableBody');
+        const now = new Date();
+
+        // Generate 20 Rows of data
+        for (let i = 0; i < 20; i++) {
+            let hour = (19 - i);
+            if (hour < 0) hour += 24;
+            let displayTime = (hour < 10 ? '0' + hour : hour) + ":00";
+
+            // Randomly simulate scores for table
+            let walk = (Math.random() * 2).toFixed(2);
+            let unsafe = (Math.random() * 2).toFixed(2);
+            let tool = (Math.random() * 2).toFixed(2);
+            let phone = (Math.random() * 3).toFixed(2);
+            let distract = (Math.random() * 5).toFixed(1);
+
+            // Determine Class based on phone/unsafe thresholds (for simulation)
+            let riskClass = "Class 0";
+            let tagClass = "tag-low";
+            if (phone > 1.5 || unsafe > 1.2) {
+                riskClass = "Class 2";
+                tagClass = "tag-high";
+            } else if (phone > 0.8 || walk > 1.0) {
+                riskClass = "Class 1";
+                tagClass = "tag-med";
+            }
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td style="color:#667;">21 Mar - ${displayTime}</td>
+                    <td>${walk}</td>
+                    <td>${unsafe}</td>
+                    <td>${tool}</td>
+                    <td>${phone}</td>
+                    <td>${distract}%</td>
+                    <td><span class="risk-tag ${tagClass}">${riskClass}</span></td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>

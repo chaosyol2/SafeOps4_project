@@ -4,7 +4,7 @@ body {
     background-image: radial-gradient(circle at top right, #001637, #0f172a);
     min-height: 100vh;
     width: 100%;
-} 
+}
 
 /* สไตล์ปุ่มเมนู (ตอนยังไม่ถูกเลือก) */
 .tab-link {
@@ -477,4 +477,202 @@ body {
     color: #00f2fe;                 /* เปลี่ยนเป็นสีฟ้าเรืองแสงเมื่อชี้ */
     text-shadow: 0 0 8px rgba(0, 242, 254, 0.6); /* เพิ่มเอฟเฟกต์เรืองแสง */
     cursor: pointer;
+}
+
+
+
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #001637;
+    padding: 15px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Real-time Row */
+.realtime-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.data-card {
+    background: rgba(0, 42, 92, 0.4);
+    padding: 15px;
+    border-left: 3px solid #00f2fe;
+    border-radius: 4px;
+}
+
+.data-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+.data-value { font-family: 'Orbitron', sans-serif; font-size: 20px; color: #ffffff; margin-top: 5px; }
+
+/* Table Style */
+.history-table-container {
+    background: rgba(0, 10, 30, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    max-height: 600px; /* เพิ่ม Scrollbar ถ้าข้อมูลเยอะเกิน */
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #ffffff; /* ตัวอักษรในตารางเป็นสีขาว */
+}
+
+thead {
+    background: rgba(16, 185, 129, 0.2);
+    font-family: 'Orbitron', sans-serif;
+    color: #00ff88; /* สีเขียวนีออนสว่าง */
+    position: sticky;
+    top: 0; /* ให้หัวตารางค้างไว้เวลา Scroll */
+}
+
+th, td {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-align: left;
+}
+
+tbody tr:hover {
+    background: rgba(0, 242, 254, 0.05);
+}
+
+/* Status Colors (เน้นความสว่าง) */
+.status-normal { color: #00ff88; }
+.status-warn { color: #ffcc00; }
+.status-critical { color: #ff4444; font-weight: bold; text-shadow: 0 0 5px rgba(255,68,68,0.5); }
+
+.history-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+.history-link:hover { opacity: 1; color: #00f2fe; }
+
+
+
+/* Behavior Grid: แสดงตัวแปรจากสมการ */
+.behavior-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.behavior-card {
+    background: rgba(13, 25, 48, 0.8);
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    position: relative;
+}
+
+.behavior-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: #889; letter-spacing: 1px; }
+.behavior-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #ffffff; margin-top: 8px; }
+
+/* Highlight สำหรับค่าที่เป็นบวกในสมการ z2 (ความเสี่ยงสูง) */
+.danger-border { border-left: 4px solid #ff4444; }
+.warning-border { border-left: 4px solid #ffcc00; }
+.safe-border { border-left: 4px solid #00ff88; }
+
+/* Table Section */
+.log-container {
+    background: rgba(0, 10, 30, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+thead { background: rgba(255, 255, 255, 0.03); color: #00f2fe; font-family: 'Orbitron', sans-serif; }
+th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+.class-tag {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: 'Orbitron';
+}
+.tag-0 { background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid #00ff88; }
+.tag-1 { background: rgba(255, 204, 0, 0.15); color: #ffcc00; border: 1px solid #ffcc00; }
+.tag-2 { background: rgba(255, 68, 68, 0.15); color: #ff4444; border: 1px solid #ff4444; }
+/* Environment Grid */
+.env-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.env-card {
+    background: rgba(0, 20, 50, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.env-card:hover {
+    border-color: #00f2fe;
+    background: rgba(0, 242, 254, 0.05);
+}
+
+.env-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: #889; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+.env-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00f2fe; }
+.env-weight { font-size: 10px; color: #556; display: block; margin-top: 5px; }
+
+/* Equation Display */
+.formula-box {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 20px;
+    border-left: 3px solid #00f2fe;
+}
+
+/* Table Area */
+.log-table-container {
+    background: rgba(0, 10, 30, 0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+thead { background: rgba(0, 242, 254, 0.1); color: #00f2fe; font-family: 'Orbitron', sans-serif; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.03); }
+
+.risk-high { color: #ff4444; font-weight: bold; }
+.risk-low { color: #00ff88; }
+
+.back-btn {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    border: 1px solid #00f2fe;
+    padding: 5px 15px;
+    border-radius: 4px;
 }
