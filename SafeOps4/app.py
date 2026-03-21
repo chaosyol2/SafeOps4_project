@@ -1,11 +1,69 @@
-from flask import Flask, render_template
+import sqlite3  # เพิ่มบรรทัดนี้ครับ
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # ส่งค่าตัวเลขสมมติ (เช่น 0) ไปก่อน เพื่อให้หน้าเว็บไม่ Error เวลาหาตัวแปร avg_risk
-    return render_template('index.html')
+    conn = sqlite3.connect('factory_risk.db')
+    cursor = conn.cursor()
+
+    # ดึงค่าเฉลี่ยจากแต่ละตาราง (ใช้ COALESCE กันเหนียวถ้าตารางไหนว่างให้เป็น 0)
+    # 1. จาก machine_risk (สมมติชื่อคอลัมน์ risk_score)
+    cursor.execute("SELECT AVG(machine_risk) FROM machine_risk")
+    m_risk = cursor.fetchone()[0] or 0
+
+    # 2. จาก human_risk_label (สมมติชื่อคอลัมน์ score)
+    cursor.execute("SELECT AVG(human_risk_label) FROM human_risk")
+    h_risk = cursor.fetchone()[0] or 0
+
+    # 3. จาก environment_risk_score (สมมติชื่อคอลัมน์ env_score)
+    cursor.execute("SELECT AVG(environment_risk_score) FROM environment_risk")
+    e_risk = cursor.fetchone()[0] or 0
+
+    # 4. จาก historical_risk_score (สมมติชื่อคอลัมน์ his_score)
+    cursor.execute("SELECT AVG(historical_risk_score) FROM historical_risk")
+    hi_risk = cursor.fetchone()[0] or 0
+
+    # คำนวณค่าเฉลี่ยรวมจากทั้ง 4 ส่วน
+    total_avg = (m_risk + h_risk + e_risk + hi_risk) / 4
+
+    # ปัดเศษ 1 ตำแหน่ง
+    final_risk = round(total_avg, 1)
+
+    # SQL: เชื่อม 4 ตาราง, คำนวณสูตรถ่วงน้ำหนัก, กรองช่วง 41-70, และสุ่มมา 1 เครื่อง
+    query = """
+    SELECT
+        m.machine_id,
+        ( (0.4 * m.machine_risk) +
+          (0.3 * h.human_risk_label) +
+          (0.2 * e.environment_risk_score) +
+          (0.1 * hi.historical_risk_score) ) as final_score
+    FROM machine_risk m
+    JOIN human_risk h ON m.machine_id = h.machine_id
+    JOIN environment_risk e ON m.machine_id = e.machine_id
+    JOIN historical_risk hi ON m.machine_id = hi.machine_id
+    WHERE final_score BETWEEN 41 AND 70
+    ORDER BY RANDOM()
+    LIMIT 1
+    """
+
+    cursor.execute(query)
+    row = cursor.fetchone()
+
+    random_alert = None
+    if row:
+        random_alert = {
+            "id": row[0],
+            "score": round(row[1], 1),
+            "status": "CHECK SYSTEM", # คำแนะนำสำหรับช่วง Warning
+            "time": "1 min ago"       # หรือจะดึงจาก DB มาคำนวณเวลาก็ได้
+        }
+
+    conn.close()
+
+
+    return render_template('index.html',avg_risk_value=final_risk,alert=random_alert)
 
 
 @app.route('/history')

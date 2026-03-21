@@ -89,13 +89,13 @@
     </div>
 
     <div class="machine-info"
-        onclick="location.href='{{ url_for('risk_page') }}';"
-        style="cursor: pointer;">
-        <span class="machine-label">Avg.Risk</span>
-        <div class="machine-count-box">
-            <span id="avg-risk-count">30</span>
+            onclick="location.href='{{ url_for('risk_page') }}';"
+            style="cursor: pointer;">
+            <span class="machine-label">Avg.Risk</span>
+            <div class="machine-count-box">
+                <span id="avg-risk-count">{{ avg_risk_value }}</span>
+            </div>
         </div>
-    </div>
 
         <!-- <div class="machine-info"
             onclick="location.href='risk.html';"
@@ -180,13 +180,25 @@
     <div class="col-side">
         <div class="panel-header alert-header">Active Alerts</div>
         <div class="alert-list">
-            <div class="alert-row critical">
+            <!-- <div class="alert-row critical">
                 <div class="alert-status-icon">⚠️</div>
                 <span class="m-id">M3</span>
                 <span class="m-val">82%</span>
                 <div class="status-badge">STOP NOW</div>
                 <span class="m-time">2 min ago</span>
-            </div>
+            </div> -->
+
+            {% if alert %}
+                <div class="alert-row warning">
+                    <div class="alert-status-icon">⚠️</div>
+                    <span class="m-id">{{ alert.id }}</span>
+                    <span class="m-val">{{ alert.score }}%</span>
+                    <div class="status-badge">{{ alert.status }}</div>
+                    <span class="m-time">{{ alert.time }}</span>
+                </div>
+            {% else %}
+                <p>No moderate risk machines found.</p>
+            {% endif %}
             <div class="alert-row warning">
                 <div class="alert-status-icon">❗</div>
                 <span class="m-id">M14</span>
@@ -194,6 +206,14 @@
                 <div class="status-badge">Check Zone</div>
                 <span class="m-time">8 min ago</span>
             </div>
+            <div class="alert-row warning">
+                <div class="alert-status-icon">❗</div>
+                <span class="m-id">M1</span>
+                <span class="m-val">60%</span>
+                <div class="status-badge">Check Zone</div>
+                <span class="m-time">8 min ago</span>
+            </div>
+
         </div>
     </div>
 
@@ -362,7 +382,7 @@ function toggleNoti() {
 
 
 
-
+<!--
 <script>
     function updateAvgRisk(newCount) {
         const countElement = document.getElementById('avg-risk-count');
@@ -379,7 +399,7 @@ function toggleNoti() {
     };
 
 </script>
-
+ -->
 
 
 
