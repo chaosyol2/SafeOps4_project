@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Average Risk | Smart Factory</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='images/app_logo.jpg') }}" height="50" class="object-contain" alt="Logo">
+    </a>
+    </div>
+
+    <div class="push-right">
+        <div class="history-link-container">
+            <a href="{{ url_for('history_page') }}" class="history-link" >
+                | &nbsp; History &nbsp; |
+            </a>
+        </div>
+        <div class="history-link-container">
+            <a href="{{ url_for('team_page') }}" class="history-link" >
+                | &nbsp; Team &nbsp; |
+            </a>
+        </div>
+
+
+        <img src="./static/images/live_logo_on.png" height="40" class="object-contain opacity-70" alt="time">
+        <span id="live-clock">00:00:00</span>
+
+        <img id="notiIcon"
+             src="./static/images/Unnoti_bell.png"
+             height="30"
+             style="cursor: pointer;"
+             onclick="toggleNoti()"
+             alt="Notification">
+
+        <img src="./static/images/Denso_logo.png" height="30" class="object-contain opacity-70" alt="brand">
+    </div>
+</div>
+
+<div class="info-panel" style="flex-direction: column; margin-top: 20px;">
+
+    <div class="panel-header risk-header-row">
+        <span style="color: #00f2fe;">> AVERAGE RISK OVERVIEW</span>
+        <span class="risk-subtext">Real-time factory safety assessment</span>
+    </div>
+
+    <!-- TOP SUMMARY -->
+    <div class="avg-risk-summary">
+        <div class="avg-risk-left">
+            <div class="avg-risk-date" id="risk-date">21 March 2026 | 18:08</div>
+            <div class="avg-risk-title">AVERAGE RISK</div>
+            <div class="avg-risk-score-row">
+                <span class="avg-risk-score">36.12%</span>
+                <span class="avg-risk-badge low">LOW</span>
+            </div>
+            <div class="avg-risk-note">
+                Overall factory condition remains stable, but several operational factors still require monitoring.
+            </div>
+        </div>
+
+        <div class="avg-risk-right">
+            <div class="risk-ring-card">
+                <div class="risk-ring">
+                    <div class="risk-ring-inner">36%</div>
+                </div>
+                <div class="risk-ring-label">Current Risk Level</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BREAKDOWN -->
+    <div class="risk-card-grid">
+
+        <div class="risk-card machine">
+            <div class="risk-card-top">
+                <span class="risk-card-title">MACHINE RISK</span>
+                <span class="risk-card-value">34.71%</span>
+            </div>
+
+            <div class="risk-bar">
+                <div class="risk-fill machine-fill" style="width: 34.71%;"></div>
+            </div>
+
+            <div class="risk-card-desc">
+                5 machines operating under abnormal conditions may increase accident risk.
+            </div>
+        </div>
+
+        <div class="risk-card human">
+            <div class="risk-card-top">
+                <span class="risk-card-title">HUMAN RISK</span>
+                <span class="risk-card-value">22.78%</span>
+            </div>
+
+            <div class="risk-bar">
+                <div class="risk-fill human-fill" style="width: 22.78%;"></div>
+            </div>
+
+            <div class="risk-card-desc">
+                3 workers were detected using mobile phones while walking inside the factory area.
+            </div>
+        </div>
+
+        <div class="risk-card env">
+            <div class="risk-card-top">
+                <span class="risk-card-title">ENVIRONMENT RISK</span>
+                <span class="risk-card-value">50.89%</span>
+            </div>
+
+            <div class="risk-bar">
+                <div class="risk-fill env-fill" style="width: 50.89%;"></div>
+            </div>
+
+            <div class="risk-card-desc">
+                Ambient temperature reached 39.58°C, increasing the risk of machine overheating and worker discomfort.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- EXTRA SUMMARY -->
+    <div class="risk-bottom-panel">
+        <div class="risk-bottom-box">
+            <div class="bottom-label">TOP CONCERN</div>
+            <div class="bottom-value env-text">Environment Risk</div>
+        </div>
+
+        <div class="risk-bottom-box">
+            <div class="bottom-label">MOST CRITICAL FACTOR</div>
+            <div class="bottom-value">High temperature condition</div>
+        </div>
+
+        <div class="risk-bottom-box">
+            <div class="bottom-label">RECOMMENDED ACTION</div>
+            <div class="bottom-value">Inspect cooling system and reinforce worker safety monitoring</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const timeString =
+            String(now.getHours()).padStart(2, '0') + ":" +
+            String(now.getMinutes()).padStart(2, '0') + ":" +
+            String(now.getSeconds()).padStart(2, '0');
+
+        const clock = document.getElementById('live-clock');
+        if (clock) clock.textContent = timeString;
+
+        const dateEl = document.getElementById('risk-date');
+        if (dateEl) {
+            const months = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            const day = now.getDate();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            dateEl.textContent = `${day} ${month} ${year} | ${timeString}`;
+        }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleNoti() {
+        const notiElement = document.getElementById('notiIcon');
+        if (notiElement.src.includes('Unnoti_bell.png')) {
+            notiElement.src = './static/images/Noti_bell.png';
+        } else {
+            notiElement.src = './static/images/Unnoti_bell.png';
+        }
+    }
+</script>
+
+</body>
+</html>

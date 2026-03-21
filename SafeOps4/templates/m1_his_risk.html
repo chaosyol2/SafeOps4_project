@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Risk Analysis | M1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-purple: #a29bfe;
+            --neon-blue: #00f2fe;
+            --neon-red: #ff4444;
+            --neon-green: #00ff88;
+            --bg-dark: #001637;
+            --panel-bg: rgba(13, 25, 48, 0.95);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 20px;
+        }
+
+        .header-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; border-bottom: 1px solid rgba(162, 155, 254, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .machine-title { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--neon-purple); }
+
+        /* Metrics Row */
+        .his-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 12px; margin-bottom: 20px;
+        }
+
+        .stat-panel {
+            background: var(--panel-bg); border-radius: 8px; padding: 12px;
+            border: 1px solid rgba(162, 155, 254, 0.2); text-align: center;
+        }
+
+        .label { font-family: 'Orbitron', sans-serif; font-size: 8px; color: #889; display: block; margin-bottom: 5px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 15px; color: #fff; }
+
+        /* Layout */
+        .main-layout { display: grid; grid-template-columns: 1fr 3fr; gap: 20px; }
+        .panel { background: var(--panel-bg); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+
+        .total-display {
+            text-align: center; padding: 25px; border-radius: 10px;
+            background: radial-gradient(circle, rgba(162, 155, 254, 0.1) 0%, transparent 80%);
+        }
+
+        #liveTotal { font-family: 'Orbitron'; font-size: 44px; line-height: 1; margin: 10px 0; color: var(--neon-purple); }
+
+        /* Table Style */
+        .history-container { max-height: 500px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 10px; white-space: nowrap; }
+        thead { position: sticky; top: 0; background: #0a1a35; z-index: 10; }
+        th { text-align: center; padding: 10px 5px; color: var(--neon-purple); font-family: 'Orbitron'; border-bottom: 2px solid #222; font-size: 8px; }
+        td { padding: 8px 5px; border-bottom: 1px solid #222; text-align: center; }
+
+        .cat-tag { font-size: 8px; padding: 2px 4px; border-radius: 3px; background: rgba(255,255,255,0.05); color: #aaa; }
+        .back-btn {
+            text-decoration: none; color: var(--neon-purple); border: 1px solid var(--neon-purple);
+            padding: 6px 12px; border-radius: 4px; font-size: 10px; font-family: 'Orbitron';
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-purple); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : HISTORICAL RISK LOGS</span>
+            <div style="font-size: 10px; color: #568;">Regression Model: Failure & Cause Analysis</div>
+        </div>
+        <a href="{{ url_for('m1_insight_page') }}" class="back-btn">← RETURN</a>
+    </div>
+
+    <div class="his-grid">
+        <div class="stat-panel"><span class="label">Downtime (H)</span><div class="value" id="cur_down">--</div></div>
+        <div class="stat-panel"><span class="label">Repair Score</span><div class="value" id="cur_rep">--</div></div>
+        <div class="stat-panel"><span class="label">Failure Type</span><div class="value" id="cur_type" style="font-size:12px; color:var(--neon-purple)">--</div></div>
+        <div class="stat-panel"><span class="label">Main Cause</span><div class="value" id="cur_cause" style="font-size:12px; color:var(--neon-blue)">--</div></div>
+    </div>
+
+    <div class="main-layout">
+        <div class="panel">
+            <h3 style="color:var(--neon-purple); font-family:'Orbitron'; font-size:12px; margin-top:0;">CALCULATION</h3>
+            <div class="total-display">
+                <div class="label">SCALED RISK</div>
+                <div id="liveTotal">0.0</div>
+                <div id="riskStatus" style="font-weight:bold; font-size:11px;">--</div>
+            </div>
+            <div style="font-size: 8px; color: #4a5a75; margin-top: 15px; font-family: monospace; line-height: 1.4; border-top: 1px solid #222; padding-top: 10px;">
+                <b>FORMULA:</b><br>
+                +3.873(Down) + 5.934(Repair)<br>
+                -0.113(Time) + [Type_Weight]<br>
+                + [Cause_Weight] + 24.033
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3 style="color:var(--neon-purple); font-family:'Orbitron'; font-size:12px; margin-top:0;">20-RECORD INCIDENT LOG</h3>
+            <div class="history-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>DOWN(H)</th>
+                            <th>REPAIR</th>
+                            <th>OCCUR.T</th>
+                            <th>TYPE</th>
+                            <th>CAUSE</th>
+                            <th>RAW SCORE</th>
+                            <th>RISK %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hisTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hisTable = document.getElementById('hisTable');
+
+        // ข้อมูลน้ำหนักสำหรับ Categorical Variables
+        const typeWeights = { 'Electrical': 0.990, 'Hydraulic': -1.235, 'Mechanical': 2.473, 'Software': -2.228 };
+        const causeWeights = { 'Deterioration': -0.494, 'Environment': -4.780, 'Operator': 5.274 };
+
+        function calculateHisRisk(down, rep, time, type, cause) {
+            let raw = 24.033
+                      + (3.873 * down)
+                      + (5.934 * rep)
+                      - (0.113 * time)
+                      + (typeWeights[type] || 0)
+                      + (causeWeights[cause] || 0);
+
+            // Scaling 0-100: ค่าเฉลี่ยต่ำสุดประมาณ 10 สูงสุดประมาณ 150
+            let scaled = ((raw - 10) / (150 - 10)) * 100;
+            return {
+                raw: raw.toFixed(2),
+                final: Math.min(Math.max(scaled, 0), 100).toFixed(1)
+            };
+        }
+
+        let rows = '';
+        const types = Object.keys(typeWeights);
+        const causes = Object.keys(causeWeights);
+
+        for(let i=0; i<20; i++) {
+            let date = (21-i > 0 ? 21-i : 30+21-i) + " Mar";
+            let down = (Math.random() * 8).toFixed(1);
+            let rep = (Math.random() * 5 + 1).toFixed(0);
+            let timeOccur = (Math.random() * 24).toFixed(0);
+            let type = types[Math.floor(Math.random() * types.length)];
+            let cause = causes[Math.floor(Math.random() * causes.length)];
+
+            let res = calculateHisRisk(parseFloat(down), parseFloat(rep), parseFloat(timeOccur), type, cause);
+            let color = res.final > 70 ? 'var(--neon-red)' : (res.final > 40 ? 'var(--neon-purple)' : 'var(--neon-green)');
+
+            rows += `<tr>
+                <td style="color:#568;">${date}</td>
+                <td>${down}</td>
+                <td>${rep}</td>
+                <td>${timeOccur}:00</td>
+                <td><span class="cat-tag">${type}</span></td>
+                <td><span class="cat-tag" style="color:var(--neon-blue)">${cause}</span></td>
+                <td style="color:#445;">${res.raw}</td>
+                <td style="color:${color}; font-weight:bold;">${res.final}%</td>
+            </tr>`;
+
+            if(i === 0) {
+                document.getElementById('liveTotal').innerText = res.final + "%";
+                document.getElementById('liveTotal').style.color = color;
+                document.getElementById('riskStatus').innerText = res.final > 70 ? 'HIGH RISK' : 'NORMAL';
+                document.getElementById('riskStatus').style.color = color;
+                document.getElementById('cur_down').innerText = down;
+                document.getElementById('cur_rep').innerText = rep;
+                document.getElementById('cur_type').innerText = type;
+                document.getElementById('cur_cause').innerText = cause;
+            }
+        }
+        hisTable.innerHTML = rows;
+    </script>
+</body>
+</html>

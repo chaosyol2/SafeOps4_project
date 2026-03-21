@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>M1 Sensor History Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+   <div class="header-section">
+        <div>
+            <div class="data-label">Logged Data Analysis</div>
+            <div style="font-family: 'Orbitron'; font-size: 22px; color: #00f2fe;">M1 : HOURLY SENSOR LOGS</div>
+        </div>
+        <!-- แก้ไข href ตรงนี้ครับ -->
+        <a href="{{ url_for('m1_insight_page') }}" class="history-link">← RETURN TO DASHBOARD</a>
+    </div>
+
+    <div class="realtime-row">
+        <div class="data-card" style="border-color: #ff4444;"><div class="data-label">Vibration</div><div class="data-value">5.64</div></div>
+        <div class="data-card"><div class="data-label">Temperature</div><div class="data-value">42.8</div></div>
+        <div class="data-card"><div class="data-label">Pressure</div><div class="data-value">6.2</div></div>
+        <div class="data-card"><div class="data-label">Voltage</div><div class="data-value">382</div></div>
+        <div class="data-card" style="border-color: #ffcc00;"><div class="data-label">Error Code</div><div class="data-value">E-102</div></div>
+        <div class="data-card"><div class="data-label">Maint. Gap</div><div class="data-value">14</div></div>
+    </div>
+
+    <div class="history-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>TIME (REVERSE LOG)</th>
+                    <th>VIB (mm/s)</th>
+                    <th>TEMP (°C)</th>
+                    <th>PRESS (Bar)</th>
+                    <th>VOLT (V)</th>
+                    <th>ERROR</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody id="logTableBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        // จำลองการสร้างข้อมูล 20 Rows
+        const tableBody = document.getElementById('logTableBody');
+        let currentTime = 18; // เริ่มที่ 18:00
+
+        for (let i = 0; i < 20; i++) {
+            let hour = currentTime - i;
+            let displayTime = (hour >= 0 ? hour : 24 + hour) + ":00";
+            let vib = (Math.random() * (5.8 - 3.2) + 3.2).toFixed(2);
+            let temp = (Math.random() * (45 - 35) + 35).toFixed(1);
+
+            let statusClass = vib > 5.0 ? 'status-critical' : (vib > 4.2 ? 'status-warn' : 'status-normal');
+            let statusText = vib > 5.0 ? 'CRITICAL' : (vib > 4.2 ? 'WARNING' : 'STABLE');
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td style="color:rgba(255,255,255,0.5)">21 Mar - ${displayTime}</td>
+                    <td class="${statusClass}">${vib}</td>
+                    <td>${temp}</td>
+                    <td>6.${Math.floor(Math.random()*9)}</td>
+                    <td>38${Math.floor(Math.random()*5)}</td>
+                    <td style="color:${vib > 5.5 ? '#ff4444' : '#666'}">${vib > 5.5 ? 'E-102' : '-'}</td>
+                    <td class="${statusClass}">${statusText}</td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Risk AI | M1 Vision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-yellow: #ffcc00;
+            --neon-blue: #00f2fe;
+            --neon-red: #ff4444;
+            --bg-dark: #001637;
+            --panel-bg: rgba(13, 25, 48, 0.95);
+        }
+
+        body { background-color: var(--bg-dark); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 20px; }
+
+        .header-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; border-bottom: 1px solid rgba(255, 204, 0, 0.3); padding-bottom: 15px;
+        }
+
+        .machine-title { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--neon-yellow); }
+        /* Layout Grid */
+        .vision-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+        /* Camera Feed Styling */
+        .camera-panel {
+            background: #000; border-radius: 12px; position: relative;
+            overflow: hidden; border: 2px solid #1a2a4a; aspect-ratio: 16/9;
+        }
+
+        .cam-label {
+            position: absolute; top: 15px; left: 15px; background: rgba(255,0,0,0.7);
+            padding: 4px 10px; font-family: 'Orbitron'; font-size: 10px; border-radius: 3px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
+
+        /* Simulated Bounding Box */
+        .detect-box {
+            position: absolute; border: 2px solid var(--neon-yellow);
+            top: 30%; left: 40%; width: 150px; height: 250px;
+        }
+        .detect-label {
+            position: absolute; top: -20px; left: -2px; background: var(--neon-yellow);
+            color: #000; font-size: 9px; font-weight: bold; padding: 2px 5px;
+        }
+
+        /* Metrics Display */
+        .metrics-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .m-card { background: var(--panel-bg); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .m-label { font-size: 9px; color: #889; font-family: 'Orbitron'; margin-bottom: 5px; display: block; }
+        .m-value { font-size: 20px; font-family: 'Orbitron'; color: var(--neon-yellow); }
+
+        /* Table Area */
+        .history-panel { background: var(--panel-bg); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        th { text-align: center; padding: 10px; color: var(--neon-yellow); font-family: 'Orbitron'; border-bottom: 1px solid #333; }
+        td { padding: 10px; border-bottom: 1px solid #222; text-align: center; }
+
+        .back-btn { text-decoration: none; color: var(--neon-yellow); border: 1px solid var(--neon-yellow); padding: 6px 12px; border-radius: 4px; font-size: 10px; font-family: 'Orbitron'; }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : HUMAN VISION AI</span>
+            <div style="font-size: 10px; color: #568;">Live CCTV Behavior Tracking System</div>
+        </div>
+        <a href="{{ url_for('m1_insight_page') }}" class="back-btn">← RETURN</a>
+    </div>
+    <div class="vision-layout">
+        <!-- ค้นหาบรรทัด .camera-panel ในโค้ดเดิมของคุณแล้วแทนที่ด้วยอันนี้ -->
+        <div class="camera-panel">
+            <div class="cam-label">● LIVE FEED: CAM_04_ZONE_M1</div>
+            <!-- นำรูปภาพที่ผ่านการดีเทคแล้วมาใส่ตรงนี้ -->
+            <img id="cctv-frame" src="./static/images/phone11.png" style="width:100%; height:100%; object-fit: cover;" alt="AI Analysis Feed">
+        </div>
+        <div class="metrics-panel">
+            <div class="m-card"><span class="m-label">Walking Viol.</span><div class="m-value" id="val_walk">0.42</div></div>
+            <div class="m-card"><span class="m-label">Unsafe Move.</span><div class="m-value" id="val_move">1.15</div></div>
+            <div class="m-card"><span class="m-label">Tool Improper</span><div class="m-value" id="val_tool">0.88</div></div>
+            <div class="m-card"><span class="m-label">Phone Freq.</span><div class="m-value" id="val_phone">2.10</div></div>
+            <div class="m-card" style="grid-column: span 2; background: rgba(255,204,0,0.1);">
+                <span class="m-label">AI PREDICTED RISK SCORE</span>
+                <div class="m-value" id="live_risk" style="font-size:32px;">42.5%</div>
+            </div>
+        </div>
+    </div>
+    <div class="history-panel">
+        <h3 style="color:var(--neon-yellow); font-family:'Orbitron'; font-size:12px; margin-top:0;">BEHAVIOR LOG (DETECTION HISTORY)</h3>
+        <div style="max-height: 300px; overflow-y: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>TIME</th>
+                        <th>EMPLOYEE</th>
+                        <th>WALK VIOL.</th>
+                        <th>UNSAFE MOVE</th>
+                        <th>IMPROPER TOOL</th>
+                        <th>PHONE FREQ</th>
+                        <th>RISK STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="humTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const humTable = document.getElementById('humTable');
+
+        function generateLog() {
+            let rows = '';
+            for(let i=0; i<20; i++) {
+                let h = (19-i < 0 ? 24+(19-i) : 19-i);
+                let time = (h < 10 ? '0'+h : h) + ":15";
+
+                let w = (Math.random() * 2).toFixed(2);
+                let m = (Math.random() * 2).toFixed(2);
+                let t = (Math.random() * 2).toFixed(2);
+                let p = (Math.random() * 3).toFixed(2);
+
+                let score = (parseFloat(w) + parseFloat(m) + parseFloat(t) + parseFloat(p)) * 10;
+                let color = score > 50 ? 'var(--neon-red)' : (score > 25 ? 'var(--neon-yellow)' : 'var(--neon-green)');
+
+                rows += `<tr>
+                    <td style="color:#568;">${time}</td>
+                    <td>ID-${1040 + i}</td>
+                    <td>${w}</td>
+                    <td>${m}</td>
+                    <td>${t}</td>
+                    <td>${p}</td>
+                    <td style="color:${color}; font-weight:bold;">${score.toFixed(1)}%</td>
+                </tr>`;
+
+                if(i === 0) {
+                    document.getElementById('val_walk').innerText = w;
+                    document.getElementById('val_move').innerText = m;
+                    document.getElementById('val_tool').innerText = t;
+                    document.getElementById('val_phone').innerText = p;
+                    document.getElementById('live_risk').innerText = score.toFixed(1) + "%";
+                    document.getElementById('live_risk').style.color = color;
+                }
+            }
+            humTable.innerHTML = rows;
+        }
+
+        generateLog();
+    </script>
+</body>
+</html>
+
+<script>
+// ค้นหาฟังก์ชัน generateLog() ใน script เดิม แล้วเพิ่มเงื่อนไขนี้เข้าไปครับ
+function generateLog() {
+    let rows = '';
+    for(let i=0; i<20; i++) {
+        // ... (โค้ดสุ่มค่าเดิมของคุณ) ...
+        let p = (Math.random() * 3).toFixed(2); // Phone Freq
+
+        let score = (parseFloat(w) + parseFloat(m) + parseFloat(t) + parseFloat(p)) * 10;
+        let color = score > 50 ? 'var(--neon-red)' : (score > 25 ? 'var(--neon-yellow)' : 'var(--neon-green)');
+
+        // สุ่มเลื่อนตำแหน่งกรอบ Bounding Box ให้เหมือน AI กำลัง Tracking คนจริงๆ
+        if(i === 0) {
+            const aiBox = document.getElementById('ai-box');
+            const statusText = document.getElementById('status-text');
+
+            // อัปเดตตัวเลขใน Metrics Card
+            document.getElementById('val_phone').innerText = p;
+            document.getElementById('live_risk').innerText = score.toFixed(1) + "%";
+            document.getElementById('live_risk').style.color = color;
+
+            // ถ้าค่าการใช้มือถือ (p) มากกว่า 1.5 ให้เปลี่ยนสถานะแจ้งเตือน
+            if (parseFloat(p) > 1.5) {
+                aiBox.style.borderColor = 'var(--neon-red)';
+                statusText.innerText = "WARNING: PHONE USAGE";
+                statusText.style.color = 'var(--neon-red)';
+            } else {
+                aiBox.style.borderColor = 'var(--neon-yellow)';
+                statusText.innerText = "STATUS: NORMAL";
+                statusText.style.color = 'var(--neon-yellow)';
+            }
+        }
+        // ... (ส่วนการสร้าง rows ตารางเดิม) ...
+    }
+    humTable.innerHTML = rows;
+}
+</script>

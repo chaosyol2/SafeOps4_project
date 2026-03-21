@@ -1,0 +1,1152 @@
+/* การตั้งค่าพื้นฐาน */
+body {
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at top right, #001637, #0f172a);
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* สไตล์ปุ่มเมนู (ตอนยังไม่ถูกเลือก) */
+.tab-link {
+    font-family: 'Orbitron', sans-serif;
+    color: rgba(255, 255, 255, 0.5); /* สีขาวจางๆ */
+    padding: 10px 24px;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px; /* มุมเหลี่ยมเล็กน้อยดูเป็นอุตสาหกรรม */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.bg-tech-gradient {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+    /* สีเขียว Emerald จางๆ ไล่ไปหาโปร่งใส */
+    border-left: 2px solid #10b981; /* เพิ่มเส้นขีดสีเขียวด้านซ้าย */
+}
+.bg-white-gradient {
+    /* ไล่เฉดจากขาว (ความโปร่งใส 15%) ไปหาโปร่งใส 0% */
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+
+    /* เพิ่มเส้นขอบซ้ายสีขาวสว่าง เพื่อให้ดูมีมิติ (Industrial Look) */
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+/* Hover Effect */
+.tab-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* สไตล์ตอนเลือกเมนู (Active Tab) */
+.active-tab {
+    color: #ffffff !important;
+    background: rgba(16, 185, 129, 0.15) !important;
+    border: 1px solid #10b981 !important; /* กรอบเขียว Emerald */
+    font-weight: bold;
+    /* แสงเรืองแสงภายนอกและภายใน */
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3),
+                inset 0 0 8px rgba(16, 185, 129, 0.2);
+    /* ตัวหนังสือขาวสว่างขึ้น */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ตกแต่ง Card เพิ่มเติมให้ดูเข้าเซ็ต */
+.kpi-card {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+/* เพิ่มใน style.css */
+.tab-content {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    display: flex;             /* ทำให้ลูกเรียงแถวหน้ากระดาน */
+    align-items: center;       /* จัดกึ่งกลางแนวตั้งให้ลูกทุกตัวเป๊ะ */
+    background-color: #001637; /* สีพื้นหลังเดิม */
+    padding: 5px 15px;         /* ระยะห่างขอบใน */
+    gap: 20px;                 /* ระยะห่างระหว่างลูก */
+
+    /* --- ส่วนที่เพิ่มใหม่ --- */
+
+    /* 1. เพิ่มขอบขาวบางๆ เพื่อกำหนดขอบเขตแสง */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* 2. เพิ่มความมนเล็กน้อย (ตัวเลือก) เพื่อให้ Glow ดูนุ่มนวลขึ้น */
+    border-radius: 10px;
+
+    /* 3. หัวใจสำคัญ: box-shadow แบบซ้อน 2 ชั้น */
+    box-shadow:
+        /* ชั้นที่ 1: แสงฟุ้งจางๆ วงกว้าง (Outer Blur) */
+        0 0 15px rgba(255, 255, 255, 0.1),
+
+        /* ชั้นที่ 2: แสงสว่างจ้าใกล้ขอบ (Outer Neon Glow) */
+        0 0 5px rgba(255, 255, 255, 0.05);
+}
+.container1 {
+    display: flex;             /* ทำให้ลูกเรียงแถวหน้ากระดาน */
+    align-items: center;       /* จัดกึ่งกลางแนวตั้งให้ลูกทุกตัวเป๊ะ */
+
+    padding: 5px 15px;         /* ระยะห่างขอบใน */
+    gap: 20px;                 /* ระยะห่างระหว่างโลโก้ เวลา และกระดิ่ง */
+
+}
+
+.container div {
+    display: flex;
+    align-items: center;       /* ให้เนื้อหาข้างใน div ย่อยตรงกลางด้วย */
+    background: transparent;   /* เอาพื้นหลังของ div ลูกออกเพื่อให้เห็นพื้นหลัง container */
+    padding: 0;                /* เคลียร์ padding เดิมออก */
+}
+
+.push-right {
+    margin-left: auto; /* ดันตัวเองและตัวที่ตามหลังมาไปชิดขวาทั้งหมด */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* ระยะห่างระหว่าง Bell กับ Denso */
+}
+
+#live-clock {
+    color: #ffffff !important; /* บังคับเป็นสีขาว */
+    font-family: 'Orbitron', sans-serif;
+}
+#text_gen{
+    color: #ffffff !important; /* บังคับเป็นสีขาว */
+    font-family: 'Orbitron', sans-serif;
+}
+
+
+
+/* Container หลักของ Widget */
+.machine-widget {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    gap: 12px;
+    height: 38px;
+    transition: all 0.3s ease;
+}
+
+/* Container หลัก: ให้สูงพอดีและจัดกึ่งกลาง */
+.machine-widget {
+    display: flex;
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    justify-content: space-between; /* แยกซ้าย-ขวา */
+    padding: 20px 25px;
+
+}
+
+/* กลุ่มตัวเลข: จัดวางแบบบน-ล่างให้ตรงกลาง */
+.machine-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* จัดตัวอักษรให้อยู่กึ่งกลางของคอลัมน์ */
+    gap: 5px;
+}
+
+.machine-label {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff; /* เปลี่ยนเป็นสีขาว */
+    font-size: 14px;  /* ใหญ่ขึ้น */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.machine-count-box {
+    background-color: #002a5c;
+    padding: 5px 20px;
+    border: 2px solid #10b981;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+#total-machines-count {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-size: 24px; /* ตัวเลขใหญ่ชัดเจน */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+#total-alert-count {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-size: 24px; /* ตัวเลขใหญ่ชัดเจน */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+#avg-risk-count {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-size: 24px; /* ตัวเลขใหญ่ชัดเจน */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+/* กลุ่มฝั่งขวา */
+.push-right {
+    display: flex;
+    align-items: center; /* จัดไอคอนและเวลาให้ตรงกันแนวตั้ง */
+    gap: 20px;
+}
+
+#live-clock {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff !important; /* บังคับสีขาว */
+    font-size: 16px; /* ใหญ่ขึ้นเพื่อให้มองเห็นชัด */
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* จัดการขนาดรูปไอคอน */
+.status-icon { height: 35px; object-contain; }
+.nav-icon { height: 25px; opacity: 0.8; transition: 0.3s; }
+.nav-icon:hover { opacity: 1; transform: scale(1.1); }
+
+
+
+
+
+
+:root {
+    /* เปลี่ยนจากน้ำเงินบริสุทธิ์ เป็นสีเขียวน้ำเงิน (Cyan/Teal) */
+    --box-color: #008b8b;       /* Dark Cyan */
+    --box-glow: #00ced1;        /* Dark Turquoise */
+    --box-shadow-1: #005f5f;
+    --box-shadow-2: #003d3d;
+    --box-size: 100px;           /* ขยายขนาดกล่องจาก 60px เป็น 80px */
+}
+
+
+
+
+.robot-canvas {
+    position: relative;
+    /* 1. ปรับขนาดให้คลุมกล่องทั้งหมด (ลองปรับตัวเลขให้พอดีกับงานจริง) */
+    width: 1200px;
+    height: 520px;
+    /* 2. เพิ่มเส้นขอบ */
+    border: 2px solid rgba(0, 242, 254, 0.5); /* สีเขียวน้ำเงินโปร่งแสง */
+    border-radius: 20px;                      /* มุมมน */
+    /* 3. เพิ่มระยะห่างระหว่างเส้นขอบกับกล่องด้านใน */
+    padding: 40px;
+    /* 4. เพิ่มเอฟเฟกต์เรืองแสง (Glow) */
+    box-shadow:
+        0 0 20px rgba(0, 242, 254, 0.2),
+        inset 0 0 15px rgba(0, 242, 254, 0.1);
+    /* จัดกึ่งกลาง (ถ้ายังไม่ได้ทำ) */
+    margin: auto;
+    background-color: rgba(0, 26, 61, 0.5); /* พื้นหลังจางๆ ให้ดูเป็นกรอบเดียวกัน */
+}
+
+/* ปรับปรุงสไตล์กล่อง */
+.box {
+    display: flex;             /* ใช้ Flexbox จัดกึ่งกลางข้อความ */
+    align-items: center;       /* กึ่งกลางแนวตั้ง */
+    justify-content: center;    /* กึ่งกลางแนวนอน */
+
+    background-color: var(--box-color);
+    border: 1.5px solid rgba(255, 255, 255, 0.8); /* เส้นขอบขาวให้ชัดขึ้น */
+    width: var(--box-size);
+    height: var(--box-size);
+    box-sizing: border-box;
+    /* เอฟเฟกต์เงาซ้อนโทนเขียวน้ำเงิน */
+    box-shadow:
+        3px -3px 0px 0px var(--box-shadow-1),
+        6px -6px 0px 0px var(--box-shadow-2),
+        0 0 15px rgba(0, 206, 209, 0.3); /* เพิ่มแสงฟุ้งเล็กน้อย */
+    /* สไตล์ตัวหนังสือบนกล่อง */
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    user-select: none;         /* ป้องกันการคลุมดำเวลาคลิกรัวๆ */
+}
+
+
+/* ปรับขนาดฟอนต์สำหรับกล่องใหญ่ */
+.big-box {
+    font-size: 24px;
+}
+.big-box {
+    width: calc(var(--box-size) * 2); /* ใหญ่เป็น 2 เท่าของกล่องปกติ */
+    height: calc(var(--box-size) * 2);
+}
+
+/* การจัดกลุ่ม (ปรับตำแหน่งให้สมดุลกับขนาดที่ใหญ่ขึ้น) */
+.group {
+    display: flex;
+    position: absolute;
+    gap: 4px; /* เพิ่มช่องว่างระหว่างกล่องเล็กน้อย */
+}
+
+.group-top-left { top: 20px; left: 10px; }
+.group-mid-left { top: 280px; left: 100px; }
+.group-bottom-left { top: 460px; left: 80px; }
+
+/* กลุ่มตัว L */
+.group-l-shape {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+}
+
+.l-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.l-horizontal {
+    display: flex;
+    /* ขยับไปทางขวาให้พ้นกล่องแนวตั้ง (ความกว้างกล่อง 80px + gap 4px) */
+    margin-left: calc(var(--box-size) + 4px);
+
+    /* ดันกลับขึ้นไปข้างบน 1 ช่วงตัวกล่อง เพื่อให้เชื่อมกับฐานของแนวตั้งพอดี */
+    /* ถ้ากล่องสูง 80px ตรงนี้ต้องเป็น -80px */
+    margin-top: calc(var(--box-size) * -1);
+
+    gap: 4px;
+}
+/* แท่งเดี่ยวขวาบน */
+.group-vertical-bar {
+    position: absolute;
+    top: 10px;
+    right: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.box.active-yellow {
+    background-color: #ffcc00 !important;
+    border-color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
+    --box-shadow-1: #b8860b;
+    --box-shadow-2: #8b4513;
+}
+
+/* คลาสสำหรับเปลี่ยนเป็นสีแดง */
+.box.active-red {
+    background-color: #ff3333 !important;
+    border-color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+    --box-shadow-1: #990000;
+    --box-shadow-2: #660000;
+}
+
+
+#noti-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#noti-icon:hover {
+    transform: scale(1.2); /* ขยายใหญ่ขึ้นนิดหน่อยตอนชี้ */
+    opacity: 1 !important;
+}
+
+#noti-icon:active {
+    transform: scale(0.9); /* ยุบตัวลงนิดนึงตอนกด */
+}
+
+
+
+/* Layout หลัก */
+.info-panel {
+    display: flex;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+
+    justify-content: center;    /* กึ่งกลางแนวนอน */
+}
+
+.col-main { flex: 3.0; background: rgba(0, 10, 30, 0.8); border-radius: 10px; padding: 15px; border: 1px solid #1a2a4a; }
+.col-side { flex: 1.0; background: rgba(0, 10, 30, 0.8); border-radius: 10px; padding: 15px; border: 1px solid #1a2a4a; align-items: flex-start; /* ชิดซ้ายแนวแกน X */}
+
+.panel-header {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffff;
+    font-size: 16px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 4px solid #00f2fe;
+}
+
+/* --- ส่วน Trends --- */
+.trends-container {
+    display: flex;
+    gap: 5px;
+    height: 200px;
+}
+
+.trend-card {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.trend-title { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+
+/* สีเส้นขอบเรืองแสงตามประเภทกราฟ */
+.red-glow { border-bottom: 2px solid #ff3333; box-shadow: 0 5px 15px rgba(255, 51, 51, 0.2); }
+.yellow-glow { border-bottom: 2px solid #ffcc00; box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2); }
+.cyan-glow { border-bottom: 2px solid #00f2fe; box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2); }
+
+/* --- ส่วน Active Alerts --- */
+.alert-list { display: flex; flex-direction: column; gap: 8px; }
+
+.alert-row {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 5px;
+    padding: 10px;
+    gap: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.m-id { font-family: 'Orbitron', sans-serif; color: #fff; width: 35px; }
+.m-val { color: #ffcc00; font-weight: bold; width: 45px; }
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: center;
+}
+
+.critical .status-badge { background: #ff3333; color: white; box-shadow: 0 0 10px #ff3333; }
+.warning .status-badge { background: #008000; color: white; } /* ตามรูปคือสีเขียว Check Zone */
+
+.m-time { color: #666; font-size: 11px; margin-left: auto; }
+
+
+
+.temp-glow {
+    border-bottom: 2px solid var(--red-glow);
+    box-shadow: 0 5px 20px rgba(255, 51, 51, 0.2);
+}
+
+.power-glow {
+    border-bottom: 2px solid var(--cyan-glow);
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.2);
+}
+
+.vib-glow {
+    border-bottom: 2px solid var(--yellow-glow);
+    box-shadow: 0 5px 20px rgba(255, 204, 0, 0.2);
+}
+
+
+.history-link-container {
+    display: inline-block;
+    padding: 10px;
+}
+
+.history-link {
+    color: rgba(255, 255, 255, 0.7); /* สีขาวจางๆ ให้ดูแพง */
+    text-decoration: none;           /* เอาขีดเส้นใต้ออก */
+    font-family: 'Orbitron', sans-serif; /* ใช้ Font เดียวกับ Dashboard */
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.history-link:hover {
+    color: #00f2fe;                 /* เปลี่ยนเป็นสีฟ้าเรืองแสงเมื่อชี้ */
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.6); /* เพิ่มเอฟเฟกต์เรืองแสง */
+    cursor: pointer;
+}
+
+
+
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #001637;
+    padding: 15px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Real-time Row */
+.realtime-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.data-card {
+    background: rgba(0, 42, 92, 0.4);
+    padding: 15px;
+    border-left: 3px solid #00f2fe;
+    border-radius: 4px;
+}
+
+.data-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+.data-value { font-family: 'Orbitron', sans-serif; font-size: 20px; color: #ffffff; margin-top: 5px; }
+
+/* Table Style */
+.history-table-container {
+    background: rgba(0, 10, 30, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    max-height: 600px; /* เพิ่ม Scrollbar ถ้าข้อมูลเยอะเกิน */
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #ffffff; /* ตัวอักษรในตารางเป็นสีขาว */
+}
+
+thead {
+    background: rgba(16, 185, 129, 0.2);
+    font-family: 'Orbitron', sans-serif;
+    color: #00ff88; /* สีเขียวนีออนสว่าง */
+    position: sticky;
+    top: 0; /* ให้หัวตารางค้างไว้เวลา Scroll */
+}
+
+th, td {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-align: left;
+}
+
+tbody tr:hover {
+    background: rgba(0, 242, 254, 0.05);
+}
+
+/* Status Colors (เน้นความสว่าง) */
+.status-normal { color: #00ff88; }
+.status-warn { color: #ffcc00; }
+.status-critical { color: #ff4444; font-weight: bold; text-shadow: 0 0 5px rgba(255,68,68,0.5); }
+
+.history-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+.history-link:hover { opacity: 1; color: #00f2fe; }
+
+
+
+/* Behavior Grid: แสดงตัวแปรจากสมการ */
+.behavior-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.behavior-card {
+    background: rgba(13, 25, 48, 0.8);
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    position: relative;
+}
+
+.behavior-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: #889; letter-spacing: 1px; }
+.behavior-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #ffffff; margin-top: 8px; }
+
+/* Highlight สำหรับค่าที่เป็นบวกในสมการ z2 (ความเสี่ยงสูง) */
+.danger-border { border-left: 4px solid #ff4444; }
+.warning-border { border-left: 4px solid #ffcc00; }
+.safe-border { border-left: 4px solid #00ff88; }
+
+/* Table Section */
+.log-container {
+    background: rgba(0, 10, 30, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+thead { background: rgba(255, 255, 255, 0.03); color: #00f2fe; font-family: 'Orbitron', sans-serif; }
+th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+.class-tag {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: 'Orbitron';
+}
+.tag-0 { background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid #00ff88; }
+.tag-1 { background: rgba(255, 204, 0, 0.15); color: #ffcc00; border: 1px solid #ffcc00; }
+.tag-2 { background: rgba(255, 68, 68, 0.15); color: #ff4444; border: 1px solid #ff4444; }
+/* Environment Grid */
+.env-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.env-card {
+    background: rgba(0, 20, 50, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.env-card:hover {
+    border-color: #00f2fe;
+    background: rgba(0, 242, 254, 0.05);
+}
+
+.env-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: #889; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+.env-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00f2fe; }
+.env-weight { font-size: 10px; color: #556; display: block; margin-top: 5px; }
+
+/* Equation Display */
+.formula-box {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 20px;
+    border-left: 3px solid #00f2fe;
+}
+
+/* Table Area */
+.log-table-container {
+    background: rgba(0, 10, 30, 0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+thead { background: rgba(0, 242, 254, 0.1); color: #00f2fe; font-family: 'Orbitron', sans-serif; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.03); }
+
+.risk-high { color: #ff4444; font-weight: bold; }
+.risk-low { color: #00ff88; }
+
+.back-btn {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    border: 1px solid #00f2fe;
+    padding: 5px 15px;
+    border-radius: 4px;
+}
+
+
+
+
+
+/* ของ alert*/
+.alert-detail-card {
+    width: 100%;
+    background: rgba(0, 10, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #ff3333;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.alert-detail-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.alert-icon {
+    font-size: 34px;
+}
+
+.alert-main-text h2 {
+    margin: 0;
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+}
+
+.alert-main-text p {
+    margin-top: 5px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+}
+
+.alert-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.meta-box {
+    background: rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.meta-label {
+    font-size: 10px;
+    color: #888;
+}
+
+.meta-value {
+    color: #fff;
+    font-weight: bold;
+}
+
+.risk-red {
+    color: #ff3333;
+}
+
+.detail-section {
+    margin-top: 15px;
+}
+
+.detail-label {
+    color: #00f2fe;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.detail-box {
+    background: rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+}
+
+.recommendation-box {
+    border-left: 4px solid #ff3333;
+}
+.line-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.line-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #00ff88;
+    font-size: 12px;
+}
+
+.line-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.line-time {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+}
+
+.line-status {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.line-status.success {
+    border: 1px solid #00ff88;
+    color: #00ff88;
+}
+
+
+#live-clock {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff !important;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: inline-block;
+    width: 130px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+
+
+/*history*/
+.history-table {
+    width: 100%;
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.history-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+}
+
+.history-table th {
+    padding: 18px 20px;
+    background: rgba(0, 242, 254, 0.1);
+    color: #00f2fe;
+    text-align: left;
+}
+
+.history-table td {
+    padding: 16px 20px;
+}
+
+.history-table tr {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.history-table tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+/* STATUS */
+.status-warning { color: #ff3333; }
+.status-pending { color: #ffcc00; }
+.status-normal { color: #00ff88; }
+
+/* RISK */
+.risk-high { color: #ff3333; }
+.risk-medium { color: #ffcc00; }
+.risk-low { color: #00ff88; }
+
+.history-table th {
+    color: #00f2fe; /* header ฟ้า */
+}
+
+.history-table td {
+    color: rgba(255,255,255,0.85);
+}
+
+
+/* history and time */
+.timestamp {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.timestamp .date {
+    color: rgba(255,255,255,0.9);
+    font-size: 13px;
+}
+
+.timestamp .time {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+}
+
+
+
+/*avg risk*/
+
+/* ===== AVG RISK PAGE ===== */
+
+.risk-header-row {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.risk-subtext {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+}
+
+.avg-risk-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background: rgba(0, 10, 30, 0.82);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 18px;
+}
+
+.avg-risk-left {
+    flex: 1;
+}
+
+.avg-risk-date {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    margin-bottom: 12px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.avg-risk-title {
+    color: #ffffff;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.avg-risk-score-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 14px;
+}
+
+.avg-risk-score {
+    font-size: 42px;
+    font-weight: bold;
+    color: #00ff88;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1;
+}
+
+.avg-risk-badge {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+.avg-risk-badge.low {
+    color: #00ff88;
+    background: rgba(0,255,136,0.12);
+    border: 1px solid rgba(0,255,136,0.5);
+}
+
+.avg-risk-note {
+    color: rgba(255,255,255,0.75);
+    max-width: 620px;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.avg-risk-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 230px;
+}
+
+.risk-ring-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.risk-ring {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: conic-gradient(#00ff88 0deg 130deg, rgba(255,255,255,0.08) 130deg 360deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 18px rgba(0,255,136,0.12);
+}
+
+.risk-ring-inner {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: #06142d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.risk-ring-label {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* risk cards */
+.risk-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.risk-card {
+    background: rgba(0, 10, 30, 0.82);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 18px;
+    min-height: 180px;
+}
+
+.risk-card.machine {
+    border-top: 3px solid #00f2fe;
+}
+
+.risk-card.human {
+    border-top: 3px solid #ffcc00;
+}
+
+.risk-card.env {
+    border-top: 3px solid #ff3333;
+}
+
+.risk-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.risk-card-title {
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.risk-card-value {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.risk-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.risk-fill {
+    height: 100%;
+    border-radius: 999px;
+}
+
+.machine-fill {
+    background: linear-gradient(90deg, #00f2fe, #00a8ff);
+}
+
+.human-fill {
+    background: linear-gradient(90deg, #ffcc00, #ff9f1a);
+}
+
+.env-fill {
+    background: linear-gradient(90deg, #ff3333, #ff6b6b);
+}
+
+.risk-card-desc {
+    color: rgba(255,255,255,0.78);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* bottom panel */
+.risk-bottom-panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.risk-bottom-box {
+    background: rgba(0, 10, 30, 0.82);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.bottom-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.bottom-value {
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.env-text {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+    .avg-risk-summary {
+        flex-direction: column;
+    }
+
+    .risk-card-grid,
+    .risk-bottom-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .avg-risk-right {
+        justify-content: flex-start;
+    }
+}
+
