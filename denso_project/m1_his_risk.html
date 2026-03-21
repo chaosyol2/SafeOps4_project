@@ -9,123 +9,67 @@
         :root {
             --neon-purple: #a29bfe;
             --neon-blue: #00f2fe;
+            --neon-red: #ff4444;
             --neon-green: #00ff88;
             --bg-dark: #001637;
             --panel-bg: rgba(13, 25, 48, 0.95);
-            --text-main: #e0e0e0;
         }
 
         body {
             background-color: var(--bg-dark);
-            color: var(--text-main);
+            color: #ffffff;
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 25px;
-            line-height: 1.4;
+            margin: 0; padding: 20px;
         }
 
         .header-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(162, 155, 254, 0.2);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; border-bottom: 1px solid rgba(162, 155, 254, 0.3);
             padding-bottom: 15px;
         }
 
-        .machine-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            color: var(--neon-purple);
-            letter-spacing: 1px;
-        }
+        .machine-title { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--neon-purple); }
 
-        /* --- Historical Metrics Grid --- */
-        .history-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
+        /* Metrics Row */
+        .his-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 12px; margin-bottom: 20px;
         }
 
         .stat-panel {
-            background: var(--panel-bg);
-            border-radius: 10px;
-            padding: 15px;
-            border: 1px solid rgba(162, 155, 254, 0.2);
-            text-align: center;
+            background: var(--panel-bg); border-radius: 8px; padding: 12px;
+            border: 1px solid rgba(162, 155, 254, 0.2); text-align: center;
         }
 
-        .label { font-family: 'Orbitron', sans-serif; font-size: 9px; color: #888; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: 20px; color: #fff; }
+        .label { font-family: 'Orbitron', sans-serif; font-size: 8px; color: #889; display: block; margin-bottom: 5px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 15px; color: #fff; }
 
-        /* --- Main Analysis Layout --- */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 2.5fr;
-            gap: 25px;
-        }
-
-        .panel {
-            background: var(--panel-bg);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
+        /* Layout */
+        .main-layout { display: grid; grid-template-columns: 1fr 3fr; gap: 20px; }
+        .panel { background: var(--panel-bg); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
 
         .total-display {
-            text-align: center;
-            padding: 30px 10px;
-            border-radius: 12px;
-            margin-top: 15px;
-            background: radial-gradient(circle at center, rgba(162, 155, 254, 0.15) 0%, transparent 80%);
+            text-align: center; padding: 25px; border-radius: 10px;
+            background: radial-gradient(circle, rgba(162, 155, 254, 0.1) 0%, transparent 80%);
         }
 
-        .formula-box {
-            font-family: monospace;
-            font-size: 11px;
-            color: #7d7d9d;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #222;
-        }
+        #liveTotal { font-family: 'Orbitron'; font-size: 44px; line-height: 1; margin: 10px 0; color: var(--neon-purple); }
 
-        /* Table Styling */
-        .history-container {
-            max-height: 550px;
-            overflow-y: auto;
-        }
+        /* Table Style */
+        .history-container { max-height: 500px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 10px; white-space: nowrap; }
+        thead { position: sticky; top: 0; background: #0a1a35; z-index: 10; }
+        th { text-align: center; padding: 10px 5px; color: var(--neon-purple); font-family: 'Orbitron'; border-bottom: 2px solid #222; font-size: 8px; }
+        td { padding: 8px 5px; border-bottom: 1px solid #222; text-align: center; }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            color: #fff;
-        }
-
-        thead {
-            position: sticky;
-            top: 0;
-            background: #0d1930;
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-purple);
-            text-align: left;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
+        .cat-tag { font-size: 8px; padding: 2px 4px; border-radius: 3px; background: rgba(255,255,255,0.05); color: #aaa; }
         .back-btn {
-            background: rgba(162, 155, 254, 0.1);
-            border: 1px solid var(--neon-purple);
-            color: var(--neon-purple);
-            padding: 8px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 12px;
+            text-decoration: none; color: var(--neon-purple); border: 1px solid var(--neon-purple);
+            padding: 6px 12px; border-radius: 4px; font-size: 10px; font-family: 'Orbitron';
         }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-purple); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -133,80 +77,117 @@
     <div class="header-nav">
         <div>
             <span class="machine-title">M1 : HISTORICAL RISK LOGS</span>
-            <div style="font-size: 12px; color: #556688;">Statistical Failure Model: Regression v3.1</div>
+            <div style="font-size: 10px; color: #568;">Regression Model: Failure & Cause Analysis</div>
         </div>
         <a href="m1_insight.html" class="back-btn">← RETURN</a>
     </div>
 
-    <div class="history-grid">
-        <div class="stat-panel"><span class="label">Prev. Downtime</span><div class="value">12.5 <small>Hrs</small></div></div>
-        <div class="stat-panel"><span class="label">Repair Freq.</span><div class="value">3 <small>Times</small></div></div>
-        <div class="stat-panel"><span class="label">Failure Pattern</span><div class="value">0.42</div></div>
-        <div class="stat-panel"><span class="label">MTBF Mean</span><div class="value">158 <small>Hrs</small></div></div>
+    <div class="his-grid">
+        <div class="stat-panel"><span class="label">Downtime (H)</span><div class="value" id="cur_down">--</div></div>
+        <div class="stat-panel"><span class="label">Repair Score</span><div class="value" id="cur_rep">--</div></div>
+        <div class="stat-panel"><span class="label">Failure Type</span><div class="value" id="cur_type" style="font-size:12px; color:var(--neon-purple)">--</div></div>
+        <div class="stat-panel"><span class="label">Main Cause</span><div class="value" id="cur_cause" style="font-size:12px; color:var(--neon-blue)">--</div></div>
     </div>
 
     <div class="main-layout">
         <div class="panel">
-            <h3 style="color:var(--neon-purple); font-family:'Orbitron'; font-size:14px; margin-top:0;">DATA SUMMARY</h3>
+            <h3 style="color:var(--neon-purple); font-family:'Orbitron'; font-size:12px; margin-top:0;">CALCULATION</h3>
             <div class="total-display">
-                <div class="label">HIST. RISK INDEX</div>
-                <div style="font-family:'Orbitron'; font-size:48px; color:var(--neon-purple); margin:10px 0;">25.5</div>
-                <div style="color: var(--neon-green); font-size: 11px; font-weight: bold;">LOW SYSTEM AGING</div>
+                <div class="label">SCALED RISK</div>
+                <div id="liveTotal">0.0</div>
+                <div id="riskStatus" style="font-weight:bold; font-size:11px;">--</div>
             </div>
-
-            <div class="formula-box">
-                <div style="margin-bottom:8px; color:#fff;">ACTIVE FORMULA:</div>
-                3.84(Prev_Down) + 2.15(Repair) + 4.62(Fail_Pattern) + 18.25
+            <div style="font-size: 8px; color: #4a5a75; margin-top: 15px; font-family: monospace; line-height: 1.4; border-top: 1px solid #222; padding-top: 10px;">
+                <b>FORMULA:</b><br>
+                +3.873(Down) + 5.934(Repair)<br>
+                -0.113(Time) + [Type_Weight]<br>
+                + [Cause_Weight] + 24.033
             </div>
         </div>
 
         <div class="panel">
-            <h3 style="color:var(--neon-blue); font-family:'Orbitron'; font-size:14px; margin-top:0;">HISTORICAL TREND LOG (20 ROWS)</h3>
+            <h3 style="color:var(--neon-purple); font-family:'Orbitron'; font-size:12px; margin-top:0;">20-RECORD INCIDENT LOG</h3>
             <div class="history-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>DATE RECORD</th>
-                            <th>DOWNTIME</th>
+                            <th>DATE</th>
+                            <th>DOWN(H)</th>
                             <th>REPAIR</th>
-                            <th>PATTERN</th>
-                            <th>INCIDENTS</th>
-                            <th>CALC. RISK</th>
+                            <th>OCCUR.T</th>
+                            <th>TYPE</th>
+                            <th>CAUSE</th>
+                            <th>RAW SCORE</th>
+                            <th>RISK %</th>
                         </tr>
                     </thead>
-                    <tbody id="hisLogBody">
-                        </tbody>
+                    <tbody id="hisTable"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <script>
-        const tableBody = document.getElementById('hisLogBody');
+        const hisTable = document.getElementById('hisTable');
 
-        for (let i = 0; i < 20; i++) {
-            let day = (21 - i);
-            let displayDate = (day > 0 ? day : 30 + day) + " Mar";
+        // ข้อมูลน้ำหนักสำหรับ Categorical Variables
+        const typeWeights = { 'Electrical': 0.990, 'Hydraulic': -1.235, 'Mechanical': 2.473, 'Software': -2.228 };
+        const causeWeights = { 'Deterioration': -0.494, 'Environment': -4.780, 'Operator': 5.274 };
 
-            let downtime = (Math.random() * 5).toFixed(1);
-            let repair = (Math.random() * 2).toFixed(0);
-            let pattern = (Math.random() * 1).toFixed(2);
+        function calculateHisRisk(down, rep, time, type, cause) {
+            let raw = 24.033
+                      + (3.873 * down)
+                      + (5.934 * rep)
+                      - (0.113 * time)
+                      + (typeWeights[type] || 0)
+                      + (causeWeights[cause] || 0);
 
-            // Formula calculation
-            let risk = (3.84 * downtime) + (2.15 * repair) + (4.62 * pattern) + 18.25;
-            let displayRisk = (risk / 5).toFixed(1); // Scaling for UI
-
-            tableBody.innerHTML += `
-                <tr>
-                    <td style="color:#667;">${displayDate} - 18:00</td>
-                    <td>${downtime} h</td>
-                    <td>${repair}</td>
-                    <td>${pattern}</td>
-                    <td>${Math.random() > 0.8 ? '1' : '0'}</td>
-                    <td style="font-weight:bold; color:var(--neon-purple)">${displayRisk}</td>
-                </tr>
-            `;
+            // Scaling 0-100: ค่าเฉลี่ยต่ำสุดประมาณ 10 สูงสุดประมาณ 150
+            let scaled = ((raw - 10) / (150 - 10)) * 100;
+            return {
+                raw: raw.toFixed(2),
+                final: Math.min(Math.max(scaled, 0), 100).toFixed(1)
+            };
         }
+
+        let rows = '';
+        const types = Object.keys(typeWeights);
+        const causes = Object.keys(causeWeights);
+
+        for(let i=0; i<20; i++) {
+            let date = (21-i > 0 ? 21-i : 30+21-i) + " Mar";
+            let down = (Math.random() * 8).toFixed(1);
+            let rep = (Math.random() * 5 + 1).toFixed(0);
+            let timeOccur = (Math.random() * 24).toFixed(0);
+            let type = types[Math.floor(Math.random() * types.length)];
+            let cause = causes[Math.floor(Math.random() * causes.length)];
+
+            let res = calculateHisRisk(parseFloat(down), parseFloat(rep), parseFloat(timeOccur), type, cause);
+            let color = res.final > 70 ? 'var(--neon-red)' : (res.final > 40 ? 'var(--neon-purple)' : 'var(--neon-green)');
+
+            rows += `<tr>
+                <td style="color:#568;">${date}</td>
+                <td>${down}</td>
+                <td>${rep}</td>
+                <td>${timeOccur}:00</td>
+                <td><span class="cat-tag">${type}</span></td>
+                <td><span class="cat-tag" style="color:var(--neon-blue)">${cause}</span></td>
+                <td style="color:#445;">${res.raw}</td>
+                <td style="color:${color}; font-weight:bold;">${res.final}%</td>
+            </tr>`;
+
+            if(i === 0) {
+                document.getElementById('liveTotal').innerText = res.final + "%";
+                document.getElementById('liveTotal').style.color = color;
+                document.getElementById('riskStatus').innerText = res.final > 70 ? 'HIGH RISK' : 'NORMAL';
+                document.getElementById('riskStatus').style.color = color;
+                document.getElementById('cur_down').innerText = down;
+                document.getElementById('cur_rep').innerText = rep;
+                document.getElementById('cur_type').innerText = type;
+                document.getElementById('cur_cause').innerText = cause;
+            }
+        }
+        hisTable.innerHTML = rows;
     </script>
 </body>
 </html>
