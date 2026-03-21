@@ -1,0 +1,4 @@
+operator_id,name,role,assigned_zone,contact
+1,Somchai Jaidee,Supervisor,Zone A,LINE:somchai01
+2,Wichai Saengthong,Technician,Zone B,LINE:wichai02
+3,Narong Pimjai,Operator,Zone C,LINE:narong03

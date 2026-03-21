@@ -1,0 +1,4 @@
+failure_id,machine_id,failure_type,cause,occurred_at,downtime,notes
+1,1,Mechanical,Deterioration,2025-01-10 14:00:00,3.5,Bearing wear caused overheating
+2,2,Hydraulic,Environment,2025-02-05 09:30:00,2.0,Hydraulic fluid contamination
+3,3,Electrical,OperatorError,2025-02-20 11:00:00,1.5,Wrong voltage applied by operator

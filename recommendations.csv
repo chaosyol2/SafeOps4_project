@@ -1,0 +1,4 @@
+rec_id,risk_id,recommendation,priority,created_at,status
+1,1,Shut down machine and inspect heating system,Immediate,2025-03-01 08:31:00,Pending
+2,2,Recalibrate pressure valve and reassign operator,Within2Hours,2025-03-01 08:36:00,Pending
+3,3,Schedule vibration check within next shift,Within1Day,2025-03-01 08:41:00,Done
