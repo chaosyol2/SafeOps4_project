@@ -1,0 +1,505 @@
+<header>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+</header>
+<body>
+<div class="container">
+    <!-- <div>
+        <a href="index.html">
+            <img src="./static/images/app_logo.jpg"
+                height="50"
+                class="object-contain"
+                alt="Logo">
+        </a>
+    </div> -->
+
+    <div>
+        <!-- เปลี่ยนจาก index.html เป็น url_for('index') -->
+        <a href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='images/app_logo.jpg') }}"
+                height="50"
+                class="object-contain"
+                alt="Logo">
+        </a>
+    </div>
+
+    <div class="push-right">
+         <div class="history-link-container">
+            <a href="{{ url_for('history_page') }}" class="history-link">History</a>
+        </div>
+         <!-- <div class="history-link-container">
+            <a href="team.html" class="history-link">
+                | &nbsp; Team &nbsp; |
+            </a>
+        </div> -->
+
+        <div class="history-link-container">
+            <a href="{{ url_for('team_page') }}" class="history-link">
+                | &nbsp; Team &nbsp; |
+            </a>
+        </div>
+
+
+         <img src="./static/images/live_logo_on.png" height="40"
+             class="object-contain opacity-70"
+             alt="time">
+       <span id="live-clock" class="text-white !important font-['Orbitron'] text-[9px] font-bold tracking-widest transform translate-y-[1px]">
+            00:00:00
+        </span>
+            <img id="notiIcon"
+                src="./static/images/Unnoti_bell.png"
+                height="30"
+                style="cursor: pointer;"
+                onclick="toggleNoti()"
+                alt="Notification">
+
+            <img src="./static/images/Denso_logo.png" height="30"
+                class="object-contain opacity-70"
+                alt="notification">
+    </div>
+
+</div>
+
+
+
+
+<div class="machine-widget">
+    <div class="machine-info"
+        onclick="location.href='{{ url_for('machines_page') }}';"
+        style="cursor: pointer;">
+        <span class="machine-label">Total Machines</span>
+        <div class="machine-count-box">
+            <span id="total-machines-count">23</span>
+        </div>
+    </div>
+
+    <div class="machine-info"
+        onclick="location.href='{{ url_for('alerts_page') }}';"
+        style="cursor: pointer;">
+        <span class="machine-label">Alert</span>
+        <div class="machine-count-box">
+            <span id="total-alert-count">00</span>
+        </div>
+    </div>
+
+    <div class="machine-info"
+        onclick="location.href='{{ url_for('risk_page') }}';"
+        style="cursor: pointer;">
+        <span class="machine-label">Avg.Risk</span>
+        <div class="machine-count-box">
+            <span id="avg-risk-count">30</span>
+        </div>
+    </div>
+
+        <!-- <div class="machine-info"
+            onclick="location.href='risk.html';"
+            style="cursor: pointer;">
+            <span class="machine-label">Avg.Risk</span>
+            <div class="machine-count-box">
+                <span id="avg-risk-count">{{ avg_risk }}</span>
+            </div>
+        </div> -->
+</div>
+
+
+
+
+<div class="robot-canvas">
+    <div class="group group-top-left">
+        <div class="box big-box" onclick="location.href='m1.html';"
+        style="cursor: pointer;">M1</div>
+        <div class="box">M2</div>
+        <div class="box">M3</div>
+    </div>
+
+    <div class="group group-mid-left">
+        <div class="box">M4</div>
+        <div class="box">M5</div>
+        <div class="box">M6</div>
+        <div class="box">M7</div>
+    </div>
+
+    <div class="group group-bottom-left">
+        <div class="box">M8</div>
+        <div class="box">M9</div>
+        <div class="box">M10</div>
+        <div class="box">M11</div>
+    </div>
+
+    <div class="group-l-shape">
+        <div class="l-vertical">
+            <div class="box">M12</div>
+            <div class="box">M13</div>
+            <div class="box">M14</div>
+            <div class="box">M15</div>
+        </div>
+        <div class="l-horizontal">
+            <div class="box">M16</div>
+            <div class="box">M17</div>
+            <div class="box">M18</div>
+            <div class="box">M19</div>
+        </div>
+    </div>
+
+    <div class="group-vertical-bar">
+        <div class="box">M20</div>
+        <div class="box">M21</div>
+        <div class="box">M22</div>
+        <div class="box">M23</div>
+    </div>
+</div>
+
+
+<!--
+<div class="info-panel">
+    <div class="col-side">
+        <div class="panel-header">Active Alert</div>
+            <div class="terminal-box">
+                <img src="source/stop2.png"  height="20" class="object-contain" alt="stop">
+                <span id="live-clock" class=" !important font-['Orbitron'] text-[9px] font-bold tracking-widest transform translate-y-[1px]">
+                M1
+            </span>
+            </div>
+        </div>
+
+    <div class="col-main">
+        <div class="panel-header">Real-time Trends</div>
+    </div>
+
+</div>
+</div> -->
+
+
+<div class="info-panel">
+    <div class="col-side">
+        <div class="panel-header alert-header">Active Alerts</div>
+        <div class="alert-list">
+            <div class="alert-row critical">
+                <div class="alert-status-icon">⚠️</div>
+                <span class="m-id">M3</span>
+                <span class="m-val">82%</span>
+                <div class="status-badge">STOP NOW</div>
+                <span class="m-time">2 min ago</span>
+            </div>
+            <div class="alert-row warning">
+                <div class="alert-status-icon">❗</div>
+                <span class="m-id">M14</span>
+                <span class="m-val">60%</span>
+                <div class="status-badge">Check Zone</div>
+                <span class="m-time">8 min ago</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-main">
+        <div class="panel-header">Real-time Trends</div>
+
+       <div class="trends-container">
+            <div class="trend-card temp-glow">
+                <div class="trend-title">Temperature (°C)</div>
+                <div class="graph-wrapper">
+                    <canvas id="tempChart"></canvas>
+                </div>
+            </div>
+          <div class="trend-card power-glow">
+                <div class="trend-title">Power Consumption (kW)</div>
+                <div class="graph-wrapper">
+                    <canvas id="powerChart"></canvas>
+                </div>
+            </div>
+            <div class="trend-card vib-glow">
+                <div class="trend-title">Vibration (mm/s)</div>
+                <div class="graph-wrapper">
+                    <canvas id="vibChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+
+
+
+<script>
+    function updateClock() {
+        const now = new Date();
+
+        // แปลงเวลาเป็นรูปแบบ HH:mm:ss
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const timeString = `${hours}:${minutes}:${seconds}`;
+
+        // ใส่เวลาลงใน Element ที่มี id="live-clock"
+        const clockElement = document.getElementById('live-clock');
+        if (clockElement) {
+            clockElement.textContent = timeString;
+        }
+    }
+
+    // เรียกฟังก์ชันทุกๆ 1,000 มิลลิวินาที (1 วินาที)
+    setInterval(updateClock, 1000);
+
+    // เรียกใช้งานทันที 1 ครั้งตอนโหลดหน้าจอ เพื่อไม่ให้ขึ้น 00:00:00 รอ
+    updateClock();
+</script>
+
+
+<script>
+
+    function updateTotalMachines(newCount) {
+        // หา Element ที่มี ID เป็น 'total-machines-count'
+        const countElement = document.getElementById('total-machines-count');
+
+        // ตรวจสอบว่ามี Element นี้อยู่จริงไหม
+        if (countElement) {
+            // อัปเดตเนื้อหาข้างในด้วยตัวเลขใหม่
+            // ใช้ .padStart เพื่อให้เป็นเลข 2 หลักเสมอ (เช่น 05, 10, 25)
+            countElement.textContent = String(newCount).padStart(2, '0');
+
+            // แถม: ใส่เอฟเฟกต์กะพริบเล็กน้อยเวลาเลขเปลี่ยน (เพื่อดึงดูดสายตา)
+            countElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                countElement.classList.remove('animate-pulse');
+            }, 1000); // กะพริบ 1 วินาทีแล้วหยุด
+        }
+    }
+
+    // --- วิธีเรียกใช้งาน (ตัวอย่าง) ---
+
+    // 1. เรียกใช้งานทันทีตอนโหลดหน้า (เช่น ตั้งค่าเริ่มต้นเป็น 30)
+    window.onload = function() {
+        updateTotalMachines(20);
+    };
+
+    // 2. ตัวอย่างการเปลี่ยนค่าแบบ Real-time (สมมติว่ามีข้อมูลใหม่มาทุก 5 วินาที)
+    // setInterval(() => {
+    //     // สุ่มเลขระหว่าง 20-40 มาโชว์
+    //     const randomNumber = Math.floor(Math.random() * (40 - 20 + 1)) + 20;
+    //     updateTotalMachines(randomNumber);
+    // }, 5000);
+
+</script>
+
+
+
+
+<script>
+function toggleNoti() {
+    const notiElement = document.getElementById('notiIcon');
+    if (notiElement.src.includes('Unnoti_bell.png')) {
+        notiElement.src = './static/images/Noti_bell.png';
+    } else {
+        notiElement.src = './static/images/Unnoti_bell.png';
+    }
+}
+</script>
+
+
+
+
+<script>
+    // 1. ฟังก์ชันสำหรับนับกล่องที่มีสี เหลือง หรือ แดง และอัปเดตตัวเลข
+    function updateAlertCounter() {
+        // เลือกกล่องทั้งหมดที่มีคลาสสีเหลือง หรือ สีแดง
+        const activeBoxes = document.querySelectorAll('.box.active-yellow, .box.active-red');
+        const totalAlerts = activeBoxes.length; // จำนวนที่นับได้
+
+        // ส่งตัวเลขที่นับได้ไปที่ฟังก์ชันแสดงผล
+        updateTotalAlert(totalAlerts);
+    }
+
+    // 2. ฟังก์ชันแสดงผล (ที่คุณมีอยู่แล้ว แต่ปรับ ID ให้ตรงกัน)
+    function updateTotalAlert(newCount) {
+        const countElement = document.getElementById('total-alert-count');
+        if (countElement) {
+            countElement.textContent = String(newCount).padStart(2, '0');
+
+            // ใส่ Effect กะพริบเฉพาะตอนที่ตัวเลขเปลี่ยน
+            countElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                countElement.classList.remove('animate-pulse');
+            }, 500);
+        }
+    }
+
+    // 3. ตั้งค่า Click Event ให้กับทุกกล่อง
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        box.addEventListener('click', function() {
+            // โลจิกเปลี่ยนสี (เหลือง -> แดง -> ปกติ)
+            if (!this.classList.contains('active-yellow') && !this.classList.contains('active-red')) {
+                this.classList.add('active-yellow');
+            } else if (this.classList.contains('active-yellow')) {
+                this.classList.remove('active-yellow');
+                this.classList.add('active-red');
+            } else {
+                this.classList.remove('active-red');
+            }
+
+            // --- หัวใจสำคัญ: ทุกครั้งที่คลิก ให้สั่ง "นับใหม่" ทันที ---
+            updateAlertCounter();
+        });
+    });
+
+    // 4. สั่งให้นับครั้งแรกตอนโหลดหน้าเว็บ (เผื่อมีค่าเริ่มต้น)
+    window.onload = function() {
+        updateAlertCounter();
+    };
+</script>
+
+
+
+
+
+<script>
+    function updateAvgRisk(newCount) {
+        const countElement = document.getElementById('avg-risk-count');
+        if (countElement) {
+            countElement.textContent = String(newCount).padStart(2, '0');
+            countElement.classList.add('animate-pulse');
+            setTimeout(() => {
+                countElement.classList.remove('animate-pulse');
+            }, 1000);
+        }
+    }
+    window.onload = function() {
+        updateAvgRisk(30);
+    };
+
+</script>
+
+
+
+
+
+
+
+<script>
+    // เลือกกล่องทั้งหมดที่มีคลาส .box
+    const boxes = document.querySelectorAll('.box');
+
+    boxes.forEach(box => {
+        box.addEventListener('click', function() {
+            if (!this.classList.contains('active-yellow') && !this.classList.contains('active-red')) {
+                // คลิกครั้งที่ 1: เปลี่ยนเป็นเหลือง
+                this.classList.add('active-yellow');
+            } else if (this.classList.contains('active-yellow')) {
+                // คลิกครั้งที่ 2: เปลี่ยนจากเหลืองเป็นแดง
+                this.classList.remove('active-yellow');
+                this.classList.add('active-red');
+            } else {
+                // คลิกครั้งที่ 3: กลับเป็นสีน้ำเงินปกติ
+                this.classList.remove('active-red');
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+<script>
+
+    function createRealTimeChart(canvasId, lineColor, dataRange, step) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        let gradientFill = ctx.createLinearGradient(0, 0, 0, 150);
+        gradientFill.addColorStop(0, lineColor + '33');
+        gradientFill.addColorStop(1, lineColor + '00');
+
+        const config = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: canvasId,
+                    borderColor: lineColor,
+                    backgroundColor: gradientFill,
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.3, // ลดความโค้งลงนิดนึงเพื่อให้เห็นความสวิงชัดขึ้น
+                    fill: true,
+                    data: []
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'realtime',
+                        display: true,
+                        realtime: {
+                            duration: 10000,
+                            refresh: 1000,
+                            delay: 1000,
+                            onRefresh: function(chart) {
+                                // *** สุ่มค่าใหม่แบบอิสระ (Pure Random) ***
+                                const now = Date.now();
+                                const newVal = Math.random() * (dataRange.max - dataRange.min) + dataRange.min;
+
+                                chart.data.datasets[0].data.push({
+                                    x: now,
+                                    y: newVal
+                                });
+                            }
+                        },
+                        grid: {
+                            display: true,
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        ticks: {
+                            display: true,
+                            color: 'rgba(255, 255, 255, 0.5)',
+                            font: { size: 9, family: 'Orbitron' },
+                            maxTicksLimit: 5
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            display: true,
+                            color: 'rgba(255, 255, 255, 0.5)',
+                            font: { size: 9, family: 'Orbitron' },
+                            stepSize: step,
+                            maxTicksLimit: 5
+                        },
+                        suggestedMin: dataRange.min,
+                        suggestedMax: dataRange.max
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        };
+
+        return new Chart(ctx, config);
+    }
+
+    // เรียกใช้งานเมื่อโหลดหน้าเว็บ
+    window.addEventListener('load', function() {
+        createRealTimeChart('tempChart', '#ff3333', { min: 20, max: 40 }, 5);
+        createRealTimeChart('powerChart', '#00f2fe', { min: 300, max: 500 }, 50);
+        createRealTimeChart('vibChart', '#ffcc00', { min: 0, max: 10 }, 2);
+    });
+</script>
