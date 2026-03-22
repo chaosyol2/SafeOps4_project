@@ -1,4 +1,4 @@
-import sqlite3  # เพิ่มบรรทัดนี้ครับ
+import sqlite3
 from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
@@ -31,36 +31,66 @@ def index():
     # ปัดเศษ 1 ตำแหน่ง
     final_risk = round(total_avg, 1)
 
-    # SQL: เชื่อม 4 ตาราง, คำนวณสูตรถ่วงน้ำหนัก, กรองช่วง 41-70, และสุ่มมา 1 เครื่อง
+    # # SQL: เชื่อม 4 ตาราง, คำนวณสูตรถ่วงน้ำหนัก, กรองช่วง 41-70, และสุ่มมา 1 เครื่อง
+    # query = """
+    # SELECT
+    #     m.machine_id,
+    #     ( (0.4 * m.machine_risk) +
+    #       (0.3 * h.human_risk_label) +
+    #       (0.2 * e.environment_risk_score) +
+    #       (0.1 * hi.historical_risk_score) ) as final_score
+    # FROM machine_risk m
+    # JOIN human_risk h ON m.machine_id = h.machine_id
+    # JOIN environment_risk e ON m.machine_id = e.machine_id
+    # JOIN historical_risk hi ON m.machine_id = hi.machine_id
+    # WHERE final_score BETWEEN 41 AND 70
+    # ORDER BY RANDOM()
+    # LIMIT 1
+    # """
+
+    # cursor.execute(query)
+    # row = cursor.fetchone()
+
+    # random_alert = None
+    # if row:
+    #     random_alert = {
+    #         "id": row[0],
+    #         "score": round(row[1], 1),
+    #         "status": "CHECK SYSTEM", # คำแนะนำสำหรับช่วง Warning
+    #         "time": "1 min ago"       # หรือจะดึงจาก DB มาคำนวณเวลาก็ได้
+    #     }
+
+    # ดึงข้อมูลเฉพาะเครื่อง (Fix ID)
+    # ใช้สูตรคำนวณถ่วงน้ำหนักตรงๆ ใน SQL
+    target_id = '10'
     query = """
     SELECT
         m.machine_id,
         ( (0.4 * m.machine_risk) +
           (0.3 * h.human_risk_label) +
           (0.2 * e.environment_risk_score) +
-          (0.1 * hi.historical_risk_score) ) as final_score
+          (0.1 * hi.historical_risk_score) ) as calculated_score
     FROM machine_risk m
     JOIN human_risk h ON m.machine_id = h.machine_id
     JOIN environment_risk e ON m.machine_id = e.machine_id
     JOIN historical_risk hi ON m.machine_id = hi.machine_id
-    WHERE final_score BETWEEN 41 AND 70
-    ORDER BY RANDOM()
+    WHERE m.machine_id = ?
     LIMIT 1
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (target_id,))
     row = cursor.fetchone()
+    conn.close()
 
+    # 3. จัดการแสดงผล Alert
     random_alert = None
     if row:
         random_alert = {
             "id": row[0],
             "score": round(row[1], 1),
-            "status": "CHECK SYSTEM", # คำแนะนำสำหรับช่วง Warning
-            "time": "1 min ago"       # หรือจะดึงจาก DB มาคำนวณเวลาก็ได้
+            "status": "CHECK SYSTEM",
+            "time": "Just now" # เปลี่ยนเป็นเวลาปัจจุบัน
         }
-
-    conn.close()
 
 
     return render_template('index.html',avg_risk_value=final_risk,alert=random_alert)
@@ -116,6 +146,10 @@ def m1_env_risk_page():
 def m1_his_risk_page():
     # หน้านี้จะใช้โชว์ข้อมูลประวัติการเสีย (Downtime) และความถี่ในการซ่อมบำรุง
     return render_template('m1_his_risk.html')
+
+@app.route('/demo')
+def demo():
+    return render_template('demo.html')
 
 
 if __name__ == '__main__':

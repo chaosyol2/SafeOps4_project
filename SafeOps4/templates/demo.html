@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+</header>
+<body>
+  <div>
+        <!-- เปลี่ยนจาก index.html เป็น url_for('index') -->
+        <a href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='images/app_logo.jpg') }}"
+                height="50"
+                class="object-contain"
+                alt="Logo">
+        </a>
+    </div>
+<div class="demo-container">
+    <div class="section-header">
+        <h2 class="page-title">RISK ANALYSIS SIMULATOR</h2>
+
+    </div>
+    <div class="demo-grid">
+        <!-- [01] MACHINE - เพิ่มเป็น 5 Inputs -->
+        <div class="input-card">
+            <h3>[01] MACHINE TELEMETRY</h3>
+            <div class="input-group">
+                <label>VIBRATION (mm/s)</label>
+                <input type="number" id="m_vib" value="1.5" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>TEMPERATURE (°C)</label>
+                <input type="number" id="m_temp" value="55" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>PRESSURE (Bar)</label>
+                <input type="number" id="m_press" value="6.2" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>VOLTAGE (V)</label>
+                <input type="number" id="m_volt" value="220" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>ERROR CODE SCORE (0-10)</label>
+                <input type="number" id="m_error" value="0" step="1">
+            </div>
+        </div>
+
+        <!-- [02] HUMAN -->
+        <div class="input-card">
+            <h3>[02] HUMAN VISION AI</h3>
+
+            <div class="input-group">
+                <label>WALKING VIOLATION (w1: -0.830)</label>
+                <input type="number" id="h_walk" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>UNSAFE MOVEMENT SCORE (w2: -1.048)</label>
+                <input type="number" id="h_move" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>IMPROPER TOOL USAGE (w3: -1.420)</label>
+                <input type="number" id="h_tool" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>PHONE USAGE FREQ (w4: -1.483)</label>
+                <input type="number" id="h_phone" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>DISTRACTION SCORE (w5: -0.761)</label>
+                <input type="number" id="h_distract" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>WORK SPEED (w6: +0.172)</label>
+                <input type="number" id="h_speed" value="1.0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>TASK SEQUENCE ERROR (w7: -1.157)</label>
+                <input type="number" id="h_seq" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>RISK TREND (w8: -1.591)</label>
+                <input type="number" id="h_trend" value="0" step="0.001">
+            </div>
+
+            <div class="input-group">
+                <label>PAST INCIDENTS (w9: -1.513)</label>
+                <input type="number" id="h_past" value="0" step="0.001">
+            </div>
+        </div>
+
+        <!-- [03] ENVIRONMENT -->
+        <div class="input-card">
+            <h3>[03] ENV MONITORING</h3>
+
+            <div class="input-group">
+                <label>AMBIENT TEMP (°C)</label>
+                <input type="number" id="e_temp" value="32" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label>HUMIDITY (%)</label>
+                <input type="number" id="e_hum" value="70" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label>AIR QUALITY (AQI)</label>
+                <input type="number" id="e_air" value="55" step="1">
+            </div>
+
+            <div class="input-group">
+                <label>LIGHTING (LUX)</label>
+                <input type="number" id="e_light" value="300" step="1">
+            </div>
+
+            <div class="input-group">
+                <label>NOISE LEVEL (dB)</label>
+                <input type="number" id="e_noise" value="85" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label>VIBRATION (m/s²)</label>
+                <input type="number" id="e_vib" value="0.5" step="0.01">
+            </div>
+        </div>
+
+        <!-- [04] HISTORICAL -->
+        <div class="input-card">
+            <h3>[04] FAILURE ANALYSIS</h3>
+
+            <div class="input-group">
+                <label>DOWNTIME DURATION (HRS)</label>
+                <input type="number" id="hi_down" value="2.5" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label>REPAIR ACTION SCORE</label>
+                <input type="number" id="hi_repair_score" value="1" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label>TIME OF OCCURRENCE (24H)</label>
+                <input type="number" id="hi_time" value="14.5" step="0.1" placeholder="e.g. 14.5 for 14:30">
+            </div>
+            <div class="input-group">
+                <label>FAILURE TYPE</label>
+                <select id="hi_type">
+                    <option value="Electrical">Electrical (+0.990)</option>
+                    <option value="Hydraulic">Hydraulic (-1.235)</option>
+                    <option value="Mechanical">Mechanical (+2.473)</option>
+                    <option value="Software">Software (-2.228)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>ROOT CAUSE</label>
+                <select id="hi_cause">
+                    <option value="Deterioration">Deterioration (-0.494)</option>
+                    <option value="Environment">Environment (-4.780)</option>
+                    <option value="Operator">Operator (+5.274)</option>
+                </select>
+            </div>
+        </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculateAllRisks()">
+            RUN REAL-TIME DIAGNOSTIC
+        </button>
+    </div>
+
+    <!-- RESULT BOXES -->
+    <div class="result-display-area">
+        <div id="res_machine" class="res-box risk-low">
+            <span class="label">MACHINE RISK</span>
+            <span class="value" id="val_machine">--</span>
+        </div>
+        <div id="res_human" class="res-box risk-low">
+            <span class="label">HUMAN RISK</span>
+            <span class="value" id="val_human">--</span>
+        </div>
+        <div id="res_env" class="res-box risk-low">
+            <span class="label">ENV RISK</span>
+            <span class="value" id="val_env">--</span>
+        </div>
+        <div id="res_hist" class="res-box risk-low">
+            <span class="label">HISTORICAL RISK</span>
+            <span class="value" id="val_hist">--</span>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+
+
+<script>
+        function calculateAllRisks() {
+    console.log("Calculation Started...");
+    try {
+        // --- 1. MACHINE RISK ---
+        const mVib = parseFloat(document.getElementById('m_vib')?.value || 0);
+        const mTemp = parseFloat(document.getElementById('m_temp')?.value || 0);
+        const mPres = parseFloat(document.getElementById('m_pres')?.value || 0);
+        const mVolt = parseFloat(document.getElementById('m_volt')?.value || 0);
+        const mError = parseFloat(document.getElementById('m_error')?.value || 0);
+
+        let z_machine = (4.29 * mVib) + (0.4167 * mTemp) - (0.8 * mPres) + (0.375 / 1000 * mVolt) + (0.067 * mError) - 15.57;
+        updateResultBox('res_machine', 'val_machine', z_machine);
+
+        // --- 2. HUMAN RISK ---
+        const walk = parseFloat(document.getElementById('h_walk')?.value || 0);
+        const phone = parseFloat(document.getElementById('h_phone')?.value || 0);
+        let z_human = (1.520 * walk) + (2.211 * phone) + 7.462;
+        updateResultBox('res_human', 'val_human', z_human);
+
+        // --- 3. ENV RISK ---
+        const eTemp = parseFloat(document.getElementById('e_temp')?.value || 0);
+        const eHum = parseFloat(document.getElementById('e_hum')?.value || 0);
+        let z_env = (5.618 * eTemp) + (2.893 * eHum) + 10;
+        updateResultBox('res_env', 'val_env', z_env);
+
+        // --- 4. HISTORICAL RISK ---
+        const downtime = parseFloat(document.getElementById('hi_down')?.value || 0);
+        const typeWeights = { "Mechanical": 2.473, "Electrical": 0.990, "Hydraulic": -1.235, "Software": -2.228 };
+        const selectedType = document.getElementById('hi_type')?.value || "Mechanical";
+        let z_hist = (3.873 * downtime) + (typeWeights[selectedType] || 0);
+        updateResultBox('res_hist', 'val_hist', z_hist);
+
+        // --- 5. GLOBAL SCORE ---
+        let totalScore = (0.4 * z_machine) + (0.3 * z_human) + (0.2 * z_env) + (0.1 * z_hist);
+        totalScore = Math.min(Math.max(totalScore, 0), 100);
+
+        // Call UI Update Functions
+        updateGlobalUI(totalScore);      // ด้านซ้าย: ตัวเลขรวม
+
+
+    } catch (e) {
+        console.error("Calculation Error:", e);
+    }
+}
+
+    // Function for the 4 Top Boxes
+    function updateResultBox(boxId, valId, score) {
+        const box = document.getElementById(boxId);
+        const valDisp = document.getElementById(valId);
+        if (!box || !valDisp) return;
+
+        valDisp.innerText = score.toFixed(2);
+        box.classList.remove('risk-low', 'risk-med', 'risk-high');
+        if (score > 60) box.classList.add('risk-high');
+        else if (score > 30) box.classList.add('risk-med');
+        else box.classList.add('risk-low');
+    }
+
+    // Function for Global UI (Left Side)
+        function updateGlobalUI(score) {
+            const scoreVal = document.getElementById('val_total_score');
+            const levelText = document.getElementById('risk_level_text');
+            const protocolText = document.getElementById('protocol_text');
+            const gauge = document.getElementById('total_risk_gauge');
+
+            if (!scoreVal) return;
+
+            scoreVal.innerText = score.toFixed(0);
+
+            if (score <= 40) {
+                levelText.innerText = "LEVEL: SAFE";
+                levelText.style.color = "#2ecc71";
+                protocolText.innerText = "Maintain standard operations.";
+                gauge.style.color = "#2ecc71";
+            } else if (score <= 70) {
+                levelText.innerText = "LEVEL: WARNING";
+                levelText.style.color = "#f1c40f";
+                protocolText.innerText = "Increase monitoring frequency.";
+                gauge.style.color = "#f1c40f";
+            } else {
+                levelText.innerText = "LEVEL: DANGER";
+                levelText.style.color = "#e74c3c";
+                protocolText.innerText = "EMERGENCY PROTOCOL ACTIVE.";
+                gauge.style.color = "#e74c3c";
+            }
+        }
+
+
+</script>
+

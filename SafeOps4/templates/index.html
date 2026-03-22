@@ -59,9 +59,12 @@
                 onclick="toggleNoti()"
                 alt="Notification">
 
-            <img src="./static/images/Denso_logo.png" height="30"
-                class="object-contain opacity-70"
-                alt="notification">
+            <a href="{{ url_for('demo') }}">
+                <img src="./static/images/Denso_logo.png" height="30"
+                    class="object-contain opacity-70"
+                    alt="notification"
+                    style="cursor: pointer;">
+            </a>
     </div>
 
 </div>
@@ -97,14 +100,6 @@
             </div>
         </div>
 
-        <!-- <div class="machine-info"
-            onclick="location.href='risk.html';"
-            style="cursor: pointer;">
-            <span class="machine-label">Avg.Risk</span>
-            <div class="machine-count-box">
-                <span id="avg-risk-count">{{ avg_risk }}</span>
-            </div>
-        </div> -->
 </div>
 
 
@@ -156,61 +151,44 @@
 </div>
 
 
-<!--
-<div class="info-panel">
-    <div class="col-side">
-        <div class="panel-header">Active Alert</div>
-            <div class="terminal-box">
-                <img src="source/stop2.png"  height="20" class="object-contain" alt="stop">
-                <span id="live-clock" class=" !important font-['Orbitron'] text-[9px] font-bold tracking-widest transform translate-y-[1px]">
-                M1
-            </span>
-            </div>
-        </div>
-
-    <div class="col-main">
-        <div class="panel-header">Real-time Trends</div>
-    </div>
-
-</div>
-</div> -->
-
 
 <div class="info-panel">
     <div class="col-side">
         <div class="panel-header alert-header">Active Alerts</div>
         <div class="alert-list">
-            <!-- <div class="alert-row critical">
-                <div class="alert-status-icon">⚠️</div>
-                <span class="m-id">M3</span>
-                <span class="m-val">82%</span>
-                <div class="status-badge">STOP NOW</div>
-                <span class="m-time">2 min ago</span>
-            </div> -->
 
             {% if alert %}
                 <div class="alert-row warning">
                     <div class="alert-status-icon">⚠️</div>
-                    <span class="m-id">{{ alert.id }}</span>
+                    <span class="m-id">M{{ alert.id }}</span>
                     <span class="m-val">{{ alert.score }}%</span>
-                    <div class="status-badge">{{ alert.status }}</div>
+
+                    <div class="warning-status-badge">
+                        {% if alert.score >= 41 and alert.score <= 70 %}
+                            SYSTEM CHECK
+                        {% else %}
+                            {{ alert.status }}
+                        {% endif %}
+                    </div>
+
                     <span class="m-time">{{ alert.time }}</span>
                 </div>
-            {% else %}
-                <p>No moderate risk machines found.</p>
             {% endif %}
-            <div class="alert-row warning">
-                <div class="alert-status-icon">❗</div>
-                <span class="m-id">M14</span>
-                <span class="m-val">60%</span>
-                <div class="status-badge">Check Zone</div>
-                <span class="m-time">8 min ago</span>
+           <div class="alert-row critical">
+                <div class="alert-status-icon">🚨</div> <span class="m-id">M14</span>
+                <span class="m-val">88.3%</span>
+
+                <div class="status-badge">CRITICAL ZONE</div>
+
+                <span class="m-time">Just now</span>
             </div>
             <div class="alert-row warning">
                 <div class="alert-status-icon">❗</div>
                 <span class="m-id">M1</span>
-                <span class="m-val">60%</span>
-                <div class="status-badge">Check Zone</div>
+                <span class="m-val">51%</span>
+
+                <div class="warning-status-badge">Check Zone</div>
+
                 <span class="m-time">8 min ago</span>
             </div>
 

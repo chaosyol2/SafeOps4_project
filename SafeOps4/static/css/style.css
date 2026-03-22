@@ -436,8 +436,39 @@ body {
     text-align: center;
 }
 
-.critical .status-badge { background: #ff3333; color: white; box-shadow: 0 0 10px #ff3333; }
-.warning .status-badge { background: #008000; color: white; } /* ตามรูปคือสีเขียว Check Zone */
+/* Badge สีแดงเรืองแสง */
+.critical .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: center;
+    background: #ff3333;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 51, 51, 0.7); /* เพิ่มความฟุ้งของแสง */
+    animation: pulse-red 2s infinite; /* ใส่ Effect กระพริบ */
+}
+
+/* Animation ทำให้ Badge ค่อยๆ เรืองแสงเข้า-ออก */
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 5px rgba(255, 51, 51, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.9); }
+    100% { box-shadow: 0 0 5px rgba(255, 51, 51, 0.7); }
+}
+.warning-status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: center;
+    background: #FF9800; /* สีส้ม Warning */
+    color: white;
+    box-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+}
 
 .m-time { color: #666; font-size: 11px; margin-left: auto; }
 
@@ -1150,3 +1181,283 @@ th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255
     }
 }
 
+/* --- ส่วนตกแต่งหน้า Demo Calculation (ใหม่) --- */
+
+/* Container ของฟอร์มอินพุต */
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Card สำหรับกลุ่มอินพุต - ใช้สไตล์เดียวกับ col-main */
+.input-card {
+    background: rgba(0, 10, 30, 0.8);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.input-card:hover {
+    border-color: #00f2fe;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+}
+
+.input-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00f2fe;
+    font-size: 14px;
+    margin-bottom: 15px;
+    border-left: 3px solid #00f2fe;
+    padding-left: 10px;
+    letter-spacing: 1px;
+}
+
+/* สไตล์ของช่องกรอกข้อมูล */
+.input-group {
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 5px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.input-group input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+/* ปุ่มคำนวณ - ใช้สไตล์เดียวกับ active-tab */
+.calc-btn {
+    grid-column: 1 / -1; /* ยาวเต็มความกว้าง */
+    font-family: 'Orbitron', sans-serif;
+    background: rgba(16, 185, 129, 0.2);
+    color: #ffffff;
+    border: 1px solid #10b981;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.calc-btn:hover {
+    background: #10b981;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+    transform: translateY(-2px);
+}
+
+/* ส่วนแสดงผลลัพธ์ */
+.result-display-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.res-box {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.res-box .label {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 8px;
+    opacity: 0.8;
+}
+
+.res-box .value {
+    font-size: 24px;
+    font-weight: bold;
+    display: block;
+}
+
+/* สีของระดับความเสี่ยง (Glow Colors) */
+.risk-low {
+    background: rgba(0, 255, 136, 0.1);
+    color: #00ff88;
+    border-color: #00ff88;
+    box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.risk-med {
+    background: rgba(255, 204, 0, 0.1);
+    color: #ffcc00;
+    border-color: #ffcc00;
+    box-shadow: inset 0 0 15px rgba(255, 204, 0, 0.2);
+}
+
+.risk-high {
+    background: rgba(255, 51, 51, 0.1);
+    color: #ff3333;
+    border-color: #ff3333;
+    box-shadow: inset 0 0 15px rgba(255, 51, 51, 0.2);
+    animation: pulse-red 2s infinite; /* ใช้ Animation เดิมที่คุณมี */
+}
+
+
+
+
+
+
+
+
+/* --- CSS สำหรับหน้า Demo ที่ดึงสไตล์เดิมมาใช้ --- */
+
+/* 1. ปรับ Container ให้ล้อกับ .container เดิมที่คุณมี */
+.demo-container {
+    max-width: 1200px;
+    margin: 10px auto;
+    padding: 30px;
+    background-color: #001637; /* สีพื้นหลังเดิมของคุณ */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), 0 0 5px rgba(255, 255, 255, 0.05);
+}
+
+/* 2. หัวข้อหน้า (Page Title) */
+.page-title {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+/* 3. Card สำหรับกรอกข้อมูล (ใช้สไตล์ .machine-count-box ผสม .active-tab) */
+.input-card {
+    background: rgba(0, 42, 92, 0.4); /* น้ำเงินเข้มโปร่งแสง */
+    border: 1px solid rgba(16, 185, 129, 0.2); /* ขอบเขียวจางๆ */
+    border-left: 4px solid #10b981; /* เส้นขอบเขียว Emerald แบบ .bg-tech-gradient */
+    padding: 20px;
+    border-radius: 4px;
+    transition: all 0.4s ease;
+}
+
+.input-card:hover {
+    border-color: #10b981;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+.input-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-size: 13px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* 4. ช่อง Input (สไตล์ Industrial) */
+.input-group label {
+    font-family: 'Inter', sans-serif;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-group input {
+    width: 100%;
+    background: #002a5c; /* สีเดียวกับ .machine-count-box */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    padding: 10px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+/* 5. ปุ่มคำนวณ (ใช้สไตล์ .active-tab) */
+.calc-btn {
+    grid-column: 1 / -1;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10b981;
+    padding: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 3px;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    transition: all 0.4s;
+    text-transform: uppercase;
+}
+
+.calc-btn:hover {
+    background: rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 6. กล่องผลลัพธ์ (ล้อตาม .res-box และ .status-badge) */
+.res-box {
+    background: rgba(0, 10, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.res-box .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.res-box .value {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* สีสถานะตามที่คุณมี (Low = Emerald Green, High = Critical Red) */
+.risk-low { border-bottom: 3px solid #10b981; color: #10b981 !important; }
+.risk-med { border-bottom: 3px solid #ffcc00; color: #ffcc00 !important; }
+.risk-high {
+    border-bottom: 3px solid #ff3333;
+    color: #ff3333 !important;
+    animation: pulse-red 2s infinite; /* ใช้ Animation เดิมของคุณ */
+}
