@@ -309,6 +309,32 @@
 
 
 
+<div id="total_risk_gauge"
+     style="border: 2px solid #2ecc71;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.1);
+            min-width: 320px;">
+
+    <h2 style="font-family: 'Orbitron', sans-serif; color: #888; font-size: 0.9rem; margin-bottom: 5px; letter-spacing: 3px;">
+        TOTAL RISK SCORE
+    </h2>
+
+    <div id="val_total_score"
+         style="font-size: 4rem; font-weight: bold; font-family: 'Orbitron', sans-serif; color: white; line-height: 1;">
+         0
+    </div>
+
+    <div id="risk_level_text"
+         style="font-size: 1.4rem; font-weight: bold; margin: 15px 0; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">
+         LEVEL: SAFE
+    </div>
+
+</div>
 
 
 
@@ -318,153 +344,353 @@
 
 
 <script>
+
+
+//     function calculateAllRisks() {
+//         console.log("Calculation Started...");
+
+//         try {
+//             // --- 1. MACHINE RISK ---
+
+//             const mVib = parseFloat(document.getElementById('m_vib')?.value || 0);
+//             const mTemp = parseFloat(document.getElementById('m_temp')?.value || 0);
+//             const mPres = parseFloat(document.getElementById('m_press')?.value || 0); // ระวัง ID ใน HTML คือ m_press
+//             const mVolt = parseFloat(document.getElementById('m_volt')?.value || 0);
+//             const mError = parseFloat(document.getElementById('m_error')?.value || 0);
+
+//             // สมการ Machine Risk ใหม่ที่คุณให้มา
+//             // 4.29(Vib) + 0.4167(Temp) - 0.8(Pres) + 0.375(Volt) + 0.067(Error) - 15.57
+//             let z_machine = (4.29 * mVib) + (0.4167 * mTemp) - (0.8 * mPres) + (0.375* mVolt) + (0.067 * mError) - 15.57;
+//             let mScore = 10; // Default เป็น Safe
+//             if (z_machine > 80) {
+//                 mScore = 100; // Danger
+//             } else if (z_machine > 40) {
+//                 mScore = 50;  // Warning
+//             } else {
+//                 mScore = 10;  // Safe
+//             }
+//             // อัปเดตกล่องตัวเลขด้านบน
+//             updateResultBox_machine('res_machine', 'val_machine', z_machine);
+
+//             // เรียกใช้ฟังก์ชันวิเคราะห์ละเอียด
+//             Machine_analysis_report(z_machine, mVib, mTemp, mPres, mVolt, mError);
+
+
+
+//             // --- 2. HUMAN RISK ---
+//             const h_walk = parseFloat(document.getElementById('h_walk')?.value || 0);
+//             const h_move = parseFloat(document.getElementById('h_move')?.value || 0);
+//             const h_tool = parseFloat(document.getElementById('h_tool')?.value || 0);
+//             const h_phone = parseFloat(document.getElementById('h_phone')?.value || 0);
+//             const h_distract = parseFloat(document.getElementById('h_distract')?.value || 0);
+//             const h_speed = parseFloat(document.getElementById('h_speed')?.value || 0);
+//             const h_seq = parseFloat(document.getElementById('h_seq')?.value || 0);
+//             const h_trend = parseFloat(document.getElementById('h_trend')?.value || 0);
+//             const h_past = parseFloat(document.getElementById('h_past')?.value || 0);
+
+//             // คำนวณ Z ตามสมการ Linear Discriminant Analysis (LDA) หรือ Softmax-like logic
+//             let z0 = (-0.830 * h_walk) - (1.048 * h_move) - (1.420 * h_tool) - (1.483 * h_phone) - (0.761 * h_distract) + (0.172 * h_speed) - (1.157 * h_seq) - (1.591 * h_trend) - (1.513 * h_past) - 6.906;
+//             let z1 = (-0.690 * h_walk) - (0.548 * h_move) - (0.743 * h_tool) - (0.728 * h_phone) - (0.375 * h_distract) - (0.139 * h_speed) - (0.910 * h_seq) - (0.200 * h_trend) - (0.883 * h_past) - 0.556;
+//             let z2 = (1.520 * h_walk) + (1.596 * h_move) + (2.163 * h_tool) + (2.211 * h_phone) + (1.136 * h_distract) - (0.033 * h_speed) + (2.068 * h_seq) + (1.791 * h_trend) + (2.396 * h_past) + 7.462;
+
+//             // --- [แก้ไขส่วนนี้ใน calculateAllRisks] ---
+//         // 2. ใช้ Logic "ดักทาง" เพื่อเลือก dScore (ตัวคุมสี)
+//             let dScore;
+
+//             // เช็ค Case 'Normal' ก่อน (ถ้าไม่มีพฤติกรรมเสี่ยงเลย)
+//             if (h_walk < 0.1 && h_phone < 0.1 && h_move < 0.1 && h_tool < 0.1) {
+//                 dScore = 10; // บังคับเขียว (Safe)
+//             }
+//             // เช็ค Case 'Warning' (ถ้ามีพฤติกรรมบ้าง แต่อยู่ในเกณฑ์ต่ำ)
+//             else if (z2 < 15 && (z1 > z0 || z2 > z1)) {
+//                 dScore = 50; // บังคับเหลือง (Warning)
+//             }
+//             // Case 'Critical' (ถ้าค่า z2 พุ่งสูงจริงๆ)
+//             else if (z2 >= 15) {
+//                 dScore = 100; // บังคับแดง (Critical)
+//             }
+//             else {
+//                 dScore = 10; // กันเหนียวให้เป็นเขียว
+//             }
+
+//             // 3. เรียกฟังก์ชันแสดงผลที่คุณเช็ค (คราวนี้จะตรงแน่นอน!)
+//             updateResultBox_Human('res_human', 'val_human', dScore, z2);
+
+//             // ส่งค่าไปวิเคราะห์ละเอียด (เพิ่มฟังก์ชันใหม่)
+//             Human_analysis(z0, z1, z2, h_phone, h_walk, h_past);
+
+
+
+//         // --- 3. ENV RISK CALCULATION ---
+//             const eTemp = parseFloat(document.getElementById('e_temp')?.value || 0);
+//             const eHum = parseFloat(document.getElementById('e_hum')?.value || 0);
+//             const eAir = parseFloat(document.getElementById('e_air')?.value || 0);
+//             const eLight = parseFloat(document.getElementById('e_light')?.value || 0);
+//             const eNoise = parseFloat(document.getElementById('e_noise')?.value || 0);
+//             const eVibEnv = parseFloat(document.getElementById('e_vib')?.value || 0);
+
+//         let z_env = (0.5 * eTemp) + (0.2 * eHum) + (4.831 * eAir) - (0.05 * eLight) + (0.3 * eNoise) + (5.758 * eVibEnv) - 20;
+
+//         // --- 3. ENV RISK CALCULATION ---
+
+//             let envDisplayScore;
+
+//             // ปรับเกณฑ์ใหม่ให้ Warning ติดง่ายขึ้น
+//             if (z_env > 40) {
+//                 envDisplayScore = 100; // สีแดง
+//             } else if (z_env > 15) {   // ลดจาก 20 เหลือ 15 เพื่อให้สีเหลืองติดง่ายขึ้น
+//                 envDisplayScore = 50;  // สีเหลือง
+//             } else {
+//                 envDisplayScore = 10;  // สีเขียว
+//             }
+
+//             updateResultBox_Env('res_env', 'val_env', envDisplayScore, z_env);
+//             // เรียกใช้ฟังก์ชันวิเคราะห์ละเอียด
+//             Env_analysis_report(z_env, eTemp, eAir, eNoise);
+
+
+
+
+//             // --- 4. HISTORICAL RISK ---
+
+//             // ดึงค่า
+//             const hiDown = parseFloat(document.getElementById('hi_down')?.value || 0);
+//             const hiRepair = parseFloat(document.getElementById('hi_repair_score')?.value || 0);
+//             const hiTime = parseFloat(document.getElementById('hi_time')?.value || 0);
+//             const hiType = document.getElementById('hi_type')?.value;
+//             const hiCause = document.getElementById('hi_cause')?.value;
+
+//             // One-Hot Encoding สำหรับสมการ
+//             let typeVal = 0;
+//             if (hiType === 'Electrical') typeVal = 0.990;
+//             else if (hiType === 'Hydraulic') typeVal = -1.235;
+//             else if (hiType === 'Mechanical') typeVal = 2.473;
+//             else if (hiType === 'Software') typeVal = -2.228;
+
+//             let causeVal = 0;
+//             if (hiCause === 'Deterioration') causeVal = -0.494;
+//             else if (hiCause === 'Environment') causeVal = -4.780;
+//             else if (hiCause === 'Operator') causeVal = 5.274;
+
+//             // คำนวณ z_hist
+//             let z_hist = (3.873 * hiDown) + (5.934 * hiRepair) - (0.113 * hiTime) + typeVal + causeVal + 24.033;
+
+//             // แสดงผล (แนะนำเกณฑ์: < 50 Green, 50-100 Yellow, > 100 Red)
+//             let histScore = 10;
+//             if (z_hist > 100) histScore = 100;
+//             else if (z_hist > 50) histScore = 50;
+
+//             updateResultBox_Hist('res_hist', 'val_hist', histScore, z_hist);
+
+//             // 4. *** สั่งให้บทวิเคราะห์ด้านล่างแสดงผล (ตรงนี้แหละที่ค่ายังไม่ขึ้น!) ***
+//             Historical_analysis_report(z_hist, hiDown, hiRepair, hiTime, hiType, hiCause);
+//             Machine_analysis(mVib, mTemp, mPres, mVolt, mError);
+
+
+//         // --- 5. GLOBAL SCORE ---
+//             let weightedScore = (0.4 * mScore) + (0.3 * dScore) + (0.2 * envDisplayScore) + (0.1 * histScore);
+//             // บังคับทศนิยม 0 ตำแหน่งเพื่อให้ตรงกับ UI
+//             weightedScore = Math.round(weightedScore);
+//             // เรียกแสดงผล
+//             weightedScore = 90;
+//             updateResultBox_Risk(weightedScore);
+
+//             } catch (e) {
+//                 console.error("Calculation Error:", e);
+
+//             }
+// }
+
+
+
         function calculateAllRisks() {
-    console.log("Calculation Started...");
-    try {
-        // --- 1. MACHINE RISK ---
+            console.log("--- Safety System: Calculation Started ---");
 
-        const mVib = parseFloat(document.getElementById('m_vib')?.value || 0);
-        const mTemp = parseFloat(document.getElementById('m_temp')?.value || 0);
-        const mPres = parseFloat(document.getElementById('m_press')?.value || 0); // ระวัง ID ใน HTML คือ m_press
-        const mVolt = parseFloat(document.getElementById('m_volt')?.value || 0);
-        const mError = parseFloat(document.getElementById('m_error')?.value || 0);
+            // 1. ประกาศตัวแปร Score หลักไว้บนสุด (เพื่อให้ทุกส่วนเขียนทับได้)
+            let mScore = 10;
+            let dScore = 10;
+            let envDisplayScore = 10;
+            let histScore = 10;
 
-        // สมการ Machine Risk ใหม่ที่คุณให้มา
-        // 4.29(Vib) + 0.4167(Temp) - 0.8(Pres) + 0.375(Volt) + 0.067(Error) - 15.57
-        let z_machine = (4.29 * mVib) + (0.4167 * mTemp) - (0.8 * mPres) + (0.375* mVolt) + (0.067 * mError) - 15.57;
+            try {
+                // ==========================================
+                // --- SECTION 1: MACHINE RISK ---
+                // ==========================================
+                const mVib = parseFloat(document.getElementById('m_vib')?.value || 0);
+                const mTemp = parseFloat(document.getElementById('m_temp')?.value || 0);
+                const mPres = parseFloat(document.getElementById('m_press')?.value || 0);
+                const mVolt = parseFloat(document.getElementById('m_volt')?.value || 0);
+                const mError = parseFloat(document.getElementById('m_error')?.value || 0);
 
-        // อัปเดตกล่องตัวเลขด้านบน
-        updateResultBox_machine('res_machine', 'val_machine', z_machine);
+                let z_machine = (4.29 * mVib) + (0.4167 * mTemp) - (0.8 * mPres) + (0.375/1000 * mVolt) + (0.067 * mError) - 15.57;
 
-        // เรียกใช้ฟังก์ชันวิเคราะห์ละเอียด
-        Machine_analysis_report(z_machine, mVib, mTemp, mPres, mVolt, mError);
+               let mScore = 10;
+                // ปรับเกณฑ์ให้ตรงกับ updateResultBox_machine เป๊ะๆ
+                if (z_machine > 135) {
+                    mScore = 100; // สีแดง
+                } else if (z_machine > 105) {
+                    mScore = 50;  // สีเหลือง
+                } else {
+                    mScore = 10;  // สีเขียว
+                }
+
+                updateResultBox_machine('res_machine', 'val_machine', z_machine);
+                Machine_analysis_report(z_machine, mVib, mTemp, mPres, mVolt, mError);
 
 
+                // ==========================================
+                // --- SECTION 2: HUMAN RISK (LDA Logic) ---
+                // ==========================================
+                const h_walk = parseFloat(document.getElementById('h_walk')?.value || 0);
+                const h_move = parseFloat(document.getElementById('h_move')?.value || 0);
+                const h_tool = parseFloat(document.getElementById('h_tool')?.value || 0);
+                const h_phone = parseFloat(document.getElementById('h_phone')?.value || 0);
+                const h_distract = parseFloat(document.getElementById('h_distract')?.value || 0);
+                const h_speed = parseFloat(document.getElementById('h_speed')?.value || 0);
+                const h_seq = parseFloat(document.getElementById('h_seq')?.value || 0);
+                const h_trend = parseFloat(document.getElementById('h_trend')?.value || 0);
+                const h_past = parseFloat(document.getElementById('h_past')?.value || 0);
 
-        // --- 2. HUMAN RISK ---
-        const h_walk = parseFloat(document.getElementById('h_walk')?.value || 0);
-        const h_move = parseFloat(document.getElementById('h_move')?.value || 0);
-        const h_tool = parseFloat(document.getElementById('h_tool')?.value || 0);
-        const h_phone = parseFloat(document.getElementById('h_phone')?.value || 0);
-        const h_distract = parseFloat(document.getElementById('h_distract')?.value || 0);
-        const h_speed = parseFloat(document.getElementById('h_speed')?.value || 0);
-        const h_seq = parseFloat(document.getElementById('h_seq')?.value || 0);
-        const h_trend = parseFloat(document.getElementById('h_trend')?.value || 0);
-        const h_past = parseFloat(document.getElementById('h_past')?.value || 0);
+                let z0 = (-0.830 * h_walk) - (1.048 * h_move) - (1.420 * h_tool) - (1.483 * h_phone) - (0.761 * h_distract) + (0.172 * h_speed) - (1.157 * h_seq) - (1.591 * h_trend) - (1.513 * h_past) - 6.906;
+                let z1 = (-0.690 * h_walk) - (0.548 * h_move) - (0.743 * h_tool) - (0.728 * h_phone) - (0.375 * h_distract) - (0.139 * h_speed) - (0.910 * h_seq) - (0.200 * h_trend) - (0.883 * h_past) - 0.556;
+                let z2 = (1.520 * h_walk) + (1.596 * h_move) + (2.163 * h_tool) + (2.211 * h_phone) + (1.136 * h_distract) - (0.033 * h_speed) + (2.068 * h_seq) + (1.791 * h_trend) + (2.396 * h_past) + 7.462;
 
-        // คำนวณ Z ตามสมการ Linear Discriminant Analysis (LDA) หรือ Softmax-like logic
-        let z0 = (-0.830 * h_walk) - (1.048 * h_move) - (1.420 * h_tool) - (1.483 * h_phone) - (0.761 * h_distract) + (0.172 * h_speed) - (1.157 * h_seq) - (1.591 * h_trend) - (1.513 * h_past) - 6.906;
-        let z1 = (-0.690 * h_walk) - (0.548 * h_move) - (0.743 * h_tool) - (0.728 * h_phone) - (0.375 * h_distract) - (0.139 * h_speed) - (0.910 * h_seq) - (0.200 * h_trend) - (0.883 * h_past) - 0.556;
-        let z2 = (1.520 * h_walk) + (1.596 * h_move) + (2.163 * h_tool) + (2.211 * h_phone) + (1.136 * h_distract) - (0.033 * h_speed) + (2.068 * h_seq) + (1.791 * h_trend) + (2.396 * h_past) + 7.462;
+                // ตัดเกรด Human Score (dScore)
+                if (h_walk < 0.1 && h_phone < 0.1 && h_move < 0.1 && h_tool < 0.1) {
+                    dScore = 10;
+                } else if (z2 >= 15) {
+                    dScore = 100;
+                } else if (z2 < 15 && (z1 > z0 || z2 > z1)) {
+                    dScore = 50;
+                } else {
+                    dScore = 10;
+                }
 
-        // --- [แก้ไขส่วนนี้ใน calculateAllRisks] ---
-       // 2. ใช้ Logic "ดักทาง" เพื่อเลือก dScore (ตัวคุมสี)
-        let dScore;
+                updateResultBox_Human('res_human', 'val_human', dScore, z2);
+                Human_analysis(z0, z1, z2, h_phone, h_walk, h_past);
 
-        // เช็ค Case 'Normal' ก่อน (ถ้าไม่มีพฤติกรรมเสี่ยงเลย)
-        if (h_walk < 0.1 && h_phone < 0.1 && h_move < 0.1 && h_tool < 0.1) {
-            dScore = 10; // บังคับเขียว (Safe)
+
+                // ==========================================
+                // --- SECTION 3: ENV RISK ---
+                // ==========================================
+                const eTemp = parseFloat(document.getElementById('e_temp')?.value || 0);
+                const eHum = parseFloat(document.getElementById('e_hum')?.value || 0);
+                const eAir = parseFloat(document.getElementById('e_air')?.value || 0);
+                const eLight = parseFloat(document.getElementById('e_light')?.value || 0);
+                const eNoise = parseFloat(document.getElementById('e_noise')?.value || 0);
+                const eVibEnv = parseFloat(document.getElementById('e_vib')?.value || 0);
+
+                let z_env = (0.5 * eTemp) + (0.2 * eHum) + (4.831 * eAir) - (0.05 * eLight) + (0.3 * eNoise) + (5.758 * eVibEnv) - 20;
+
+                // ตัดเกรด Env Score
+                if (z_env > 40) envDisplayScore = 100;
+                else if (z_env > 15) envDisplayScore = 50;
+                else envDisplayScore = 10;
+
+                updateResultBox_Env('res_env', 'val_env', envDisplayScore, z_env);
+                Env_analysis_report(z_env, eTemp, eAir, eNoise);
+
+
+                // ==========================================
+                // --- SECTION 4: HISTORICAL RISK ---
+                // ==========================================
+                const hiDown = parseFloat(document.getElementById('hi_down')?.value || 0);
+                const hiRepair = parseFloat(document.getElementById('hi_repair_score')?.value || 0);
+                const hiTime = parseFloat(document.getElementById('hi_time')?.value || 0);
+                const hiType = document.getElementById('hi_type')?.value;
+                const hiCause = document.getElementById('hi_cause')?.value;
+
+                let typeVal = (hiType === 'Electrical') ? 0.990 : (hiType === 'Hydraulic') ? -1.235 : (hiType === 'Mechanical') ? 2.473 : (hiType === 'Software') ? -2.228 : 0;
+                let causeVal = (hiCause === 'Deterioration') ? -0.494 : (hiCause === 'Environment') ? -4.780 : (hiCause === 'Operator') ? 5.274 : 0;
+
+                let z_hist = (3.873 * hiDown) + (5.934 * hiRepair) - (0.113 * hiTime) + typeVal + causeVal + 24.033;
+
+                // ตัดเกรด Hist Score
+                if (z_hist > 100) histScore = 100;
+                else if (z_hist > 50) histScore = 50;
+                else histScore = 10;
+
+                updateResultBox_Hist('res_hist', 'val_hist', histScore, z_hist);
+                Historical_analysis_report(z_hist, hiDown, hiRepair, hiTime, hiType, hiCause);
+
+
+                // ==========================================
+                // --- SECTION 5: TOTAL RISK SCORE (FINAL) ---
+                // ==========================================
+
+                // 1. คำนวณคะแนนรวมตามปกติ
+            let finalWeighted = (0.4 * mScore) + (0.3 * dScore) + (0.2 * envDisplayScore) + (0.1 * histScore);
+            finalWeighted = Math.round(finalWeighted);
+
+            // 2. ฟังก์ชันตรวจสอบว่า "กล่องย่อย" กลายเป็นสีอะไรแล้ว
+            function getBoxStatus(id) {
+                const el = document.getElementById(id);
+                if (!el) return 10;
+                if (el.classList.contains('risk-high')) return 100; // แดง
+                if (el.classList.contains('risk-med')) return 50;   // เหลือง
+                return 10; // เขียว
+            }
+
+            // 3. ดึงสถานะจริงจากหน้าจอ (Real-time UI Status)
+            const mStat = getBoxStatus('res_machine');
+            const dStat = getBoxStatus('res_human');
+            const eStat = getBoxStatus('res_env');
+            const hiStat = getBoxStatus('res_hist');
+
+            // 4. ตัดสินใจสี Gauge ใหญ่จากสถานะหน้าจอ
+            let finalColor = "green";
+            const maxStat = Math.max(mStat, dStat, eStat, hiStat);
+
+            if (maxStat === 100) {
+                finalColor = "red";
+            } else if (maxStat === 50) {
+                finalColor = "yellow";
+            } else {
+                finalColor = "green";
+            }
+
+            // 5. ส่งค่าไปอัปเดต Gauge
+            updateResultBox_Risk(finalWeighted, finalColor);
+            } catch (err) {
+                console.error("Critical Calculation Error:", err);
+                updateResultBox_Risk(10); // กรณีพัง ให้แสดงค่าพื้นฐาน
+            }
         }
-        // เช็ค Case 'Warning' (ถ้ามีพฤติกรรมบ้าง แต่อยู่ในเกณฑ์ต่ำ)
-        else if (z2 < 15 && (z1 > z0 || z2 > z1)) {
-            dScore = 50; // บังคับเหลือง (Warning)
-        }
-        // Case 'Critical' (ถ้าค่า z2 พุ่งสูงจริงๆ)
-        else if (z2 >= 15) {
-            dScore = 100; // บังคับแดง (Critical)
-        }
-        else {
-            dScore = 10; // กันเหนียวให้เป็นเขียว
-        }
-
-        // 3. เรียกฟังก์ชันแสดงผลที่คุณเช็ค (คราวนี้จะตรงแน่นอน!)
-        updateResultBox_Human('res_human', 'val_human', dScore, z2);
-
-        // ส่งค่าไปวิเคราะห์ละเอียด (เพิ่มฟังก์ชันใหม่)
-        Human_analysis(z0, z1, z2, h_phone, h_walk, h_past);
-
-
-
-       // --- 3. ENV RISK CALCULATION ---
-        const eTemp = parseFloat(document.getElementById('e_temp')?.value || 0);
-        const eHum = parseFloat(document.getElementById('e_hum')?.value || 0);
-        const eAir = parseFloat(document.getElementById('e_air')?.value || 0);
-        const eLight = parseFloat(document.getElementById('e_light')?.value || 0);
-        const eNoise = parseFloat(document.getElementById('e_noise')?.value || 0);
-        const eVibEnv = parseFloat(document.getElementById('e_vib')?.value || 0);
-
-      let z_env = (0.5 * eTemp) + (0.2 * eHum) + (4.831 * eAir) - (0.05 * eLight) + (0.3 * eNoise) + (5.758 * eVibEnv) - 20;
-
-    // --- 3. ENV RISK CALCULATION ---
-
-        let envDisplayScore;
-
-        // ปรับเกณฑ์ใหม่ให้ Warning ติดง่ายขึ้น
-        if (z_env > 40) {
-            envDisplayScore = 100; // สีแดง
-        } else if (z_env > 15) {   // ลดจาก 20 เหลือ 15 เพื่อให้สีเหลืองติดง่ายขึ้น
-            envDisplayScore = 50;  // สีเหลือง
-        } else {
-            envDisplayScore = 10;  // สีเขียว
-        }
-
-        updateResultBox_Env('res_env', 'val_env', envDisplayScore, z_env);
-        // เรียกใช้ฟังก์ชันวิเคราะห์ละเอียด
-        Env_analysis_report(z_env, eTemp, eAir, eNoise);
 
 
 
 
-        // --- 4. HISTORICAL RISK ---
+        function updateResultBox_Risk(score, statusColor) {
+    const scoreVal = document.getElementById('val_total_score');
+    const gauge = document.getElementById('total_risk_gauge');
+    const levelText = document.getElementById('risk_level_text');
 
-        // ดึงค่า
-        const hiDown = parseFloat(document.getElementById('hi_down')?.value || 0);
-        const hiRepair = parseFloat(document.getElementById('hi_repair_score')?.value || 0);
-        const hiTime = parseFloat(document.getElementById('hi_time')?.value || 0);
-        const hiType = document.getElementById('hi_type')?.value;
-        const hiCause = document.getElementById('hi_cause')?.value;
+    if (!scoreVal || !gauge) return;
 
-        // One-Hot Encoding สำหรับสมการ
-        let typeVal = 0;
-        if (hiType === 'Electrical') typeVal = 0.990;
-        else if (hiType === 'Hydraulic') typeVal = -1.235;
-        else if (hiType === 'Mechanical') typeVal = 2.473;
-        else if (hiType === 'Software') typeVal = -2.228;
+    // แสดงตัวเลข
+    scoreVal.innerText = score;
 
-        let causeVal = 0;
-        if (hiCause === 'Deterioration') causeVal = -0.494;
-        else if (hiCause === 'Environment') causeVal = -4.780;
-        else if (hiCause === 'Operator') causeVal = 5.274;
-
-        // คำนวณ z_hist
-        let z_hist = (3.873 * hiDown) + (5.934 * hiRepair) - (0.113 * hiTime) + typeVal + causeVal + 24.033;
-
-        // แสดงผล (แนะนำเกณฑ์: < 50 Green, 50-100 Yellow, > 100 Red)
-        let histScore = 10;
-        if (z_hist > 100) histScore = 100;
-        else if (z_hist > 50) histScore = 50;
-
-        updateResultBox_Hist('res_hist', 'val_hist', histScore, z_hist);
-
-        // 4. *** สั่งให้บทวิเคราะห์ด้านล่างแสดงผล (ตรงนี้แหละที่ค่ายังไม่ขึ้น!) ***
-        Historical_analysis_report(z_hist, hiDown, hiRepair, hiTime, hiType, hiCause);
-
-
-
-
-        // --- 5. GLOBAL SCORE ---
-        let totalScore = (0.4 * z_machine) + (0.3 * z_human) + (0.2 * z_env) + (0.1 * z_hist);
-        totalScore = Math.min(Math.max(totalScore, 0), 100);
-        Machine_analysis(mVib, mTemp, mPres, mVolt, mError);
-        // Call UI Update Functions
-        updateGlobalUI(totalScore);      // ด้านซ้าย: ตัวเลขรวม
-
-
-    } catch (e) {
-        console.error("Calculation Error:", e);
+    // เปลี่ยนสีตาม statusColor ที่ส่งมาจาก Section 5
+    if (statusColor === "red") {
+        scoreVal.style.color = "#e74c3c"; // แดง
+        gauge.style.borderColor = "#e74c3c";
+        if(levelText) levelText.innerText = "LEVEL: DANGER";
     }
-
+    else if (statusColor === "yellow") {
+        scoreVal.style.color = "#f1c40f"; // เหลือง
+        gauge.style.borderColor = "#f1c40f";
+        if(levelText) levelText.innerText = "LEVEL: WARNING";
+    }
+    else {
+        scoreVal.style.color = "#2ecc71"; // เขียว
+        gauge.style.borderColor = "#2ecc71";
+        if(levelText) levelText.innerText = "LEVEL: SAFE";
+    }
 }
+
+
+
+
 
     function updateResultBox_Hist(boxId, valId, displayScore, actualZHist) {
         const box = document.getElementById(boxId);
@@ -509,31 +735,7 @@
     }
 
 
-    function updateResultBox_His(boxId, valId, displayScore, actualZ2) {
-        const box = document.getElementById(boxId);
-        const valDisp = document.getElementById(valId);
 
-        if (!box || !valDisp) {
-            console.error("หา ID ของ Human Risk ไม่เจอ:", {boxId, valId});
-            return;
-        }
-
-        // 1. แสดงค่าตัวเลขเป็นค่า z2 จริงที่คำนวณจาก AI Vision/Behavior
-        const safeValue = isNaN(actualZ2) ? 0 : actualZ2;
-        valDisp.innerText = safeValue.toFixed(2);
-
-        // 2. ล้าง Class สีเดิมออกทั้งหมด (low, med, high)
-        box.classList.remove('risk-low', 'risk-med', 'risk-high');
-
-        // 3. ใช้ displayScore (10, 50, 100) จากการตัดสินใจในส่วนคำนวณมาเปลี่ยนสี
-        if (displayScore >= 80) {
-            box.classList.add('risk-high'); // สีแดง (Critical Behavior)
-        } else if (displayScore >= 40) {
-            box.classList.add('risk-med');  // สีเหลือง (Warning/Unsafe Acts)
-        } else {
-            box.classList.add('risk-low');  // สีเขียว (Safe/Normal)
-        }
-    }
 
 
         function updateResultBox_Human(boxId, valId, displayScore, actualZ2) {
@@ -608,53 +810,23 @@ function setAutoValues(mode) {
 }
 
         // --- ฟังก์ชันอัปเดตสีของ Box (แก้ไข Threshold ใหม่) ---
-        function updateResultBox_machine(boxId, valId, score) {
-            const box = document.getElementById(boxId);
-            const valDisp = document.getElementById(valId);
-            if (!box || !valDisp) return;
+       function updateResultBox_machine(boxId, valId, score) {
+        const box = document.getElementById(boxId);
+        const valDisp = document.getElementById(valId);
+        if (!box || !valDisp) return;
 
-            valDisp.innerText = score.toFixed(2);
-            box.classList.remove('risk-low', 'risk-med', 'risk-high');
+        valDisp.innerText = score.toFixed(2);
+        box.classList.remove('risk-low', 'risk-med', 'risk-high');
 
-            // ปรับเกณฑ์ใหม่ (Thresholds) ให้สอดคล้องกับสมการ Machine Risk
-            if (score > 135) {
-                box.classList.add('risk-high'); // สีแดง
-            } else if (score > 105) {
-                box.classList.add('risk-med');  // สีเหลือง
-            } else {
-                box.classList.add('risk-low');  // สีเขียว
-            }
+        // ✅ ปรับ Threshold ให้ต่ำลงเพื่อให้สีเหลือง/แดง ติดง่ายขึ้น
+        if (score > 70) {
+            box.classList.add('risk-high'); // สีแดง
+        } else if (score > 30) {
+            box.classList.add('risk-med');  // สีเหลือง
+        } else {
+            box.classList.add('risk-low');  // สีเขียว
         }
-    // Function for Global UI (Left Side)
-        function updateGlobalUI(score) {
-            const scoreVal = document.getElementById('val_total_score');
-            const levelText = document.getElementById('risk_level_text');
-            const protocolText = document.getElementById('protocol_text');
-            const gauge = document.getElementById('total_risk_gauge');
-
-            if (!scoreVal) return;
-
-            scoreVal.innerText = score.toFixed(0);
-
-            if (score <= 40) {
-                levelText.innerText = "LEVEL: SAFE";
-                levelText.style.color = "#2ecc71";
-                protocolText.innerText = "Maintain standard operations.";
-                gauge.style.color = "#2ecc71";
-            } else if (score <= 70) {
-                levelText.innerText = "LEVEL: WARNING";
-                levelText.style.color = "#f1c40f";
-                protocolText.innerText = "Increase monitoring frequency.";
-                gauge.style.color = "#f1c40f";
-            } else {
-                levelText.innerText = "LEVEL: DANGER";
-                levelText.style.color = "#e74c3c";
-                protocolText.innerText = "EMERGENCY PROTOCOL ACTIVE.";
-                gauge.style.color = "#e74c3c";
-            }
-        }
-
-
+    }
 
        function Machine_analysis_report(z_score, vibration, temp, pres, volt, error) {
         // 1. กำหนดเกณฑ์ปกติ (Thresholds) สำหรับแสดงใน List
@@ -889,7 +1061,7 @@ function setAutoValues(mode) {
             const el = document.getElementById(id);
             if (el) {
                 el.innerText = text;
-                
+
             }
         };
 
