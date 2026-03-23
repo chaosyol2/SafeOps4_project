@@ -29,6 +29,11 @@
         <!-- [01] MACHINE - เพิ่มเป็น 5 Inputs -->
         <div class="input-card">
             <h3>[01] MACHINE TELEMETRY</h3>
+            <div class="scenario-controls" style="margin-bottom: 15px; display: flex; gap: 10px;">
+                <button type="button" class="mini-btn" onclick="setAutoValues_machine('normal')">🟢 Normal</button>
+                <button type="button" class="mini-btn" onclick="setAutoValues_machine('warning')">🟡 Warning</button>
+                <button type="button" class="mini-btn" onclick="setAutoValues_machine('critical')">🔴 Critical</button>
+                </div>
             <div class="input-group">
                 <label>VIBRATION (mm/s)</label>
                 <input type="number" id="m_vib" value="1.5" step="0.1">
@@ -54,49 +59,53 @@
         <!-- [02] HUMAN -->
         <div class="input-card">
             <h3>[02] HUMAN VISION AI</h3>
-
+            <div class="scenario-controls" style="margin-bottom: 15px; display: flex; gap: 10px;">
+                <button type="button" class="mini-btn" onclick="setHumanAuto('normal')">🟢 Normal</button>
+                <button type="button" class="mini-btn" onclick="setHumanAuto('warning')">🟡 Warning</button>
+                <button type="button" class="mini-btn" onclick="setHumanAuto('critical')">🔴 Critical</button>
+            </div>
             <div class="input-group">
-                <label>WALKING VIOLATION (w1: -0.830)</label>
+                <label>WALKING VIOLATION</label>
                 <input type="number" id="h_walk" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>UNSAFE MOVEMENT SCORE (w2: -1.048)</label>
+                <label>UNSAFE MOVEMENT SCORE</label>
                 <input type="number" id="h_move" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>IMPROPER TOOL USAGE (w3: -1.420)</label>
+                <label>IMPROPER TOOL USAGE</label>
                 <input type="number" id="h_tool" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>PHONE USAGE FREQ (w4: -1.483)</label>
+                <label>PHONE USAGE FREQ</label>
                 <input type="number" id="h_phone" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>DISTRACTION SCORE (w5: -0.761)</label>
+                <label>DISTRACTION SCORE</label>
                 <input type="number" id="h_distract" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>WORK SPEED (w6: +0.172)</label>
+                <label>WORK SPEED</label>
                 <input type="number" id="h_speed" value="1.0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>TASK SEQUENCE ERROR (w7: -1.157)</label>
+                <label>TASK SEQUENCE ERROR</label>
                 <input type="number" id="h_seq" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>RISK TREND (w8: -1.591)</label>
+                <label>RISK TREND</label>
                 <input type="number" id="h_trend" value="0" step="0.001">
             </div>
 
             <div class="input-group">
-                <label>PAST INCIDENTS (w9: -1.513)</label>
+                <label>PAST INCIDENTS</label>
                 <input type="number" id="h_past" value="0" step="0.001">
             </div>
         </div>
@@ -104,42 +113,50 @@
         <!-- [03] ENVIRONMENT -->
         <div class="input-card">
             <h3>[03] ENV MONITORING</h3>
-
+            <div class="scenario-controls" style="margin-bottom: 15px; display: flex; gap: 10px;">
+                <button type="button" class="mini-btn" onclick="setEnvAuto('normal')">🟢 Normal</button>
+                <button type="button" class="mini-btn" onclick="setEnvAuto('warning')">🟡 Warning</button>
+                <button type="button" class="mini-btn" onclick="setEnvAuto('critical')">🔴 Critical</button>
+            </div>
             <div class="input-group">
                 <label>AMBIENT TEMP (°C)</label>
-                <input type="number" id="e_temp" value="32" step="0.1">
+                <input type="number" id="e_temp" value="0" step="0.1">
             </div>
 
             <div class="input-group">
                 <label>HUMIDITY (%)</label>
-                <input type="number" id="e_hum" value="70" step="0.1">
+                <input type="number" id="e_hum" value="0" step="0.1">
             </div>
 
             <div class="input-group">
                 <label>AIR QUALITY (AQI)</label>
-                <input type="number" id="e_air" value="55" step="1">
+                <input type="number" id="e_air" value="0" step="1">
             </div>
 
             <div class="input-group">
                 <label>LIGHTING (LUX)</label>
-                <input type="number" id="e_light" value="300" step="1">
+                <input type="number" id="e_light" value="0" step="1">
             </div>
 
             <div class="input-group">
                 <label>NOISE LEVEL (dB)</label>
-                <input type="number" id="e_noise" value="85" step="0.1">
+                <input type="number" id="e_noise" value="0" step="0.1">
             </div>
 
             <div class="input-group">
                 <label>VIBRATION (m/s²)</label>
-                <input type="number" id="e_vib" value="0.5" step="0.01">
+                <input type="number" id="e_vib" value="0" step="0.01">
             </div>
         </div>
 
         <!-- [04] HISTORICAL -->
         <div class="input-card">
             <h3>[04] FAILURE ANALYSIS</h3>
-
+            <div class="scenario-controls" style="margin-bottom: 15px; display: flex; gap: 10px;">
+                <button type="button" class="mini-btn" onclick="setHistAuto('normal')">🟢 Normal</button>
+                <button type="button" class="mini-btn" onclick="setHistAuto('warning')">🟡 Warning</button>
+                <button type="button" class="mini-btn" onclick="setHistAuto('critical')">🔴 Critical</button>
+            </div>
             <div class="input-group">
                 <label>DOWNTIME DURATION (HRS)</label>
                 <input type="number" id="hi_down" value="2.5" step="0.1">
@@ -151,27 +168,38 @@
             </div>
 
             <div class="input-group">
-                <label>TIME OF OCCURRENCE (24H)</label>
-                <input type="number" id="hi_time" value="14.5" step="0.1" placeholder="e.g. 14.5 for 14:30">
-            </div>
-            <div class="input-group">
-                <label>FAILURE TYPE</label>
-                <select id="hi_type">
-                    <option value="Electrical">Electrical (+0.990)</option>
-                    <option value="Hydraulic">Hydraulic (-1.235)</option>
-                    <option value="Mechanical">Mechanical (+2.473)</option>
-                    <option value="Software">Software (-2.228)</option>
-                </select>
-            </div>
+               <label>DOWNTIME DURATION (HRS)</label>
+            <input type="number" id="hi_down" value="2.5" step="0.1">
+        </div>
 
-            <div class="input-group">
-                <label>ROOT CAUSE</label>
-                <select id="hi_cause">
-                    <option value="Deterioration">Deterioration (-0.494)</option>
-                    <option value="Environment">Environment (-4.780)</option>
-                    <option value="Operator">Operator (+5.274)</option>
-                </select>
-            </div>
+        <div class="input-group">
+            <label>REPAIR ACTION SCORE (1-10)</label>
+            <input type="number" id="hi_repair_score" value="1" step="1" min="1" max="10">
+        </div>
+
+        <div class="input-group">
+            <label>TIME OF OCCURRENCE (24H)</label>
+            <input type="number" id="hi_time" value="14.5" step="0.1" placeholder="e.g. 14.5 for 14:30">
+        </div>
+
+        <div class="input-group">
+            <label>FAILURE TYPE</label>
+            <select id="hi_type">
+                <option value="Electrical">Electrical (+0.990)</option>
+                <option value="Hydraulic">Hydraulic (-1.235)</option>
+                <option value="Mechanical">Mechanical (+2.473)</option>
+                <option value="Software">Software (-2.228)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>ROOT CAUSE</label>
+            <select id="hi_cause">
+                <option value="Deterioration">Deterioration (-0.494)</option>
+                <option value="Environment">Environment (-4.780)</option>
+                <option value="Operator">Operator (+5.274)</option>
+            </select>
+        </div>
         </div>
         </div>
 
@@ -199,7 +227,90 @@
             <span class="value" id="val_hist">--</span>
         </div>
     </div>
+    <!-- RESULT BOXES -->
+    <div class="result-display-area">
+        <div class="dashboard-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="flex-item input-card cyan-glow" style="flex: 1.5; min-width: 250px;">
+               <h3>[Machine Telemetry Analysis</h3>
+                <div id="machine-sensor-list" class="alert-list">
+
+                </div>
+                <hr>
+                <div class="analysis-results">
+
+
+                    <h3>Current Analysis</h3>
+                    <div id="current-analysis-machine" class="bottom-value">Waiting for data...</div>
+
+                    <h3>Future Prediction</h3>
+                    <div id="future-prediction-machine" class="bottom-value">Waiting for data...</div>
+
+                    <h3>Mitigation Plan</h3>
+                    <div id="prevention-plan-machine" class="bottom-value">Waiting for data...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="flex-item input-card cyan-glow" style="flex: 1.5; min-width: 250px;">
+               <h3>Human AI Diagnostics</h3>
+                <div id="human-diagnostics-list" class="alert-list">
+            </div>
+            <hr>
+            <div class="analysis-results">
+                <h3>Current Analysis</h3>
+                <div id="current-analysis-human" class="bottom-value">Waiting for data...</div>
+
+                <h3>Future Prediction</h3>
+                <div id="future-prediction-human" class="bottom-value">Waiting for data...</div>
+
+                <h3>Mitigation Plan</h3>
+                <div id="prevention-plan-human" class="bottom-value">Waiting for data...</div>
+            </div>
+            </div>
+        </div>
+
+        <div class="dashboard-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="flex-item input-card cyan-glow" style="flex: 1.5; min-width: 250px;">
+               <h3>Environment AI Diagnostics</h3>
+                <div id="env-sensor-list" class="alert-list">
+                </div>
+                <hr>
+                <div class="analysis-results">
+                    <h3>Current Analysis</h3>
+                    <div id="current-analysis-env" class="bottom-value">Waiting for data...</div>
+                    <h3>Future Prediction</h3>
+                    <div id="future-prediction-env" class="bottom-value">Waiting for data...</div>
+                    <h3>Mitigation Plan</h3>
+                    <div id="prevention-plan-env" class="bottom-value">Waiting for data...</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="dashboard-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="flex-item input-card cyan-glow" style="flex: 1.5; min-width: 250px;">
+                <h3>Historical & Failure Analysis</h3>
+                <div id="hist-analysis-list" class="alert-list">
+               </div>
+                <hr>
+                <div class="analysis-results">
+                    <h3>Current Analysis</h3>
+                    <div id="current-analysis-hist" class="bottom-value">Waiting for data...</div>
+                    <h3>Future Prediction</h3>
+                    <div id="future-prediction-hist" class="bottom-value">Waiting for data...</div>
+                    <h3>Mitigation Plan</h3>
+                    <div id="prevention-plan-hist" class="bottom-value">Waiting for data...</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
 
 </body>
 
@@ -211,38 +322,140 @@
     console.log("Calculation Started...");
     try {
         // --- 1. MACHINE RISK ---
+
         const mVib = parseFloat(document.getElementById('m_vib')?.value || 0);
         const mTemp = parseFloat(document.getElementById('m_temp')?.value || 0);
-        const mPres = parseFloat(document.getElementById('m_pres')?.value || 0);
+        const mPres = parseFloat(document.getElementById('m_press')?.value || 0); // ระวัง ID ใน HTML คือ m_press
         const mVolt = parseFloat(document.getElementById('m_volt')?.value || 0);
         const mError = parseFloat(document.getElementById('m_error')?.value || 0);
 
-        let z_machine = (4.29 * mVib) + (0.4167 * mTemp) - (0.8 * mPres) + (0.375 / 1000 * mVolt) + (0.067 * mError) - 15.57;
-        updateResultBox('res_machine', 'val_machine', z_machine);
+        // สมการ Machine Risk ใหม่ที่คุณให้มา
+        // 4.29(Vib) + 0.4167(Temp) - 0.8(Pres) + 0.375(Volt) + 0.067(Error) - 15.57
+        let z_machine = (4.29 * mVib) + (0.4167 * mTemp) - (0.8 * mPres) + (0.375* mVolt) + (0.067 * mError) - 15.57;
+
+        // อัปเดตกล่องตัวเลขด้านบน
+        updateResultBox_machine('res_machine', 'val_machine', z_machine);
+
+        // เรียกใช้ฟังก์ชันวิเคราะห์ละเอียด
+        Machine_analysis_report(z_machine, mVib, mTemp, mPres, mVolt, mError);
+
+
 
         // --- 2. HUMAN RISK ---
-        const walk = parseFloat(document.getElementById('h_walk')?.value || 0);
-        const phone = parseFloat(document.getElementById('h_phone')?.value || 0);
-        let z_human = (1.520 * walk) + (2.211 * phone) + 7.462;
-        updateResultBox('res_human', 'val_human', z_human);
+        const h_walk = parseFloat(document.getElementById('h_walk')?.value || 0);
+        const h_move = parseFloat(document.getElementById('h_move')?.value || 0);
+        const h_tool = parseFloat(document.getElementById('h_tool')?.value || 0);
+        const h_phone = parseFloat(document.getElementById('h_phone')?.value || 0);
+        const h_distract = parseFloat(document.getElementById('h_distract')?.value || 0);
+        const h_speed = parseFloat(document.getElementById('h_speed')?.value || 0);
+        const h_seq = parseFloat(document.getElementById('h_seq')?.value || 0);
+        const h_trend = parseFloat(document.getElementById('h_trend')?.value || 0);
+        const h_past = parseFloat(document.getElementById('h_past')?.value || 0);
 
-        // --- 3. ENV RISK ---
+        // คำนวณ Z ตามสมการ Linear Discriminant Analysis (LDA) หรือ Softmax-like logic
+        let z0 = (-0.830 * h_walk) - (1.048 * h_move) - (1.420 * h_tool) - (1.483 * h_phone) - (0.761 * h_distract) + (0.172 * h_speed) - (1.157 * h_seq) - (1.591 * h_trend) - (1.513 * h_past) - 6.906;
+        let z1 = (-0.690 * h_walk) - (0.548 * h_move) - (0.743 * h_tool) - (0.728 * h_phone) - (0.375 * h_distract) - (0.139 * h_speed) - (0.910 * h_seq) - (0.200 * h_trend) - (0.883 * h_past) - 0.556;
+        let z2 = (1.520 * h_walk) + (1.596 * h_move) + (2.163 * h_tool) + (2.211 * h_phone) + (1.136 * h_distract) - (0.033 * h_speed) + (2.068 * h_seq) + (1.791 * h_trend) + (2.396 * h_past) + 7.462;
+
+        // --- [แก้ไขส่วนนี้ใน calculateAllRisks] ---
+       // 2. ใช้ Logic "ดักทาง" เพื่อเลือก dScore (ตัวคุมสี)
+        let dScore;
+
+        // เช็ค Case 'Normal' ก่อน (ถ้าไม่มีพฤติกรรมเสี่ยงเลย)
+        if (h_walk < 0.1 && h_phone < 0.1 && h_move < 0.1 && h_tool < 0.1) {
+            dScore = 10; // บังคับเขียว (Safe)
+        }
+        // เช็ค Case 'Warning' (ถ้ามีพฤติกรรมบ้าง แต่อยู่ในเกณฑ์ต่ำ)
+        else if (z2 < 15 && (z1 > z0 || z2 > z1)) {
+            dScore = 50; // บังคับเหลือง (Warning)
+        }
+        // Case 'Critical' (ถ้าค่า z2 พุ่งสูงจริงๆ)
+        else if (z2 >= 15) {
+            dScore = 100; // บังคับแดง (Critical)
+        }
+        else {
+            dScore = 10; // กันเหนียวให้เป็นเขียว
+        }
+
+        // 3. เรียกฟังก์ชันแสดงผลที่คุณเช็ค (คราวนี้จะตรงแน่นอน!)
+        updateResultBox_Human('res_human', 'val_human', dScore, z2);
+
+        // ส่งค่าไปวิเคราะห์ละเอียด (เพิ่มฟังก์ชันใหม่)
+        Human_analysis(z0, z1, z2, h_phone, h_walk, h_past);
+
+
+
+       // --- 3. ENV RISK CALCULATION ---
         const eTemp = parseFloat(document.getElementById('e_temp')?.value || 0);
         const eHum = parseFloat(document.getElementById('e_hum')?.value || 0);
-        let z_env = (5.618 * eTemp) + (2.893 * eHum) + 10;
-        updateResultBox('res_env', 'val_env', z_env);
+        const eAir = parseFloat(document.getElementById('e_air')?.value || 0);
+        const eLight = parseFloat(document.getElementById('e_light')?.value || 0);
+        const eNoise = parseFloat(document.getElementById('e_noise')?.value || 0);
+        const eVibEnv = parseFloat(document.getElementById('e_vib')?.value || 0);
+
+      let z_env = (0.5 * eTemp) + (0.2 * eHum) + (4.831 * eAir) - (0.05 * eLight) + (0.3 * eNoise) + (5.758 * eVibEnv) - 20;
+
+    // --- 3. ENV RISK CALCULATION ---
+
+        let envDisplayScore;
+
+        // ปรับเกณฑ์ใหม่ให้ Warning ติดง่ายขึ้น
+        if (z_env > 40) {
+            envDisplayScore = 100; // สีแดง
+        } else if (z_env > 15) {   // ลดจาก 20 เหลือ 15 เพื่อให้สีเหลืองติดง่ายขึ้น
+            envDisplayScore = 50;  // สีเหลือง
+        } else {
+            envDisplayScore = 10;  // สีเขียว
+        }
+
+        updateResultBox_Env('res_env', 'val_env', envDisplayScore, z_env);
+        // เรียกใช้ฟังก์ชันวิเคราะห์ละเอียด
+        Env_analysis_report(z_env, eTemp, eAir, eNoise);
+
+
+
 
         // --- 4. HISTORICAL RISK ---
-        const downtime = parseFloat(document.getElementById('hi_down')?.value || 0);
-        const typeWeights = { "Mechanical": 2.473, "Electrical": 0.990, "Hydraulic": -1.235, "Software": -2.228 };
-        const selectedType = document.getElementById('hi_type')?.value || "Mechanical";
-        let z_hist = (3.873 * downtime) + (typeWeights[selectedType] || 0);
-        updateResultBox('res_hist', 'val_hist', z_hist);
+
+        // ดึงค่า
+        const hiDown = parseFloat(document.getElementById('hi_down')?.value || 0);
+        const hiRepair = parseFloat(document.getElementById('hi_repair_score')?.value || 0);
+        const hiTime = parseFloat(document.getElementById('hi_time')?.value || 0);
+        const hiType = document.getElementById('hi_type')?.value;
+        const hiCause = document.getElementById('hi_cause')?.value;
+
+        // One-Hot Encoding สำหรับสมการ
+        let typeVal = 0;
+        if (hiType === 'Electrical') typeVal = 0.990;
+        else if (hiType === 'Hydraulic') typeVal = -1.235;
+        else if (hiType === 'Mechanical') typeVal = 2.473;
+        else if (hiType === 'Software') typeVal = -2.228;
+
+        let causeVal = 0;
+        if (hiCause === 'Deterioration') causeVal = -0.494;
+        else if (hiCause === 'Environment') causeVal = -4.780;
+        else if (hiCause === 'Operator') causeVal = 5.274;
+
+        // คำนวณ z_hist
+        let z_hist = (3.873 * hiDown) + (5.934 * hiRepair) - (0.113 * hiTime) + typeVal + causeVal + 24.033;
+
+        // แสดงผล (แนะนำเกณฑ์: < 50 Green, 50-100 Yellow, > 100 Red)
+        let histScore = 10;
+        if (z_hist > 100) histScore = 100;
+        else if (z_hist > 50) histScore = 50;
+
+        updateResultBox_Hist('res_hist', 'val_hist', histScore, z_hist);
+
+        // 4. *** สั่งให้บทวิเคราะห์ด้านล่างแสดงผล (ตรงนี้แหละที่ค่ายังไม่ขึ้น!) ***
+        Historical_analysis_report(z_hist, hiDown, hiRepair, hiTime, hiType, hiCause);
+
+
+
 
         // --- 5. GLOBAL SCORE ---
         let totalScore = (0.4 * z_machine) + (0.3 * z_human) + (0.2 * z_env) + (0.1 * z_hist);
         totalScore = Math.min(Math.max(totalScore, 0), 100);
-
+        Machine_analysis(mVib, mTemp, mPres, mVolt, mError);
         // Call UI Update Functions
         updateGlobalUI(totalScore);      // ด้านซ้าย: ตัวเลขรวม
 
@@ -250,7 +463,101 @@
     } catch (e) {
         console.error("Calculation Error:", e);
     }
+
 }
+
+    function updateResultBox_Hist(boxId, valId, displayScore, actualZHist) {
+        const box = document.getElementById(boxId);
+        const valDisp = document.getElementById(valId);
+        if (!box || !valDisp) return;
+
+        valDisp.innerText = isNaN(actualZHist) ? "0.00" : actualZHist.toFixed(2);
+
+        box.classList.remove('risk-low', 'risk-med', 'risk-high');
+        if (displayScore >= 80) {
+            box.classList.add('risk-high');
+        } else if (displayScore >= 40) {
+            box.classList.add('risk-med');
+        } else {
+            box.classList.add('risk-low');
+        }
+    }
+
+      function updateResultBox_Env(boxId, valId, displayScore, actualZEnv) {
+        const box = document.getElementById(boxId);
+        const valDisp = document.getElementById(valId);
+
+        if (!box || !valDisp) {
+            console.error("หา ID ไม่เจอ:", {boxId, valId});
+            return;
+        }
+
+        // ป้องกันค่า NaN (Not a Number) ถ้าคำนวณพลาดให้โชว์ 0.00
+        const safeValue = isNaN(actualZEnv) ? 0 : actualZEnv;
+        valDisp.innerText = safeValue.toFixed(2);
+
+        // ล้างสีเก่าและใส่สีใหม่ตามคะแนนควบคุม (displayScore)
+        box.classList.remove('risk-low', 'risk-med', 'risk-high');
+
+        if (displayScore >= 80) {
+            box.classList.add('risk-high'); // สีแดง
+        } else if (displayScore >= 40) {
+            box.classList.add('risk-med');  // สีเหลือง
+        } else {
+            box.classList.add('risk-low');  // สีเขียว
+        }
+    }
+
+
+    function updateResultBox_His(boxId, valId, displayScore, actualZ2) {
+        const box = document.getElementById(boxId);
+        const valDisp = document.getElementById(valId);
+
+        if (!box || !valDisp) {
+            console.error("หา ID ของ Human Risk ไม่เจอ:", {boxId, valId});
+            return;
+        }
+
+        // 1. แสดงค่าตัวเลขเป็นค่า z2 จริงที่คำนวณจาก AI Vision/Behavior
+        const safeValue = isNaN(actualZ2) ? 0 : actualZ2;
+        valDisp.innerText = safeValue.toFixed(2);
+
+        // 2. ล้าง Class สีเดิมออกทั้งหมด (low, med, high)
+        box.classList.remove('risk-low', 'risk-med', 'risk-high');
+
+        // 3. ใช้ displayScore (10, 50, 100) จากการตัดสินใจในส่วนคำนวณมาเปลี่ยนสี
+        if (displayScore >= 80) {
+            box.classList.add('risk-high'); // สีแดง (Critical Behavior)
+        } else if (displayScore >= 40) {
+            box.classList.add('risk-med');  // สีเหลือง (Warning/Unsafe Acts)
+        } else {
+            box.classList.add('risk-low');  // สีเขียว (Safe/Normal)
+        }
+    }
+
+
+        function updateResultBox_Human(boxId, valId, displayScore, actualZ2) {
+            const box = document.getElementById(boxId);
+            const valDisp = document.getElementById(valId);
+            if (!box || !valDisp) return;
+
+            // แสดงค่าตัวเลขเป็น z2 จริง (เพื่อให้ User เห็นค่าดิบ)
+            valDisp.innerText = actualZ2.toFixed(2);
+
+            // ล้าง Class สีเดิมออกทั้งหมด
+            box.classList.remove('risk-low', 'risk-med', 'risk-high');
+
+            // ใช้ displayScore (10, 50, 100) เป็นเกณฑ์ในการเปลี่ยนสี
+            if (displayScore >= 80) {
+                box.classList.add('risk-high'); // สีแดง (Critical)
+            } else if (displayScore >= 40) {
+                box.classList.add('risk-med');  // สีเหลือง (Warning)
+            } else {
+                box.classList.add('risk-low');  // สีเขียว (Safe)
+            }
+        }
+
+
 
     // Function for the 4 Top Boxes
     function updateResultBox(boxId, valId, score) {
@@ -265,6 +572,59 @@
         else box.classList.add('risk-low');
     }
 
+
+
+    // --- ฟังก์ชันสุ่มค่า (Scenario Selector) ---
+function setAutoValues(mode) {
+    const rand = (min, max) => (Math.random() * (max - min) + min).toFixed(1);
+    let data = {};
+
+    if (mode === 'random') {
+        mode = Math.random() > 0.5 ? 'warning' : 'critical';
+    }
+
+    switch (mode) {
+        case 'normal':
+            // ปรับค่าให้ Z-score ออกมาประมาณ 80-90 (Low Risk)
+            data = { vib: 1.0, temp: 40, pres: 8.0, volt: 200, err: 0 };
+            break;
+        case 'warning':
+            // ปรับค่าให้ Z-score ออกมาประมาณ 110-125 (Med Risk)
+            data = { vib: 5.0, temp: 70, pres: 5.0, volt: 230, err: 2 };
+            break;
+        case 'critical':
+            // ปรับค่าให้ Z-score ออกมา > 140 (High Risk)
+            data = { vib: 12.0, temp: 95, pres: 2.0, volt: 250, err: 10 };
+            break;
+    }
+
+    document.getElementById('m_vib').value = data.vib;
+    document.getElementById('m_temp').value = data.temp;
+    document.getElementById('m_press').value = data.pres;
+    document.getElementById('m_volt').value = data.volt;
+    document.getElementById('m_error').value = data.err;
+
+    calculateAllRisks(); // รันการคำนวณใหม่ทันที
+}
+
+        // --- ฟังก์ชันอัปเดตสีของ Box (แก้ไข Threshold ใหม่) ---
+        function updateResultBox_machine(boxId, valId, score) {
+            const box = document.getElementById(boxId);
+            const valDisp = document.getElementById(valId);
+            if (!box || !valDisp) return;
+
+            valDisp.innerText = score.toFixed(2);
+            box.classList.remove('risk-low', 'risk-med', 'risk-high');
+
+            // ปรับเกณฑ์ใหม่ (Thresholds) ให้สอดคล้องกับสมการ Machine Risk
+            if (score > 135) {
+                box.classList.add('risk-high'); // สีแดง
+            } else if (score > 105) {
+                box.classList.add('risk-med');  // สีเหลือง
+            } else {
+                box.classList.add('risk-low');  // สีเขียว
+            }
+        }
     // Function for Global UI (Left Side)
         function updateGlobalUI(score) {
             const scoreVal = document.getElementById('val_total_score');
@@ -295,5 +655,397 @@
         }
 
 
+
+       function Machine_analysis_report(z_score, vibration, temp, pres, volt, error) {
+        // 1. กำหนดเกณฑ์ปกติ (Thresholds) สำหรับแสดงใน List
+        const config = [
+            { name: "Vibration", val: vibration, limit: 4.5, unit: "mm/s" },
+            { name: "Temperature", val: temp, limit: 75, unit: "°C" },
+            { name: "Pressure", val: pres, limit: 10, unit: "Bar" },
+            { name: "Voltage", val: volt, limit: 245, unit: "V" }
+        ];
+
+        // อัปเดตรายการ Sensor ใน List
+        const listElem = document.getElementById('sensor-input-list');
+        if (listElem) {
+            let html = "";
+            config.forEach(s => {
+                const isCritical = s.val > s.limit;
+                html += `
+                    <div class="alert-row">
+                        <span style="width: 100px;">${s.name}</span>
+                        <span style="color: ${isCritical ? '#ff3333' : '#00ff88'}">${s.val} ${s.unit}</span>
+                    </div>`;
+            });
+            listElem.innerHTML = html;
+        }
+
+        // 2. สร้างบทวิเคราะห์ตามค่า Z-Score
+        let current = "", future = "", prevent = "";
+
+        if (z_score > 80) {
+            current = `CRITICAL: High mechanical instability detected (Z: ${z_score.toFixed(2)}). Severe vibration or thermal stress.`;
+            future = "Catastrophic component failure or motor burnout is imminent within current cycle.";
+            prevent = "Emergency shutdown recommended. Perform precision alignment and check lubrication levels.";
+        } else if (z_score > 40) {
+            current = "WARNING: Operating parameters are deviating from baseline. Increased wear detected.";
+            future = "Degradation of mechanical seals and bearings will accelerate.";
+            prevent = "Schedule maintenance during next shift change. Inspect for loose mounting bolts.";
+        } else {
+            current = "Machine is operating within nominal safety and efficiency limits.";
+            future = "Steady-state operation expected for the remainder of the production cycle.";
+            prevent = "Continue standard automated monitoring and routine inspections.";
+        }
+
+        // อัปเดตลง UI
+        const setVal = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        };
+
+        setVal('current-analysis-machine', current);
+        setVal('future-prediction-machine', future);
+        setVal('prevention-plan-machine', prevent);
+    }
+
+
+    function Historical_analysis_report(z_hist, downtime, repairScore, fType, fCause) {
+        // 1. กำหนดเกณฑ์สำหรับแสดงสถานะปัจจัยหลักใน List
+        const config = [
+            { name: "Downtime", val: downtime, limit: 10, unit: "Hrs" },
+            { name: "Repair Score", val: repairScore, limit: 4, unit: "Pts" },
+            { name: "Failure Type", val: fType, isType: true },
+            { name: "Root Cause", val: fCause, isCause: true }
+        ];
+
+        // อัปเดตรายการปัจจัยใน UI List (id: sensor-input-list-hist)
+        const listElem = document.getElementById('sensor-input-list-hist');
+        if (listElem) {
+            let html = "";
+            config.forEach(s => {
+                let isWarning = false;
+                if (s.name === "Downtime") isWarning = s.val > s.limit;
+                if (s.val === "Operator") isWarning = true; // สาเหตุจากคนถือว่ามีความเสี่ยงสูง
+
+                html += `
+                    <div class="alert-row">
+                        <span style="width: 120px; color: #aaa;">${s.name}</span>
+                        <span style="color: ${isWarning ? '#ffcc00' : '#00ff88'}">${s.val} ${s.unit || ''}</span>
+                    </div>`;
+            });
+            listElem.innerHTML = html;
+        }
+
+        // 2. สร้างบทวิเคราะห์ตามค่า Z-Score (Historical Risk)
+        let current = "", future = "", prevent = "";
+
+        if (z_hist > 100) {
+            current = `CRITICAL: High failure recurrence detected (Z: ${z_hist.toFixed(2)}). Chronic issues identified.`;
+            future = `Systemic breakdown likely. Current ${fType} failure pattern indicates high probability of total machine replacement.`;
+            prevent = `Immediate audit of maintenance logs required. Root cause '${fCause}' suggests urgent retraining or structural redesign.`;
+        } else if (z_hist > 50) {
+            current = "WARNING: Increasing trend in downtime duration and repair complexity.";
+            future = "Operational reliability will continue to degrade if preventive cycles aren't shortened.";
+            prevent = "Perform Root Cause Analysis (RCA) on recent failures. Verify spare parts quality.";
+        } else {
+            current = "Maintenance history indicates stable equipment reliability.";
+            future = "Machine is expected to reach its calculated MTBF without unscheduled stops.";
+            prevent = "Maintain current documentation standards and routine preventive maintenance.";
+        }
+
+        // 3. อัปเดตลง UI (ตรวจสอบ ID ให้ตรงกับ HTML ของคุณ)
+        const setVal = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        };
+
+        setVal('current-analysis-hist', current);
+        setVal('future-prediction-hist', future);
+        setVal('prevention-plan-hist', prevent);
+    }
+
+
+
+    function Human_analysis(z0, z1, z2, phone, walk, past) {
+        let current = "";
+        let future = "";
+        let prevent = "";
+        let status = "";
+
+        // ตัดสินระดับความเสี่ยง
+        if (z2 > z1 && z2 > z0) {
+            status = "HIGH RISK";
+            current = "Critical human-related safety violations detected. Multiple AI vision triggers active.";
+            future = "High probability of immediate workplace accident or procedure failure.";
+            prevent = "Mandatory safety intervention required. Suspend current task for retraining.";
+        } else if (z1 > z0) {
+            status = "MEDIUM RISK";
+            current = "Cautionary behaviors observed. Slight deviation from safety protocols.";
+            future = "Accumulated minor errors may lead to near-miss incidents.";
+            prevent = "Issue verbal warning and increase supervisor monitoring frequency.";
+        } else {
+            status = "LOW RISK (SAFE)";
+            current = "Operator behavior is compliant with safety standards.";
+            future = "Operational safety is maintained.";
+            prevent = "Continue routine safety observation.";
+        }
+
+        // เจาะจงสาเหตุ (ตัวอย่าง: ถ้า phone หรือ walk สูง)
+        if (phone > 0) current += " Distraction from phone usage is a primary concern.";
+        if (past > 0) current += " History of incidents increases risk weight.";
+
+        // อัปเดตลงใน HTML (อ้างอิง ID ของกล่อง Human ใน HTML ของคุณ)
+        const setVal = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        };
+
+        // หมายเหตุ: ใน HTML คุณต้องแก้ ID กล่อง Human ให้ไม่ซ้ำกับ Machine นะครับ
+        // เช่น current-analysis-human
+        setVal('current-analysis-human', current);
+        setVal('future-prediction-human', future);
+        setVal('prevention-plan-human', prevent);
+    }
+
+
+        function Env_analysis_report(z_score, temp, air, noise) {
+            let current = "", future = "", prevent = "";
+
+            // เกณฑ์การตัดสิน (Adjust thresholds based on your model's scale)
+            if (z_score > 100) { // สมมติว่าเกิน 100 คืออันตราย
+                current = `High environmental stress detected (Score: ${z_score.toFixed(2)}). Critical levels in ambient factors.`;
+                future = "Sustained exposure may cause equipment overheating or operator fatigue.";
+                prevent = "Activate auxiliary cooling and air filtration. PPE for noise protection mandatory.";
+            } else if (z_score > 50) {
+                current = "Environmental parameters are drifting from optimal range.";
+                future = "Potential reduction in machine precision and long-term hardware reliability.";
+                prevent = "Check HVAC system performance and monitor noise dampening units.";
+            } else {
+                current = "Atmospheric and ambient conditions are within nominal safety zones.";
+                future = "No environment-induced downtime expected.";
+                prevent = "Maintain standard environmental monitoring.";
+            }
+
+            // อัปเดตลง UI
+            const setVal = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text;
+            };
+
+            setVal('current-analysis-env', current);
+            setVal('future-prediction-env', future);
+            setVal('prevention-plan-env', prevent);
+
+            // อัปเดตรายการสถานะใน List
+            const listElem = document.getElementById('env-status-list');
+            if (listElem) {
+                listElem.innerHTML = `
+                    <div class="alert-row"><span>Temp:</span> <span style="color:${temp > 35 ? '#ff3333':'#00ff88'}">${temp} °C</span></div>
+                    <div class="alert-row"><span>Air Qual:</span> <span style="color:${air > 100 ? '#ff3333':'#00ff88'}">${air} AQI</span></div>
+                    <div class="alert-row"><span>Noise:</span> <span style="color:${noise > 85 ? '#ff3333':'#00ff88'}">${noise} dB</span></div>
+                `;
+            }
+        }
+
+
+      function Historical_analysis_report(z_hist, hiDown, hiRepair, hiTime, hiType, hiCause) {
+        // 1. แสดงรายการตัวแปรในช่องสรุปบน (hist-analysis-list)
+        const listElem = document.getElementById('hist-analysis-list');
+        if (listElem) {
+            const rows = [
+                { label: "Downtime", val: hiDown.toFixed(1) + " Hrs", color: hiDown > 10 ? "#ff3333" : "#00ff88" },
+                { label: "Repair Score", val: hiRepair, color: hiRepair > 3 ? "#ffcc00" : "#00ff88" },
+                { label: "Type", val: hiType, color: "#00d4ff" },
+                { label: "Cause", val: hiCause, color: hiCause === "Operator" ? "#ff3333" : "#ffcc00" }
+            ];
+
+            // listElem.innerHTML = rows.map(r => `
+            //     <div class="alert-row" style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            //         <span style="color: #888;">${r.label}</span>
+            //         <span style="color: ${r.color}; font-weight: bold;">${r.val}</span>
+            //     </div>
+            // `).join('');
+        }
+
+        // 2. วิเคราะห์ตามค่า Z-Score
+        let current = "", future = "", prevent = "";
+
+        if (z_hist > 100) {
+            current = `CRITICAL: High recurrence risk (Z: ${z_hist.toFixed(2)}). Root cause '${hiCause}' detected.`;
+            future = `Potential for system-wide failure in ${hiType} unit within next shift.`;
+            prevent = `Action: Immediate RCA for ${hiCause} and replace critical ${hiType} parts.`;
+        } else if (z_hist > 50) {
+            current = `WARNING: Moderate instability. Historical downtime is accumulating.`;
+            future = `Reliability will decrease if ${hiCause} factor is not addressed.`;
+            prevent = `Action: Schedule secondary inspection for ${hiType} components.`;
+        } else {
+            current = "NORMAL: Equipment follows standard reliability curves.";
+            future = "Steady-state operation expected for current cycle.";
+            prevent = "Action: Continue standard PM and logging.";
+        }
+
+        // 3. ยิงข้อมูลเข้าสู่ ID ที่คุณแจ้งมา
+        const setVal = (id, text, color) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.innerText = text;
+                
+            }
+        };
+
+        let mainColor = z_hist > 100 ? "#ff3333" : (z_hist > 50 ? "#ffcc00" : "#00ff88");
+        setVal('current-analysis-hist', current, mainColor);
+        setVal('future-prediction-hist', future, mainColor);
+        setVal('prevention-plan-hist', prevent, mainColor);
+    }
+
+
+
+        function setAutoValues_machine(mode) {
+            // ฟังก์ชันช่วยสุ่มตัวเลขในช่วงที่กำหนด
+           const rand = (min, max) => (Math.random() * (max - min) + min).toFixed(1);
+            let data = {};
+
+            if (mode === 'random') {
+                mode = Math.random() > 0.5 ? 'warning' : 'critical';
+            }
+
+            switch (mode) {
+                case 'normal':
+                    // ปรับค่าให้ Z-score ออกมาประมาณ 80-90 (Low Risk)
+                    data = { vib: 1.0, temp: 40, pres: 8.0, volt: 200, err: 0 };
+                    break;
+                case 'warning':
+                    // ปรับค่าให้ Z-score ออกมาประมาณ 110-125 (Med Risk)
+                    data = { vib: 5.0, temp: 70, pres: 5.0, volt: 230, err: 2 };
+                    break;
+                case 'critical':
+                    // ปรับค่าให้ Z-score ออกมา > 140 (High Risk)
+                    data = { vib: 12.0, temp: 95, pres: 2.0, volt: 250, err: 10 };
+                    break;
+            }
+
+            // กรอกค่าลงใน Input ของ Machine
+            document.getElementById('m_vib').value = data.vib;
+            document.getElementById('m_temp').value = data.temp;
+            document.getElementById('m_press').value = data.pres;
+            document.getElementById('m_volt').value = data.volt;
+            document.getElementById('m_error').value = Math.floor(data.err);
+
+            // หลังจากกรอกเสร็จ ให้รันการคำนวณทันทีเพื่อให้ UI อัปเดต
+            calculateAllRisks();
+        }
+
+
+        function setHumanAuto(mode) {
+            const rand = (min, max) => (Math.random() * (max - min) + min).toFixed(2);
+            let data = {};
+
+            switch (mode) {
+               case 'normal':
+                    data = { walk: 0, move: 0, tool: 0, phone: 0, distract: 0, speed: 1.0, seq: 0, trend: 0, past: 0 };
+                    break;
+                case 'warning':
+                    // ให้ค่าอยู่ระหว่าง 0.5 - 1.0 เพื่อให้ z2 ดีดขึ้นมานิดหน่อย (ประมาณ 10-12)
+                    data = { walk: 0.5, move: 0.5, tool: 0.5, phone: 1.0, distract: 0.5, speed: 1.0, seq: 0.5, trend: 0.2, past: 0 };
+                    break;
+                case 'critical':
+                    // ค่าเยอะๆ ให้ z2 เกิน 15
+                    data = { walk: 3.0, move: 2.5, tool: 2.0, phone: 4.0, distract: 2.0, speed: 0.5, seq: 3.0, trend: 1.0, past: 1.0 };
+                    break;
+            }
+
+            // กรอกค่าลง Input (อ้างอิงตาม ID ใน HTML ของคุณ)
+            document.getElementById('h_walk').value = data.walk;
+            document.getElementById('h_move').value = data.move;
+            document.getElementById('h_tool').value = data.tool;
+            document.getElementById('h_phone').value = data.phone;
+            document.getElementById('h_distract').value = data.distract;
+            document.getElementById('h_speed').value = data.speed;
+            document.getElementById('h_seq').value = data.seq;
+            document.getElementById('h_trend').value = data.trend;
+            document.getElementById('h_past').value = data.past;
+
+            // รันการคำนวณใหม่ทันที
+            calculateAllRisks();
+        }
+
+
+        function setEnvAuto(mode) {
+            const rand = (min, max) => (Math.random() * (max - min) + min).toFixed(1);
+            let data = {};
+
+            switch (mode) {
+                case 'normal':
+                    // ค่าที่ทำให้ z_env ออกมาน้อยกว่า 20 (สีเขียว)
+                    data = { temp: 25, hum: 50, air: 0.1, light: 500, noise: 50, vib: 0.01 };
+                    break;
+                case 'warning':
+                    data = {
+                        temp: 32.0,
+                        hum: 60.0,
+                        air: 3.5,    // ลดลงจาก 6.5 เหลือ 3.5 (3.5 * 4.831 = ~16.9 แต้ม)
+                        light: 300.0,
+                        noise: 75.0,
+                        vib: 0.5     // ลดลงจาก 1.2 เหลือ 0.5 (0.5 * 5.758 = ~2.8 แต้ม)
+                    };
+                    break;
+                case 'critical':
+                    // ค่าที่ทำให้ z_env ทะลุ 40 (สีแดง)
+                    // ใช้ air และ vib สูงๆ เพราะตัวคูณในสมการคุณเยอะมาก
+                    data = {
+                        temp: 42.0,
+                        hum: 85.0,
+                        air: 15.0,    // (15 * 4.831) = 72 แต้ม -> ทะลุเกณฑ์ 40 แน่นอน
+                        light: 50.0,
+                        noise: 105.0,
+                        vib: 5.0      // (5 * 5.758) = 28 แต้ม
+                    };
+                    break;
+            }
+
+            // --- จุดสำคัญ: ต้องใส่ ID ให้ตรงกับที่ดึงใน calculateAllRisks ---
+            document.getElementById('e_temp').value = data.temp;
+            document.getElementById('e_hum').value = data.hum;
+            document.getElementById('e_air').value = data.air;
+            document.getElementById('e_light').value = data.light;
+            document.getElementById('e_noise').value = data.noise;
+            document.getElementById('e_vib').value = data.vib;
+
+            // สั่งคำนวณใหม่
+            calculateAllRisks();
+        }
+
+    function setHistAuto(mode) {
+        let data = {};
+        const rand = (min, max) => (Math.random() * (max - min) + min).toFixed(1);
+
+        switch (mode) {
+            case 'normal':
+                // z_hist ต่ำ: Downtime น้อย, ซ่อมง่าย, สาเหตุจาก Environment (ตัวลบเยอะ)
+                data = { down: 0.5, repair: 1, time: 10.0, type: 'Hydraulic', cause: 'Environment' };
+                break;
+            case 'warning':
+                // z_hist กลาง: Downtime 5 ชม., ซ่อมระดับ 3, สาเหตุจาก Deterioration
+                data = { down: 5.0, repair: 3, time: 14.0, type: 'Electrical', cause: 'Deterioration' };
+                break;
+            case 'critical':
+                // z_hist สูง: Downtime 15 ชม., ซ่อมยาก (5), สาเหตุจาก Operator (ตัวบวกเยอะ)
+                data = { down: 15.0, repair: 5, time: 22.0, type: 'Mechanical', cause: 'Operator' };
+                break;
+        }
+
+        // กรอกค่าลง Input
+        document.getElementById('hi_down').value = data.down;
+        document.getElementById('hi_repair_score').value = data.repair;
+        document.getElementById('hi_time').value = data.time;
+        document.getElementById('hi_type').value = data.type;
+        document.getElementById('hi_cause').value = data.cause;
+
+        // สั่งคำนวณใหม่
+        if (typeof calculateAllRisks === "function") {
+            calculateAllRisks();
+        }
+    }
 </script>
 

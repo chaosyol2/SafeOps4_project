@@ -308,53 +308,115 @@ function toggleNoti() {
 
 
 <script>
-    // 1. ฟังก์ชันสำหรับนับกล่องที่มีสี เหลือง หรือ แดง และอัปเดตตัวเลข
-    function updateAlertCounter() {
-        // เลือกกล่องทั้งหมดที่มีคลาสสีเหลือง หรือ สีแดง
-        const activeBoxes = document.querySelectorAll('.box.active-yellow, .box.active-red');
-        const totalAlerts = activeBoxes.length; // จำนวนที่นับได้
+    // // 1. ฟังก์ชันสำหรับนับกล่องที่มีสี เหลือง หรือ แดง และอัปเดตตัวเลข
+    // function updateAlertCounter() {
+    //     // เลือกกล่องทั้งหมดที่มีคลาสสีเหลือง หรือ สีแดง
+    //     const activeBoxes = document.querySelectorAll('.box.active-yellow, .box.active-red');
+    //     const totalAlerts = activeBoxes.length; // จำนวนที่นับได้
 
-        // ส่งตัวเลขที่นับได้ไปที่ฟังก์ชันแสดงผล
-        updateTotalAlert(totalAlerts);
+    //     // ส่งตัวเลขที่นับได้ไปที่ฟังก์ชันแสดงผล
+    //     updateTotalAlert(totalAlerts);
+    // }
+
+    // // 2. ฟังก์ชันแสดงผล (ที่คุณมีอยู่แล้ว แต่ปรับ ID ให้ตรงกัน)
+    // function updateTotalAlert(newCount) {
+    //     const countElement = document.getElementById('total-alert-count');
+    //     if (countElement) {
+    //         countElement.textContent = String(newCount).padStart(2, '0');
+
+    //         // ใส่ Effect กะพริบเฉพาะตอนที่ตัวเลขเปลี่ยน
+    //         countElement.classList.add('animate-pulse');
+    //         setTimeout(() => {
+    //             countElement.classList.remove('animate-pulse');
+    //         }, 500);
+    //     }
+    // }
+
+    // // 3. ตั้งค่า Click Event ให้กับทุกกล่อง
+    // const boxes = document.querySelectorAll('.box');
+    // boxes.forEach(box => {
+    //     box.addEventListener('click', function() {
+    //         // โลจิกเปลี่ยนสี (เหลือง -> แดง -> ปกติ)
+    //         if (!this.classList.contains('active-yellow') && !this.classList.contains('active-red')) {
+    //             this.classList.add('active-yellow');
+    //         } else if (this.classList.contains('active-yellow')) {
+    //             this.classList.remove('active-yellow');
+    //             this.classList.add('active-red');
+    //         } else {
+    //             this.classList.remove('active-red');
+    //         }
+
+    //         // --- หัวใจสำคัญ: ทุกครั้งที่คลิก ให้สั่ง "นับใหม่" ทันที ---
+    //         updateAlertCounter();
+    //     });
+    // });
+
+    // // 4. สั่งให้นับครั้งแรกตอนโหลดหน้าเว็บ (เผื่อมีค่าเริ่มต้น)
+    // window.onload = function() {
+    //     updateAlertCounter();
+    // };
+
+    // 1. ฟังก์ชันสุ่มสถานะ (สุ่มเหลือง 1-3 และ แดง 1)
+function randomAlerts() {
+    const boxes = document.querySelectorAll('.box');
+
+    // เคลียร์สถานะเดิมออกให้หมดก่อนสุ่มใหม่
+    boxes.forEach(box => {
+        box.classList.remove('active-yellow', 'active-red');
+    });
+
+    // แปลง NodeList เป็น Array เพื่อให้จัดการสุ่มง่ายขึ้น
+    const boxIndices = Array.from(Array(boxes.length).keys());
+
+    // ฟังก์ชันช่วยสุ่มดึงค่าออกจาก Array (เพื่อไม่ให้สุ่มซ้ำกล่องเดิม)
+    const pullRandomIndex = () => {
+        const randomIndex = Math.floor(Math.random() * boxIndices.length);
+        return boxIndices.splice(randomIndex, 1)[0];
+    };
+
+    // --- สุ่มสีแดง 1 กล่อง ---
+    if (boxIndices.length > 0) {
+        const redIndex = pullRandomIndex();
+        boxes[redIndex].classList.add('active-red');
     }
 
-    // 2. ฟังก์ชันแสดงผล (ที่คุณมีอยู่แล้ว แต่ปรับ ID ให้ตรงกัน)
-    function updateTotalAlert(newCount) {
-        const countElement = document.getElementById('total-alert-count');
-        if (countElement) {
-            countElement.textContent = String(newCount).padStart(2, '0');
-
-            // ใส่ Effect กะพริบเฉพาะตอนที่ตัวเลขเปลี่ยน
-            countElement.classList.add('animate-pulse');
-            setTimeout(() => {
-                countElement.classList.remove('animate-pulse');
-            }, 500);
+    // --- สุ่มสีเหลือง 1-3 กล่อง ---
+    const yellowCount = Math.floor(Math.random() * 3) + 1; // สุ่มเลข 1 ถึง 3
+    for (let i = 0; i < yellowCount; i++) {
+        if (boxIndices.length > 0) {
+            const yellowIndex = pullRandomIndex();
+            boxes[yellowIndex].classList.add('active-yellow');
         }
     }
 
-    // 3. ตั้งค่า Click Event ให้กับทุกกล่อง
-    const boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
-        box.addEventListener('click', function() {
-            // โลจิกเปลี่ยนสี (เหลือง -> แดง -> ปกติ)
-            if (!this.classList.contains('active-yellow') && !this.classList.contains('active-red')) {
-                this.classList.add('active-yellow');
-            } else if (this.classList.contains('active-yellow')) {
-                this.classList.remove('active-yellow');
-                this.classList.add('active-red');
-            } else {
-                this.classList.remove('active-red');
-            }
+    // หลังจากสุ่มเสร็จ สั่งให้นับเลขทันที
+    updateAlertCounter();
+}
 
-            // --- หัวใจสำคัญ: ทุกครั้งที่คลิก ให้สั่ง "นับใหม่" ทันที ---
-            updateAlertCounter();
-        });
-    });
+// 2. ฟังก์ชันนับและอัปเดตตัวเลข (คงเดิม)
+function updateAlertCounter() {
+    const activeBoxes = document.querySelectorAll('.box.active-yellow, .box.active-red');
+    updateTotalAlert(activeBoxes.length);
+}
 
-    // 4. สั่งให้นับครั้งแรกตอนโหลดหน้าเว็บ (เผื่อมีค่าเริ่มต้น)
-    window.onload = function() {
-        updateAlertCounter();
-    };
+// 3. ฟังก์ชันแสดงผลพร้อม Effect (คงเดิม)
+function updateTotalAlert(newCount) {
+    const countElement = document.getElementById('total-alert-count');
+    if (countElement) {
+        countElement.textContent = String(newCount).padStart(2, '0');
+        countElement.classList.add('animate-pulse');
+        setTimeout(() => countElement.classList.remove('animate-pulse'), 500);
+    }
+}
+
+// 4. การเรียกใช้งาน
+window.onload = function() {
+    randomAlerts(); // สุ่มทันทีเมื่อโหลดหน้าเว็บ
+
+    // (เพิ่มเติม) ถ้าอยากให้สุ่มใหม่ทุกๆ 5 วินาที สามารถใช้คำสั่งนี้ได้ครับ:
+    // setInterval(randomAlerts, 5000);
+};
+
 </script>
 
 
