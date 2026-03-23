@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <header>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
@@ -337,6 +338,24 @@
 </div>
 
 
+<div class="risk-monitor-box" style="
+    background: rgba(0, 10, 20, 0.8);
+    border: 1px solid #00f2fe;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    margin-top: 20px;
+">
+    <h4 style="font-family: 'Orbitron', sans-serif; color: #00f2fe; margin-top: 0; font-size: 0.9rem; letter-spacing: 1px;">
+        <i class="fas fa-satellite-dish"></i> LIVE RISK STREAMING
+    </h4>
+
+    <div style="height: 250px; position: relative;">
+        <canvas id="riskTrendChart"></canvas>
+    </div>
+</div>
+
+
 
 </body>
 
@@ -651,10 +670,26 @@
 
             // 5. ส่งค่าไปอัปเดต Gauge
             updateResultBox_Risk(finalWeighted, finalColor);
-            } catch (err) {
+
+            // หลังจากอัปเดต Gauge ใหญ่เสร็จแล้ว
+            // updateDailyChart(mScore, dScore, envDisplayScore, histScore, finalWeighted, finalColor);
+
+
+            updateDailyChart(
+                mScore,           // ค่าจาก Machine (10, 50, 100)
+                dScore,           // ค่าจาก Human (10, 50, 100)
+                envDisplayScore,  // ค่าจาก Env (10, 50, 100)
+                histScore,        // ค่าจาก Hist (10, 50, 100)
+                finalWeighted,    // คะแนนรวมถ่วงน้ำหนัก
+                finalColor        // สีสถานะ ("red", "yellow", "green")
+            );
+
+
+        } catch (err) {
                 console.error("Critical Calculation Error:", err);
                 updateResultBox_Risk(10); // กรณีพัง ให้แสดงค่าพื้นฐาน
             }
+
         }
 
 
@@ -1219,5 +1254,140 @@ function setAutoValues(mode) {
             calculateAllRisks();
         }
     }
+
+
+
+
+let myDailyChart;
+const ONE_DAY = 24 * 60 * 60 * 1000; // 1 วันในรูปแบบ ms
+
+// ฟังก์ชันสร้างข้อมูลเริ่มต้น (ย้อนหลัง 7 วัน) เพื่อไม่ให้กราฟโล่ง
+function getInitialDailyData(baseValue) {
+    let data = [];
+    let now = Date.now();
+    for (let i = 7; i >= 0; i--) {
+        data.push({
+            x: now - (i * ONE_DAY),
+            y: baseValue + (Math.random() * 5) // สุ่มค่าเริ่มต้นนิดหน่อยให้ดูสมจริง
+        });
+    }
+    return data;
+}
+
+// 1. ฟังก์ชัน Initialize กราฟ (เรียกครั้งเดียวตอนโหลดหน้า)
+function initDailyRiskChart() {
+    const ctx = document.getElementById('riskTrendChart').getContext('2d');
+
+    myDailyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [
+                { label: 'Machine', borderColor: '#3498db', borderWidth: 1, borderDash: [5, 5], data: getInitialDailyData(10), pointRadius: 2 },
+                { label: 'Human', borderColor: '#9b59b6', borderWidth: 1, borderDash: [5, 5], data: getInitialDailyData(10), pointRadius: 2 },
+                { label: 'Env', borderColor: '#e67e22', borderWidth: 1, borderDash: [5, 5], data: getInitialDailyData(10), pointRadius: 2 },
+                { label: 'History', borderColor: '#95a5a6', borderWidth: 1, borderDash: [5, 5], data: getInitialDailyData(10), pointRadius: 2 },
+                {
+                    label: 'TOTAL RISK',
+                    borderColor: '#2ecc71',
+                    borderWidth: 4,
+                    fill: true,
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                    data: getInitialDailyData(10),
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'realtime',
+                    realtime: {
+                        duration: 7 * ONE_DAY, // แสดงผลย้อนหลัง 7 วัน
+                        refresh: ONE_DAY,      // อัปเดตข้อมูลหลักทุก 1 วัน
+                        delay: 0,              // แสดงผลแบบ Real-time ทันที
+                        pause: false,
+                        ttl: 14 * ONE_DAY      // เก็บข้อมูลในหน่วยความจำ 14 วัน
+                    },
+                    time: { unit: 'day' },     // บังคับหน่วยแกน X เป็นรายวัน
+                    ticks: { color: '#888', font: { family: 'Orbitron', size: 10 } },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                y: {
+                    min: 0, max: 100,
+                    ticks: { color: '#888', font: { family: 'Orbitron', size: 10 } },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: { color: '#fff', font: { family: 'Orbitron', size: 10 } }
+                }
+            }
+        }
+    });
+}
+
+
+
+// ตัวแปรเก็บประวัติ (ย้อนหลัง 7 วัน) - ประกาศไว้นอกฟังก์ชัน
+let historyRecords = {
+    m: Array(7).fill(10),
+    h: Array(7).fill(10),
+    e: Array(7).fill(10),
+    hi: Array(7).fill(10),
+    total: Array(7).fill(10)
+};
+
+function updateDailyChart(m, h, e, hi, total, color) {
+    if (!myDailyChart) return;
+
+    const now = Date.now();
+    const ONE_DAY = 24 * 60 * 60 * 1000;
+    const themeColor = (color === "red") ? "#e74c3c" : (color === "yellow" ? "#f1c40f" : "#2ecc71");
+
+    // 1. อัปเดตประวัติ (เอาค่าใหม่ไปทับค่าล่าสุด และดันค่าเก่าไปข้างหลัง)
+    historyRecords.m.shift(); historyRecords.m.push(m);
+    historyRecords.h.shift(); historyRecords.h.push(h);
+    historyRecords.e.shift(); historyRecords.e.push(e);
+    historyRecords.hi.shift(); historyRecords.hi.push(hi);
+    historyRecords.total.shift(); historyRecords.total.push(total);
+
+    // 2. สร้าง Data สำหรับวาดกราฟ (อดีต 7 วัน + พยากรณ์ 3 วัน)
+    const prepareData = (historyArr, currentVal) => {
+        let plotData = [];
+        // ใส่ข้อมูลย้อนหลัง 7 วัน
+        for (let i = 0; i < 7; i++) {
+            plotData.push({ x: now - ((6 - i) * ONE_DAY), y: historyArr[i] });
+        }
+        // แถม: พยากรณ์ล่วงหน้า 3 วัน (แนวโน้มตามค่าปัจจุบัน)
+        for (let j = 1; j <= 3; j++) {
+            let drift = (currentVal >= 50) ? (Math.random() * 5) : (Math.random() * -3);
+            plotData.push({ x: now + (j * ONE_DAY), y: Math.max(0, Math.min(100, currentVal + drift)) });
+        }
+        return plotData;
+    };
+
+    // 3. ยัดข้อมูลลง Dataset
+    myDailyChart.data.datasets[0].data = prepareData(historyRecords.m, m);
+    myDailyChart.data.datasets[1].data = prepareData(historyRecords.h, h);
+    myDailyChart.data.datasets[2].data = prepareData(historyRecords.e, e);
+    myDailyChart.data.datasets[3].data = prepareData(historyRecords.hi, hi);
+    myDailyChart.data.datasets[4].data = prepareData(historyRecords.total, total);
+
+    // 4. เปลี่ยนสีเส้น TOTAL ให้เรืองแสงตามสถานะ
+    myDailyChart.data.datasets[4].borderColor = themeColor;
+    myDailyChart.data.datasets[4].backgroundColor = themeColor + "22"; // Shadow Fill
+
+    myDailyChart.update();
+}
+
+
+
+
+// เรียก Init ตอนโหลดหน้า
+window.addEventListener('load', initDailyRiskChart);
 </script>
 
