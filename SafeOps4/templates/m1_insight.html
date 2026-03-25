@@ -11,6 +11,7 @@
             --neon-green: #00ff88;
             --neon-blue: #00f2fe;
             --neon-yellow: #ffcc00;
+            --neon-orange: #ff9f43;
             --neon-red: #ff4444;
             --bg-dark: #001637;
             --panel-bg: rgba(13, 25, 48, 0.95);
@@ -42,7 +43,6 @@
             letter-spacing: 1px;
         }
 
-        /* --- Risk Classification Grid --- */
         .risk-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -56,11 +56,12 @@
             padding: 20px;
             border: 1px solid rgba(255,255,255,0.1);
             position: relative;
-            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .risk-panel.alert { border-color: var(--neon-red); box-shadow: inset 0 0 15px rgba(255, 68, 68, 0.1); }
-        .risk-panel.warning { border-color: var(--neon-yellow); }
+        .risk-panel:hover { transform: translateY(-5px); border-color: var(--neon-blue); }
+        .risk-panel.warning { border-color: var(--neon-yellow); box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.05); }
 
         .category-title {
             font-family: 'Orbitron', sans-serif;
@@ -93,9 +94,6 @@
             justify-content: space-between;
         }
 
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-
-        /* --- Main Content --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -112,13 +110,13 @@
         .total-display {
             text-align: center;
             padding: 40px;
-            background: radial-gradient(circle at center, rgba(0,255,136,0.1) 0%, transparent 80%);
+            background: radial-gradient(circle at center, rgba(255, 204, 0, 0.1) 0%, transparent 80%);
         }
 
         .total-score {
             font-size: 80px;
             font-family: 'Orbitron', sans-serif;
-            color: var(--neon-green);
+            color: var(--neon-yellow);
             line-height: 1;
         }
 
@@ -131,83 +129,56 @@
             text-decoration: none;
             font-size: 12px;
         }
-
-        .formula-table { width: 100%; font-size: 11px; color: #777; margin-top: 20px; border-top: 1px solid #222; }
     </style>
 </head>
 <body>
 
-        <div class="header-nav">
-            <div>
-                <span class="machine-title">M1 : CNC LASER | AI DIAGNOSTICS</span>
-                <div style="font-size: 12px; color: #556688;">Predictive Maintenance Modeling v2.4</div>
-            </div>
-            <a href="{{ url_for('index') }}" class="back-btn">← RETURN</a>
+    <div class="header-nav">
+        <div>
+            <span class="machine-title">M1 : CNC LASER | AI DIAGNOSTICS</span>
+            <div style="font-size: 12px; color: #556688;">Predictive Maintenance Modeling v2.4</div>
         </div>
-
-   <div class="risk-grid">
-    <div class="risk-panel alert"
-         onclick="location.href='{{ url_for('m1_machine_risk_page') }}';"
-         style="cursor: pointer; transition: 0.3s;">
-
-        <span class="category-title">MACHINE RISK</span>
-        <span class="category-score" style="color:var(--neon-red)">45.8</span>
-
-        <ul class="diag-list">
-            <li><span>Vibration (High)</span><span style="color:var(--neon-red)">●</span></li>
-            <li><span>Temperature</span><span style="color:var(--neon-green)">●</span></li>
-            <li><span>Pneumatic Press.</span><span style="color:var(--neon-green)">●</span></li>
-        </ul>
+        <a href="{{ url_for('index') }}" class="back-btn">← RETURN</a>
     </div>
 
-        <!-- <div class="risk-panel warning" onclick="location.href='m1_human_risk.html';" style="cursor: pointer; transition: 0.3s;">
-            <span class="category-title">HUMAN RISK</span>
-            <span class="category-score" style="color:var(--neon-yellow)">32.1</span>
+    <div class="risk-grid">
+        <div class="risk-panel warning" onclick="location.href='{{ url_for('m1_machine_risk_page') }}';">
+            <span class="category-title">MACHINE RISK</span>
+            <span class="category-score" style="color:var(--neon-yellow)">54.2</span>
             <ul class="diag-list">
-                <li><span>Phone Usage</span><span style="color:var(--neon-yellow)">●</span></li>
-                <li><span>Work Speed</span><span style="color:var(--neon-green)">●</span></li>
-                <li><span>Task Sequence</span><span style="color:var(--neon-green)">●</span></li>
+                <li><span>Vibration (High)</span><span style="color:var(--neon-yellow)">●</span></li>
+                <li><span>Temperature</span><span style="color:var(--neon-yellow)">●</span></li>
+                <li><span>Pneumatic Press.</span><span style="color:var(--neon-green)">●</span></li>
             </ul>
-        </div> -->
-        <div class="risk-panel warning"
-            onclick="location.href='{{ url_for('m1_human_risk_page') }}';"
-            style="cursor: pointer; transition: 0.3s;">
+        </div>
 
+        <div class="risk-panel warning" onclick="location.href='{{ url_for('m1_human_risk_page') }}';">
             <span class="category-title">HUMAN RISK</span>
-            <span class="category-score" style="color:var(--neon-yellow)">32.1</span>
-
+            <span class="category-score" style="color:var(--neon-yellow)">52.5</span>
             <ul class="diag-list">
-                <li><span>Phone Usage</span><span style="color:var(--neon-yellow)">●</span></li>
-                <li><span>Work Speed</span><span style="color:var(--neon-green)">●</span></li>
+                <li><span>Operator Fatigue</span><span style="color:var(--neon-yellow)">●</span></li>
+                <li><span>Work Speed</span><span style="color:var(--neon-yellow)">●</span></li>
                 <li><span>Task Sequence</span><span style="color:var(--neon-green)">●</span></li>
             </ul>
         </div>
 
-        <div class="risk-panel"
-            onclick="location.href='{{ url_for('m1_env_risk_page') }}';"
-            style="cursor: pointer; transition: 0.3s;">
-
+        <div class="risk-panel warning" onclick="location.href='{{ url_for('m1_env_risk_page') }}';">
             <span class="category-title">ENVIRONMENT RISK</span>
-            <span class="category-score" style="color:var(--neon-blue)">48.2</span>
-
+            <span class="category-score" style="color:var(--neon-orange)">56.8</span>
             <ul class="diag-list">
-                <li><span>Humidity</span><span style="color:var(--neon-blue)">●</span></li>
+                <li><span>Humidity (Elevated)</span><span style="color:var(--neon-orange)">●</span></li>
                 <li><span>Air Quality</span><span style="color:var(--neon-green)">●</span></li>
                 <li><span>Noise Level</span><span style="color:var(--neon-blue)">●</span></li>
             </ul>
         </div>
 
-       <div class="risk-panel"
-            onclick="location.href='{{ url_for('m1_his_risk_page') }}';"
-            style="cursor: pointer; transition: 0.3s;">
-
+        <div class="risk-panel warning" onclick="location.href='{{ url_for('m1_his_risk_page') }}';">
             <span class="category-title">HISTORICAL RISK</span>
-            <span class="category-score" style="color:#a29bfe">25.5</span>
-
+            <span class="category-score" style="color:var(--neon-yellow)">51.5</span>
             <ul class="diag-list">
-                <li><span>Downtime Hist.</span><span style="color:var(--neon-green)">●</span></li>
+                <li><span>Downtime Hist.</span><span style="color:var(--neon-yellow)">●</span></li>
                 <li><span>Repair Action</span><span style="color:var(--neon-green)">●</span></li>
-                <li><span>Failure Freq.</span><span style="color:var(--neon-green)">●</span></li>
+                <li><span>Failure Freq.</span><span style="color:var(--neon-yellow)">●</span></li>
             </ul>
         </div>
     </div>
@@ -217,13 +188,13 @@
             <h3 style="color:var(--neon-blue); font-family: 'Orbitron'; font-size: 14px; margin-top: 0;">FINAL AI ASSESSMENT</h3>
             <div class="total-display">
                 <div style="font-size: 11px; letter-spacing: 2px; color: #888;">OVERALL RISK INDEX</div>
-                <div class="total-score">38.7</div>
-                <div style="color: var(--neon-green); font-weight: bold; margin-top: 10px;">CLASS 0: STABLE OPERATION</div>
+                <div class="total-score">55.0</div>
+                <div style="color: var(--neon-yellow); font-weight: bold; margin-top: 10px;">CLASS 1: CAUTIONARY MONITORING</div>
             </div>
 
-            <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-left: 4px solid var(--neon-red);">
-                <strong style="color: var(--neon-red); font-size: 13px;">AI CLASSIFICATION: MECHANICAL ANOMALY</strong>
-                <p style="font-size: 12px; color: #aaa; margin: 5px 0;">Primary Cause: Vibration (4.29 weight) is trending upwards. Mechanical Expertise intervention suggested within 12 hours.</p>
+            <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-left: 4px solid var(--neon-yellow);">
+                <strong style="color: var(--neon-yellow); font-size: 13px;">AI CLASSIFICATION: TRENDING ANOMALY</strong>
+                <p style="font-size: 12px; color: #aaa; margin: 5px 0;">Primary Cause: Multi-factor convergence. Vibration and Humidity are both trending towards Warning levels. System recommends inspection within 24 hours.</p>
             </div>
         </div>
 
@@ -235,15 +206,15 @@
         </div>
 
         <div class="panel" style="grid-column: span 2;">
-            <h3 style="color:var(--neon-yellow); font-family: 'Orbitron'; font-size: 14px; margin-top: 0;">ACTIVE AI MATHEMATICAL MODELS</h3>
+            <h3 style="color:var(--neon-yellow); font-family: 'Orbitron'; font-size: 14px; margin-top: 0;">ACTIVE AI MATHEMATICAL MODELS (CALIBRATED)</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; font-size: 11px; font-family: monospace; color: #667788;">
                 <div>
-                    <div>Machine: 4.29(Vib) + 0.4167(Temp) - 0.8(Pres) + 0.375(Volt) + 0.067(Err) - 15.57</div>
-                    <div style="margin-top: 8px;">Environment: 5.618(Temp) + 2.893(Hum) + 4.831(Air) - 2.816(Light) + 5.758(Vib) + 42.7</div>
+                    <div>Machine: 4.52(Vib) + 1.15(Temp) - 0.8(Pres) + 12.5 = 54.2</div>
+                    <div style="margin-top: 8px;">Environment: 3.22(Humid) + 2.15(Temp) + 18.4 = 56.8</div>
                 </div>
                 <div>
-                    <div>Human (z₂): +1.52(Walk) + 1.59(Unsafe) + 2.16(Tool) + 2.21(Phone) + 2.39(Past) + 7.462</div>
-                    <div style="margin-top: 8px;"></div>Hist: 3.84(Prev_Down) + 2.15(Repair_Freq) + 4.62(Fail_Pattern) + 18.25</div>
+                    <div>Human: 2.12(Fatigue) + 1.45(Speed) + 15.2 = 52.5</div>
+                    <div style="margin-top: 8px;">Final Index: (R_m + R_e + R_h + R_hist)/4 + Adj(1.25) = 55.0</div>
                 </div>
             </div>
         </div>
@@ -257,9 +228,9 @@
                 labels: ['08:00', '12:00', '16:00', '20:00', '00:00', '04:00', '08:00'],
                 datasets: [{
                     label: 'Predicted Risk Level',
-                    data: [30, 35, 38.7, 42, 45, 43, 40],
-                    borderColor: '#00f2fe',
-                    backgroundColor: 'rgba(0, 242, 254, 0.1)',
+                    data: [45, 48, 55, 57, 56, 54, 55],
+                    borderColor: '#ffcc00',
+                    backgroundColor: 'rgba(255, 204, 0, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]

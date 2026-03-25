@@ -146,7 +146,70 @@
             notiElement.src = './static/images/Unnoti_bell.png';
         }
     }
+
+
+   function sendData() {
+    const inputField = document.getElementById('user-id');
+    const userId = inputField.value.trim();
+    const statusMsg = document.getElementById('status-message');
+
+    if (userId === "") {
+        statusMsg.style.color = "#ff4d4d";
+        statusMsg.textContent = "> ERROR: ID REQUIRED";
+        return;
+    }
+
+    // เริ่มการส่งข้อมูลจริง
+    statusMsg.style.color = "#00f2fe";
+    statusMsg.textContent = "> TRANSMITTING DATA...";
+
+    fetch('/submit_id', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: userId })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === "success") {
+            statusMsg.style.color = "#00f2fe";
+            statusMsg.textContent = "> " + data.message;
+            inputField.value = ""; // ล้างช่องกรอกเมื่อสำเร็จ
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        statusMsg.style.color = "#ff4d4d";
+        statusMsg.textContent = "> CONNECTION FAILED: " + error.message;
+    });
+}
 </script>
+
+
+
+<div style="margin-top: 40px; padding: 20px; border: 1px dashed rgba(0, 242, 254, 0.3); background: rgba(0, 242, 254, 0.02); display: flex; flex-direction: column; align-items: center;">
+    <label for="user-id" style="color: #00f2fe; font-family: 'Orbitron'; font-size: 12px; margin-bottom: 10px; letter-spacing: 2px;">
+        ENTER OPERATOR ID TO CONNECT
+    </label>
+    <div style="display: flex; gap: 10px; width: 100%; max-width: 400px;">
+        <input type="text" id="user-id" placeholder="ID-XXXXX"
+            style="flex-grow: 1; background: rgba(0,0,0,0.5); border: 1px solid #00f2fe; color: #fff; padding: 10px; font-family: 'Orbitron'; outline: none; box-shadow: 0 0 5px rgba(0, 242, 254, 0.2);">
+
+        <button onclick="sendData()"
+            style="background: #00f2fe; color: #000; border: none; padding: 10px 25px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase;">
+            Submit
+        </button>
+    </div>
+    <p id="status-message" style="margin-top: 10px; font-size: 11px; color: #00f2fe; height: 15px;"></p>
+</div>
+
+
+
 
 </body>
 </html>

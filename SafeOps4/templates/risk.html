@@ -52,97 +52,94 @@
     </div>
 
     <!-- TOP SUMMARY -->
-    <div class="avg-risk-summary">
-        <div class="avg-risk-left">
-            <div class="avg-risk-date" id="risk-date">21 March 2026 | 18:08</div>
-            <div class="avg-risk-title">AVERAGE RISK</div>
-            <div class="avg-risk-score-row">
-                <span class="avg-risk-score">36.12%</span>
-                <span class="avg-risk-badge low">LOW</span>
-            </div>
-            <div class="avg-risk-note">
-                Overall factory condition remains stable, but several operational factors still require monitoring.
-            </div>
+   <div class="avg-risk-summary">
+    <div class="avg-risk-left">
+        <div class="avg-risk-date" id="risk-date">21 March 2026 | 18:08</div>
+        <div class="avg-risk-title">AVERAGE RISK</div>
+        <div class="avg-risk-score-row">
+            <span class="avg-risk-score" style="color: #ffcc00;">60.9%</span>
+            <span class="avg-risk-badge" style="background: rgba(255, 159, 67, 0.2); color: #ff9f43; border: 1px solid #ff9f43;">CAUTION</span>
         </div>
-
-        <div class="avg-risk-right">
-            <div class="risk-ring-card">
-                <div class="risk-ring">
-                    <div class="risk-ring-inner">36%</div>
-                </div>
-                <div class="risk-ring-label">Current Risk Level</div>
-            </div>
+        <div class="avg-risk-note">
+            AI Analysis: Increased risk detected due to concurrent machine vibrations and environmental factors. Enhanced monitoring recommended.
         </div>
     </div>
+
+    <div class="avg-risk-right">
+        <div class="risk-ring-card">
+            <div class="risk-ring" style="background: conic-gradient(#ffcc00 60.9%, #1a2a4a 0deg);">
+                <div class="risk-ring-inner">61%</div>
+            </div>
+            <div class="risk-ring-label">Current Risk Level</div>
+        </div>
+    </div>
+</div>
 
     <!-- BREAKDOWN -->
-    <div class="risk-card-grid">
+  <div class="risk-card-grid">
 
-        <div class="risk-card machine">
-            <div class="risk-card-top">
-                <span class="risk-card-title">MACHINE RISK</span>
-                <span class="risk-card-value">34.71%</span>
-            </div>
-
-            <div class="risk-bar">
-                <div class="risk-fill machine-fill" style="width: 34.71%;"></div>
-            </div>
-
-            <div class="risk-card-desc">
-                5 machines operating under abnormal conditions may increase accident risk.
-            </div>
+    <div class="risk-card machine">
+        <div class="risk-card-top">
+            <span class="risk-card-title">MACHINE RISK</span>
+            <span class="risk-card-value">58.40%</span>
         </div>
-
-        <div class="risk-card human">
-            <div class="risk-card-top">
-                <span class="risk-card-title">HUMAN RISK</span>
-                <span class="risk-card-value">22.78%</span>
-            </div>
-
-            <div class="risk-bar">
-                <div class="risk-fill human-fill" style="width: 22.78%;"></div>
-            </div>
-
-            <div class="risk-card-desc">
-                3 workers were detected using mobile phones while walking inside the factory area.
-            </div>
+        <div class="risk-bar">
+            <div class="risk-fill machine-fill" style="width: 58.40%; background: #ffcc00;"></div>
         </div>
-
-        <div class="risk-card env">
-            <div class="risk-card-top">
-                <span class="risk-card-title">ENVIRONMENT RISK</span>
-                <span class="risk-card-value">50.89%</span>
-            </div>
-
-            <div class="risk-bar">
-                <div class="risk-fill env-fill" style="width: 50.89%;"></div>
-            </div>
-
-            <div class="risk-card-desc">
-                Ambient temperature reached 39.58°C, increasing the risk of machine overheating and worker discomfort.
-            </div>
-        </div>
-
+        <div class="risk-card-desc">Mechanical vibration in Section M1-M3 exceeds normal thresholds.</div>
     </div>
 
-    <!-- EXTRA SUMMARY -->
-    <div class="risk-bottom-panel">
-        <div class="risk-bottom-box">
-            <div class="bottom-label">TOP CONCERN</div>
-            <div class="bottom-value env-text">Environment Risk</div>
+    <div class="risk-card human">
+        <div class="risk-card-top">
+            <span class="risk-card-title">HUMAN RISK</span>
+            <span class="risk-card-value">52.50%</span>
         </div>
-
-        <div class="risk-bottom-box">
-            <div class="bottom-label">MOST CRITICAL FACTOR</div>
-            <div class="bottom-value">High temperature condition</div>
+        <div class="risk-bar">
+            <div class="risk-fill human-fill" style="width: 52.50%; background: #ffcc00;"></div>
         </div>
-
-        <div class="risk-bottom-box">
-            <div class="bottom-label">RECOMMENDED ACTION</div>
-            <div class="bottom-value">Inspect cooling system and reinforce worker safety monitoring</div>
-        </div>
+        <div class="risk-card-desc">Safety protocol alerts: Minor PPE compliance issues detected by AI Vision.</div>
     </div>
 
+    <div class="risk-card env">
+        <div class="risk-card-top">
+            <span class="risk-card-title">ENVIRONMENT RISK</span>
+            <span class="risk-card-value">72.30%</span>
+        </div>
+        <div class="risk-bar">
+            <div class="risk-fill env-fill" style="width: 72.30%; background: #ff4444;"></div>
+        </div>
+        <div class="risk-card-desc">High humidity and ambient temperature are affecting system stability.</div>
+    </div>
+
+    <div class="risk-card hist">
+        <div class="risk-card-top">
+            <span class="risk-card-title">HISTORICAL RISK</span>
+            <span class="risk-card-value">60.15%</span> </div>
+        <div class="risk-bar">
+            <div class="risk-fill hist-fill" style="width: 60.15%;"></div>
+        </div>
+        <div class="risk-card-desc">Past 7-day average risk data showing an upward trend in overall anomalies.</div>
+    </div>
+
+</div>
+
+
+
+
+
+<div class="risk-bottom-panel">
+    <div class="risk-bottom-box">
+        <div class="bottom-label">HISTORICAL TREND</div>
+        <div class="bottom-value" style="color: #ffcc00;">60.4% (Past 24H Avg)</div>
+    </div>
+    <div class="risk-bottom-box">
+        <div class="bottom-label">TOP CONCERN</div>
+        <div class="bottom-value env-text">Overheating Risk</div>
+    </div>
+    <div class="risk-bottom-box">
+        <div class="bottom-label">RECOMMENDED ACTION</div>
+        <div class="bottom-value">Deploy maintenance team to Section M1 and adjust ventilation.</div>
+    </div>
 </div>
 
 <script>

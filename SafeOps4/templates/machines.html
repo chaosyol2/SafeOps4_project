@@ -57,129 +57,125 @@
 
 
     <!-- Machine Item 01 -->
-            <div class="machine-card" style="border-left: 5px solid #00ff88; background: rgba(30,30,35,0.95); padding: 30px; border-radius: 12px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #fff; min-width: 550px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+       <div class="machine-card" style="border-left: 5px solid #ffcc00; background: rgba(30,30,35,0.95); padding: 30px; border-radius: 12px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #fff; min-width: 550px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
 
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                <div>
-                    <h2 style="margin: 0; font-size: 24px; color: #fff; letter-spacing: 0.5px;">M1 : CNC Machine #1</h2>
-                    <small style="color: #00ff88; font-weight: bold; letter-spacing: 1px;">● STATUS: OPERATIONAL</small>
-                </div>
-                <div style="text-align: right;">
-                   <a href="{{ url_for('m1_insight_page') }}" style="text-decoration: none;">
-                        <button style="background: #00ff88; color: #000; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px;">
-                            <span>+</span> AI INSIGHT
-                        </button>
-                    </a>
-                </div>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+        <div>
+            <h2 style="margin: 0; font-size: 24px; color: #fff; letter-spacing: 0.5px;">M1 : CNC Machine #1</h2>
+            <small style="color: #ffcc00; font-weight: bold; letter-spacing: 1px;">● STATUS: CAUTIONARY MONITORING</small>
+        </div>
+        <div style="text-align: right;">
+            <a href="{{ url_for('m1_insight_page') }}" style="text-decoration: none;">
+                <button style="background: #00ff88; color: #000; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px;">
+                    <span>+</span> AI INSIGHT
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 0 0 20px 0;">
+
+    <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 25px;">
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+                <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Type of Machine</span>
+                <span style="font-size: 15px;">Cutting / Machining</span>
             </div>
-
-            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 0 0 20px 0;">
-
-            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 25px;">
-
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <div>
-                        <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Type of Machine</span>
-                        <span style="font-size: 15px;">Cutting / Machining</span>
-                    </div>
-                    <div>
-                        <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Person In Charge</span>
-                        <span style="font-size: 15px;">Mr. Marco (Senior Engineer)</span>
-                    </div>
-                    <div>
-                        <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Operation Lifespan</span>
-                        <span style="font-size: 15px; color: #3498db;">4,250 Hours (Next Service: 5,000)</span>
-                    </div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
-                            <span style="color: #ccc;">🌡️ Temp</span>
-                            <span style="color: #00ff88; font-weight: bold;">42.0°C</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
-                            <span style="color: #ccc;">📳 Vibration</span>
-                            <span style="color: #00ff88; font-weight: bold;">2.4 mm/s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px;">
-                            <span style="color: #ccc;">💧 Humidity</span>
-                            <span style="color: #00ff88; font-weight: bold;">45%</span>
-                        </div>
-                    </div>
-
-                    <div style="background: rgba(255,204,0,0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,204,0,0.2);">
-                        <span style="font-size: 10px; color: #ffcc00; text-transform: uppercase; font-weight: bold;">Risk Score</span>
-                        <div style="font-size: 22px; font-weight: bold; color: #ffcc00;">12 <span style="font-size: 14px; opacity: 0.7;">/ 100</span></div>
-                    </div>
-                </div>
-
+            <div>
+                <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Person In Charge</span>
+                <span style="font-size: 15px;">Mr. Marco (Senior Engineer)</span>
+            </div>
+            <div>
+                <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Operation Lifespan</span>
+                <span style="font-size: 15px; color: #ffcc00;">4,250 Hours (Next Service: 5,000)</span>
             </div>
         </div>
 
-
-
-        <!-- Machine Item 02 -->
-
-        <div class="machine-card" style="border-left: 5px solid #ffcc00; background: rgba(30,30,35,0.95); padding: 30px; border-radius: 12px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #fff; min-width: 550px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); ">
-
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                <div>
-                    <h2 style="margin: 0; font-size: 24px; color: #fff; letter-spacing: 0.5px;">M2 : CNC Machine #2</h2>
-                    <small style="color: #ffcc00; font-weight: bold; letter-spacing: 1px;">● STATUS: MAINTENANCE REQUIRED</small>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="color: #ccc;">🌡️ Temp</span>
+                    <span style="color: #ffcc00; font-weight: bold;">42.0°C</span>
                 </div>
-                <div style="text-align: right;">
-                    <button style="background: #00ff88; color: #000; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px;">
-                        <span>+</span> AI INSIGHT
-                    </button>
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="color: #ccc;">📳 Vibration</span>
+                    <span style="color: #ffcc00; font-weight: bold;">4.2 mm/s</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                    <span style="color: #ccc;">💧 Humidity</span>
+                    <span style="color: #ff9f43; font-weight: bold;">58%</span>
                 </div>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 0 0 20px 0;">
-
-            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 25px;">
-
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <div>
-                        <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Type of Machine</span>
-                        <span style="font-size: 15px;">Cutting / Machining</span>
-                    </div>
-                    <div>
-                        <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Person In Charge</span>
-                        <span style="font-size: 15px;">Mr. Marco (Senior Engineer)</span>
-                    </div>
-                    <div>
-                        <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Operation Lifespan</span>
-                        <span style="font-size: 15px; color: #ffcc00;">7,820 Hours (Overdue: 7,500)</span>
-                    </div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
-                            <span style="color: #ccc;">🌡️ Temp</span>
-                            <span style="color: #ffcc00; font-weight: bold;">54.5°C</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
-                            <span style="color: #ccc;">📳 Vibration</span>
-                            <span style="color: #ff4444; font-weight: bold;">6.8 mm/s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px;">
-                            <span style="color: #ccc;">💧 Humidity</span>
-                            <span style="color: #00ff88; font-weight: bold;">48%</span>
-                        </div>
-                    </div>
-
-                    <div style="background: rgba(255,68,68,0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,68,68,0.2);">
-                        <span style="font-size: 10px; color: #ff4444; text-transform: uppercase; font-weight: bold;">Risk Score</span>
-                        <div style="font-size: 22px; font-weight: bold; color: #ff4444;">68 <span style="font-size: 14px; opacity: 0.7;">/ 100</span></div>
-                    </div>
-                </div>
-
+            <div style="background: rgba(255,204,0,0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,204,0,0.2);">
+                <span style="font-size: 10px; color: #ffcc00; text-transform: uppercase; font-weight: bold;">Risk Score</span>
+                <div style="font-size: 22px; font-weight: bold; color: #ffcc00;">55 <span style="font-size: 14px; opacity: 0.7;">/ 100</span></div>
             </div>
         </div>
 
+    </div>
+</div>
 
+
+
+    <div class="machine-card" style="border-left: 5px solid #ffcc00; background: rgba(30,30,35,0.95); padding: 30px; border-radius: 12px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #fff; min-width: 550px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+        <div>
+            <h2 style="margin: 0; font-size: 24px; color: #fff; letter-spacing: 0.5px;">M2 : CNC Machine #2</h2>
+            <small style="color: #ffcc00; font-weight: bold; letter-spacing: 1px;">● STATUS: MAINTENANCE REQUIRED</small>
+        </div>
+        <div style="text-align: right;">
+            <button style="background: #00ff88; color: #000; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px;">
+                <span>+</span> AI INSIGHT
+            </button>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 0 0 20px 0;">
+
+    <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 25px;">
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+                <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Type of Machine</span>
+                <span style="font-size: 15px;">Cutting / Machining</span>
+            </div>
+            <div>
+                <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Person In Charge</span>
+                <span style="font-size: 15px;">Mr. Marco (Senior Engineer)</span>
+            </div>
+            <div>
+                <span style="color: #888; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Operation Lifespan</span>
+                <span style="font-size: 15px; color: #ffcc00;">7,820 Hours (Overdue: 7,500)</span>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="color: #ccc;">🌡️ Temp</span>
+                    <span style="color: #ffcc00; font-weight: bold;">54.5°C</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="color: #ccc;">📳 Vibration</span>
+                    <span style="color: #ff4444; font-weight: bold;">6.8 mm/s</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                    <span style="color: #ccc;">💧 Humidity</span>
+                    <span style="color: #00ff88; font-weight: bold;">48%</span>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,204,0,0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,204,0,0.2);">
+                <span style="font-size: 10px; color: #ffcc00; text-transform: uppercase; font-weight: bold;">Risk Score</span>
+                <div style="font-size: 22px; font-weight: bold; color: #ffcc00;">68 <span style="font-size: 14px; opacity: 0.7;">/ 100</span></div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
            <!-- Machine Item 03 -->

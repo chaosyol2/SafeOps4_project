@@ -1,5 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request, jsonify
+import datetime
 
 app = Flask(__name__)
 
@@ -122,6 +124,12 @@ def risk_page():
     # ในอนาคตคุณสามารถคำนวณค่า Risk รายตัวมาโชว์ที่นี่ได้
     return render_template('risk.html')
 
+@app.route('/m1')
+def m1_page():
+
+    return render_template('m1.html')
+
+
 @app.route('/m1_insight')
 def m1_insight_page():
     # ในอนาคตคุณสามารถใส่ Logic วิเคราะห์ข้อมูลด้วย AI ตรงนี้ได้
@@ -152,5 +160,45 @@ def demo():
     return render_template('demo.html')
 
 
+
+# นำค่าจาก LINE Developers Console มาใส่
+LINE_ACCESS_TOKEN = 'szTR83OFlRljGF/xgWOWrDaxcCYlmUvnXRW/FVxMdM3iR0DiwqFUlLoXlcmELM4IXq9ndS+cgPVLSkC8S+aCn4redIkTu3UZPg11WnTZxI9WYzBr1+XPaAx81DzNizJfLkc79SSiTxCjWLN+jq4S1AdB04t89/1O/w1cDnyilFU='
+USER_ID = 'U1e788bdc7d56c68103ab09f264631f33' # ID ของคุณที่จะให้บอททักไปหา
+
+def send_line_message(text):
+    url = 'https://api.line.me/v2/bot/message/push'
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {LINE_ACCESS_TOKEN}'
+    }
+    data = {
+        "to": USER_ID,
+        "messages": [
+            {
+                "type": "text",
+                "text": text
+            }
+        ]
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.status_code
+
+@app.route('/submit_id', methods=['POST'])
+def submit_id():
+    data = request.get_json()
+    user_id = data.get('id')
+
+    if user_id:
+        # ข้อความแบบ Professional สำหรับ Smart Factory
+        log_msg = f"🔧 [SMART FACTORY SYSTEM]\n────────────────\n📢 Status: Operator Login\n👤 ID: {user_id}\n✅ Connection: Established"
+
+        status = send_line_message(log_msg)
+
+        if status == 200:
+            return jsonify({"status": "success", "message": "Logged & Sent to LINE Bot"})
+        else:
+            return jsonify({"status": "error", "message": "LINE API Error"}), 500
+
+    return jsonify({"status": "error", "message": "Invalid ID"}), 400
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

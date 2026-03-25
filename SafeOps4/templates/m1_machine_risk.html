@@ -2,31 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M1 Sensor History Log</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body { background: #001637; color: #e0e0e0; font-family: 'Inter', sans-serif; padding: 25px; }
+        .data-label { font-size: 11px; color: #888; text-transform: uppercase; }
+        .data-value { font-family: 'Orbitron'; font-size: 20px; color: #fff; }
+        .realtime-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; margin: 20px 0; }
+        .data-card { background: rgba(13, 25, 48, 0.95); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid #00f2fe; }
+        .status-normal { color: #00ff88; }
+        .status-warn { color: #ffcc00; }
+        .status-critical { color: #ff4444; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+        th { text-align: left; padding: 12px; border-bottom: 2px solid rgba(255,255,255,0.1); color: #00f2fe; font-family: 'Orbitron'; font-size: 11px; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    </style>
 </head>
 <body>
 
-   <div class="header-section">
+   <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
         <div>
             <div class="data-label">Logged Data Analysis</div>
             <div style="font-family: 'Orbitron'; font-size: 22px; color: #00f2fe;">M1 : HOURLY SENSOR LOGS</div>
         </div>
-        <!-- แก้ไข href ตรงนี้ครับ -->
-        <a href="{{ url_for('m1_insight_page') }}" class="history-link">← RETURN TO DASHBOARD</a>
+        <a href="{{ url_for('m1_insight_page') }}" style="color: #00f2fe; text-decoration: none; font-size: 12px; border: 1px solid #00f2fe; padding: 8px 15px; border-radius: 4px;">← RETURN TO DASHBOARD</a>
     </div>
 
-    <div class="realtime-row">
-        <div class="data-card" style="border-color: #ff4444;"><div class="data-label">Vibration</div><div class="data-value">5.64</div></div>
-        <div class="data-card"><div class="data-label">Temperature</div><div class="data-value">42.8</div></div>
-        <div class="data-card"><div class="data-label">Pressure</div><div class="data-value">6.2</div></div>
-        <div class="data-card"><div class="data-label">Voltage</div><div class="data-value">382</div></div>
-        <div class="data-card" style="border-color: #ffcc00;"><div class="data-label">Error Code</div><div class="data-value">E-102</div></div>
-        <div class="data-card"><div class="data-label">Maint. Gap</div><div class="data-value">14</div></div>
+   <div class="realtime-row">
+    <div class="data-card" style="border-left-color: #ff4444;">
+        <div class="data-label">Vibration</div>
+        <div class="data-value" style="color: #ff4444;">5.64</div>
     </div>
-
-    <div class="history-table-container">
+    <div class="data-card">
+        <div class="data-label">Temperature</div>
+        <div class="data-value">42.8</div>
+    </div>
+    <div class="data-card">
+        <div class="data-label">Pressure</div>
+        <div class="data-value">6.2</div>
+    </div>
+    <div class="data-card">
+        <div class="data-label">Voltage</div>
+        <div class="data-value">382</div>
+    </div>
+    <div class="data-card" style="border-left-color: #ffcc00;">
+        <div class="data-label">Error Code</div>
+        <div class="data-value">E-102</div>
+    </div>
+    <div class="data-card" style="border-left-color: #ffcc00; background: rgba(255, 68, 68, 0.05);">
+        <div class="data-label" style="color: #ffcc00; font-weight: bold;">Machine Risk Index</div>
+        <div class="data-value" style="color: #ffcc00;">54.2</div>
+    </div>
+</div>
+<div class="history-table-container">
         <table>
             <thead>
                 <tr>
@@ -44,32 +73,50 @@
         </table>
     </div>
 
-    <script>
-        // จำลองการสร้างข้อมูล 20 Rows
-        const tableBody = document.getElementById('logTableBody');
-        let currentTime = 18; // เริ่มที่ 18:00
+   <script>
+    const tableBody = document.getElementById('logTableBody');
+    let currentTime = new Date().getHours();
 
-        for (let i = 0; i < 20; i++) {
-            let hour = currentTime - i;
-            let displayTime = (hour >= 0 ? hour : 24 + hour) + ":00";
-            let vib = (Math.random() * (5.8 - 3.2) + 3.2).toFixed(2);
-            let temp = (Math.random() * (45 - 35) + 35).toFixed(1);
+    for (let i = 0; i < 20; i++) {
+        let hour = currentTime - i;
+        if (hour < 0) hour += 24;
+        let displayTime = hour.toString().padStart(2, '0') + ":00";
 
-            let statusClass = vib > 5.0 ? 'status-critical' : (vib > 4.2 ? 'status-warn' : 'status-normal');
-            let statusText = vib > 5.0 ? 'CRITICAL' : (vib > 4.2 ? 'WARNING' : 'STABLE');
+        // ปรับ Range การสุ่มให้สูงขึ้น (3.8 - 5.8) เพื่อให้มีค่า Critical ปนเยอะขึ้น
+        let vib = (Math.random() * (5.8 - 3.8) + 3.8).toFixed(2);
+        let temp = (Math.random() * (45 - 41) + 41).toFixed(1);
 
-            tableBody.innerHTML += `
-                <tr>
-                    <td style="color:rgba(255,255,255,0.5)">21 Mar - ${displayTime}</td>
-                    <td class="${statusClass}">${vib}</td>
-                    <td>${temp}</td>
-                    <td>6.${Math.floor(Math.random()*9)}</td>
-                    <td>38${Math.floor(Math.random()*5)}</td>
-                    <td style="color:${vib > 5.5 ? '#ff4444' : '#666'}">${vib > 5.5 ? 'E-102' : '-'}</td>
-                    <td class="${statusClass}">${statusText}</td>
-                </tr>
-            `;
+        let statusClass = '';
+        let statusText = '';
+        let errorText = '-';
+
+        // Logic ตัดเกณฑ์สีตามความเสี่ยง 62.4
+        if (vib > 5.2) {
+            statusClass = 'status-critical';
+            statusText = 'CRITICAL';
+            errorText = 'E-102'; // แสดง Error เมื่อสั่นหนักมาก
+        } else if (vib > 4.5) {
+            statusClass = 'status-warn';
+            statusText = 'WARNING';
+        } else {
+            statusClass = 'status-normal';
+            statusText = 'STABLE';
         }
-    </script>
+
+        tableBody.innerHTML += `
+            <tr>
+                <td style="color:rgba(255,255,255,0.5)">25 Mar - ${displayTime}</td>
+                <td class="${statusClass}" style="font-weight:bold">${vib}</td>
+                <td>${temp}</td>
+                <td>6.${Math.floor(Math.random()*4 + 1)}</td> <td>38${Math.floor(Math.random()*5)}</td>
+                <td style="color:${errorText !== '-' ? '#ff4444' : '#666'}">${errorText}</td>
+                <td class="${statusClass}" style="font-weight:bold">${statusText}</td>
+            </tr>
+        `;
+    }
+</script>
+
+
+
 </body>
 </html>

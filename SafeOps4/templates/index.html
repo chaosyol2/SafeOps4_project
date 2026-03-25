@@ -87,7 +87,7 @@
         style="cursor: pointer;">
         <span class="machine-label">Alert</span>
         <div class="machine-count-box">
-            <span id="total-alert-count">00</span>
+            <span id="total-alert-count">03</span>
         </div>
     </div>
 
@@ -107,7 +107,7 @@
 
 <div class="robot-canvas">
     <div class="group group-top-left">
-        <div class="box big-box" onclick="location.href='m1.html';"
+        <div class="box big-box"  onclick="location.href='{{ url_for('m1_page') }}';"
         style="cursor: pointer;">M1</div>
         <div class="box">M2</div>
         <div class="box">M3</div>
@@ -388,7 +388,7 @@ function randomAlerts() {
             boxes[yellowIndex].classList.add('active-yellow');
         }
     }
-
+    boxes[0].classList.add('active-yellow');
     // หลังจากสุ่มเสร็จ สั่งให้นับเลขทันที
     updateAlertCounter();
 }
@@ -444,7 +444,7 @@ window.onload = function() {
 
 
 
-
+<!--
 
 <script>
     // เลือกกล่องทั้งหมดที่มีคลาส .box
@@ -465,7 +465,7 @@ window.onload = function() {
             }
         });
     });
-</script>
+</script> -->
 
 
 

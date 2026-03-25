@@ -8,67 +8,80 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        .history-table {
-            width: 100%;
-            background: rgba(255,255,255,0.02);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+   <style>
+        :root {
+            --bg-dark: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --line-green: #06C755;
+            --accent-blue: #38bdf8;
         }
 
-        .history-table table {
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif; /* ฟอนต์หลักที่อ่านง่าย */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .font-tech { font-family: 'Orbitron', sans-serif; }
+
+        /* การตกแต่งตาราง */
+        .log-container {
+            background: var(--panel-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
-        }
-
-        .history-table th {
-            padding: 18px 20px;
-            background: rgba(0, 242, 254, 0.1);
-            color: #00f2fe;
             text-align: left;
         }
 
-        .history-table td {
-            padding: 16px 20px;
-            color: rgba(255,255,255,0.85);
-            vertical-align: top;
-        }
-
-        .history-table tr {
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .history-table tbody tr:hover {
+        th {
             background: rgba(255,255,255,0.05);
-            transition: 0.2s;
+            padding: 16px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .status-warning { color: #ff3333; }
-        .status-pending { color: #ffcc00; }
-        .status-normal  { color: #00ff88; }
-
-        .risk-high   { color: #ff3333; }
-        .risk-medium { color: #ffcc00; }
-        .risk-low    { color: #00ff88; }
-
-        .timestamp {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.3;
-        }
-
-        .timestamp .date {
-            color: rgba(255,255,255,0.9);
+        td {
+            padding: 14px 20px;
+             font-family: 'Inter', sans-serif;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 13px;
+            vertical-align: middle;
         }
 
-        .timestamp .time {
-            color: #00f2fe;
-            font-size: 12px;
+        tr:hover { background: rgba(255,255,255,0.03); }
+
+        /* จัดการสถานะแจ้งเตือน Line */
+        .line-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(6, 199, 85, 0.15);
+            color: var(--line-green);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
         }
+
+        .dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .dot-red { background: #ff4444; box-shadow: 0 0 8px #ff4444; }
+        .dot-blue { background: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue); }
+        .dot-green { background: var(--line-green); }
+
+        .text-muted { color: #94a3b8; font-size: 11px; }
+        .machine-id { font-weight: 600; color: #fff; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -101,328 +114,93 @@
 </div>
 
 <div class="info-panel" style="flex-direction: column; margin-top: 20px;">
-
-    <div class="panel-header" style="margin-bottom: 15px; display: flex; justify-content: space-between;">
-        <span style="color: #00f2fe;">> SYSTEM EVENT LOGS</span>
-        <span style="font-size: 12px; color: rgba(255,255,255,0.5);">Showing last 100 events</span>
+    <div class="panel-header" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <span style="color: #00f2fe; font-family: 'Orbitron'; font-size: 18px;">> SYSTEM EVENT LOGS</span>
+            <div style="font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 5px;">Historical Tracking & AI Predictive Maintenance</div>
+        </div>
+        <div style="text-align: right;">
+            <span style="font-size: 12px; color: #ffcc00;">Live Status: Active Monitoring</span>
+        </div>
     </div>
 
     <div class="history-table">
-        <table>
+        <table id="eventLogTable">
             <thead>
                 <tr>
                     <th>TIMESTAMP</th>
                     <th>MACHINE</th>
-                    <th>EVENT</th>
+                    <th>EVENT TYPE</th>
                     <th>DESCRIPTION</th>
                     <th>RISK</th>
                     <th>STATUS</th>
-                    <th>ACTION</th>
-                    <th>OPERATOR</th>
+                    <th>ACTION TAKEN</th>
+                    <th>PIC (OPERATOR)</th>
                 </tr>
             </thead>
-
             <tbody>
-                <tr>
-                    <td class="timestamp">2024-05-20 14:30:05</td>
-                    <td>CNC-01</td>
-                    <td>Temp Threshold</td>
-                    <td>Temperature reached 87°C</td>
-                    <td class="risk-high">HIGH</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Auto Shutdown</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 13:15:22</td>
-                    <td>ROBOT-A2</td>
-                    <td>Maintenance</td>
-                    <td>Scheduled lubrication cycle</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-pending">PENDING</td>
-                    <td>Waiting Operator</td>
-                    <td>Admin_04</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 10:02:45</td>
-                    <td>CNC-01</td>
-                    <td>System Startup</td>
-                    <td>Machine boot completed</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>Admin_01</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 15:10:12</td>
-                    <td>CNC-02</td>
-                    <td>Vibration Alert</td>
-                    <td>Abnormal vibration detected</td>
-                    <td class="risk-high">HIGH</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Auto Stop</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 14:58:44</td>
-                    <td>ROBOT-B1</td>
-                    <td>Overload</td>
-                    <td>Load exceeded safe threshold</td>
-                    <td class="risk-high">HIGH</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Shutdown</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 14:40:30</td>
-                    <td>CNC-03</td>
-                    <td>Cooling Issue</td>
-                    <td>Coolant level low</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-pending">PENDING</td>
-                    <td>Check Required</td>
-                    <td>Admin_02</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 14:20:11</td>
-                    <td>ROBOT-A1</td>
-                    <td>Motor Heat</td>
-                    <td>Motor temperature rising</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Monitor</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 13:55:55</td>
-                    <td>CNC-01</td>
-                    <td>Tool Wear</td>
-                    <td>Tool degradation detected</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-pending">PENDING</td>
-                    <td>Replace Tool</td>
-                    <td>Admin_01</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 13:40:00</td>
-                    <td>ROBOT-C2</td>
-                    <td>Calibration</td>
-                    <td>Routine calibration complete</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 13:20:15</td>
-                    <td>CNC-04</td>
-                    <td>Startup</td>
-                    <td>Machine started successfully</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>Admin_03</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 12:50:32</td>
-                    <td>ROBOT-A2</td>
-                    <td>Sensor Fault</td>
-                    <td>Temperature sensor error</td>
-                    <td class="risk-high">HIGH</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Reset Sensor</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 12:30:10</td>
-                    <td>CNC-02</td>
-                    <td>Power Drop</td>
-                    <td>Voltage instability detected</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Monitor</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 12:10:45</td>
-                    <td>ROBOT-B2</td>
-                    <td>Idle</td>
-                    <td>No activity detected</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 11:55:00</td>
-                    <td>CNC-03</td>
-                    <td>Lubrication</td>
-                    <td>Lubrication cycle completed</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>Admin_02</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 11:30:25</td>
-                    <td>ROBOT-C1</td>
-                    <td>Speed Drop</td>
-                    <td>Speed below threshold</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-pending">PENDING</td>
-                    <td>Inspect</td>
-                    <td>Admin_05</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 11:10:12</td>
-                    <td>CNC-05</td>
-                    <td>Overheat</td>
-                    <td>Temperature exceeded 90°C</td>
-                    <td class="risk-high">HIGH</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Shutdown</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 10:45:33</td>
-                    <td>ROBOT-A3</td>
-                    <td>Maintenance</td>
-                    <td>Scheduled check completed</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>Admin_04</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 10:20:10</td>
-                    <td>CNC-01</td>
-                    <td>Restart</td>
-                    <td>System restarted</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 09:55:55</td>
-                    <td>ROBOT-B1</td>
-                    <td>Error Code</td>
-                    <td>Error E-204 triggered</td>
-                    <td class="risk-high">HIGH</td>
-                    <td class="status-warning">WARNING</td>
-                    <td>Reset Required</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 09:30:22</td>
-                    <td>CNC-02</td>
-                    <td>Alignment</td>
-                    <td>Axis misalignment detected</td>
-                    <td class="risk-medium">MEDIUM</td>
-                    <td class="status-pending">PENDING</td>
-                    <td>Adjust Axis</td>
-                    <td>Admin_02</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 09:05:44</td>
-                    <td>ROBOT-C3</td>
-                    <td>Startup</td>
-                    <td>Robot initialized</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 08:45:10</td>
-                    <td>CNC-04</td>
-                    <td>Cooling</td>
-                    <td>Cooling system active</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>System</td>
-                </tr>
-
-                <tr>
-                    <td class="timestamp">2024-05-20 08:20:00</td>
-                    <td>ROBOT-A1</td>
-                    <td>Check</td>
-                    <td>Daily inspection completed</td>
-                    <td class="risk-low">LOW</td>
-                    <td class="status-normal">NORMAL</td>
-                    <td>No Action</td>
-                    <td>Admin_01</td>
-                </tr>
-            </tbody>
+                </tbody>
         </table>
     </div>
 </div>
 
 <script>
+    const operators = ["Mimi", "Yok", "Marco", "Little", "Puth", "Mark"];
+    const machines = ["CNC-01", "CNC-02", "ROBOT-A1", "ROBOT-B2", "CNC-05", "ARM-X1"];
+
+    // ชุดข้อมูลตัวอย่างสำหรับจำลองสถานะต่างๆ
+    const eventTypes = [
+        { type: "Predictive Alert", desc: "Vibration pattern suggests bearing wear", risk: "MEDIUM", status: "PREDICTIVE", action: "Schedule Check", riskCls: "risk-medium", statCls: "status-predictive" },
+        { type: "Critical Failure", desc: "Spindle motor overcurrent - emergency stop", risk: "HIGH", status: "WARNING", action: "Repairing", riskCls: "risk-high", statCls: "status-warning" },
+        { type: "Maintenance", desc: "Monthly sensor recalibration completed", risk: "LOW", status: "RESOLVED", action: "None", riskCls: "risk-low", statCls: "status-resolved" },
+        { type: "System Alert", desc: "Coolant pressure below optimal level", risk: "MEDIUM", status: "PENDING", action: "Waiting PIC", riskCls: "risk-medium", statCls: "status-pending" },
+        { type: "Operational", desc: "Production cycle #402 finished", risk: "LOW", status: "NORMAL", action: "No Action", riskCls: "risk-low", statCls: "status-normal" }
+    ];
+
+    function generateLogs() {
+        const tbody = document.querySelector('#eventLogTable tbody');
+        let html = '';
+        const now = new Date();
+
+        for (let i = 0; i < 15; i++) {
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+            const machine = machines[Math.floor(Math.random() * machines.length)];
+            const event = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+
+            // สร้างเวลาถอยหลัง
+            const eventTime = new Date(now.getTime() - (i * 3600000));
+            const dateStr = eventTime.toISOString().split('T')[0];
+            const timeStr = eventTime.toTimeString().split(' ')[0];
+
+            html += `
+                <tr>
+                    <td class="timestamp">
+                        <div class="date">${dateStr}</div>
+                        <div class="time">${timeStr}</div>
+                    </td>
+                    <td style="font-weight: bold;">${machine}</td>
+                    <td>${event.type}</td>
+                    <td style="font-size: 12px; color: rgba(255,255,255,0.7);">${event.desc}</td>
+                    <td class="${event.riskCls}">${event.risk}</td>
+                    <td class="${event.statCls}">${event.status}</td>
+                    <td><span class="action-badge">${event.action}</span></td>
+                    <td style="color: #ffcc00;">${operator}</td>
+                </tr>
+            `;
+        }
+        tbody.innerHTML = html;
+    }
+
+    // เรียกใช้งาน
+    generateLogs();
+
+    // ฟังก์ชันนาฬิกาเดิมของคุณ
     function updateClock() {
         const now = new Date();
-        const timeString = now.getHours().toString().padStart(2, '0') + ":" +
-                           now.getMinutes().toString().padStart(2, '0') + ":" +
-                           now.getSeconds().toString().padStart(2, '0');
-        document.getElementById('live-clock').textContent = timeString;
+        document.getElementById('live-clock').textContent = now.toTimeString().split(' ')[0];
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    function toggleNoti() {
-        const notiElement = document.getElementById('notiIcon');
-        if (notiElement.src.includes('Unnoti_bell.png')) {
-            notiElement.src = './static/images/Noti_bell.png';
-        } else {
-            notiElement.src = './static/images/Unnoti_bell.png';
-        }
-    }
-
-    function randomDate(baseDate, index) {
-        const date = new Date(baseDate);
-        const randomOffset = Math.floor(Math.random() * 5) + index;
-        date.setDate(date.getDate() - randomOffset);
-        return date.toISOString().split('T')[0];
-    }
-
-    document.querySelectorAll('.timestamp').forEach((td, index) => {
-        const text = td.textContent.trim();
-        const parts = text.split(' ');
-
-        if (parts.length === 2) {
-            const baseDate = parts[0];
-            const time = parts[1];
-            const newDate = randomDate(baseDate, index);
-
-            td.innerHTML = `
-                <div class="date">${newDate}</div>
-                <div class="time">${time}</div>
-            `;
-        }
-    });
 </script>
-
 </body>
 </html>

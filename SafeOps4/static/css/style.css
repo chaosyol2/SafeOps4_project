@@ -1477,3 +1477,25 @@ th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255
     background: #333;
     border-color: #00d2ff;
 }
+/* ค้นหาคลาสนี้ในไฟล์ style.css แล้ววางทับด้วยโค้ดนี้ครับ */
+.risk-card-grid {
+    display: grid;
+    /* เปลี่ยนจาก repeat(3, 1fr) เป็น repeat(4, 1fr) */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px; /* ระยะห่างระหว่างการ์ด */
+    width: 100%;
+    margin-top: 25px;
+    /* เพิ่มส่วนนี้เพื่อให้รองรับหน้าจอที่เล็กลง (Responsive) */
+    overflow-x: auto;
+    padding-bottom: 10px; /* เผื่อพื้นที่ให้ Scrollbar */
+}
+
+/* ปรับสไตล์ย่อยของการ์ด Historical ให้เข้าชุดกัน */
+.risk-card.hist {
+    border-top: 3px solid #a29bfe; /* สีม่วงอ่อนสำหรับ Historical */
+    background: rgba(162, 155, 254, 0.03); /* พื้นหลังม่วงจางๆ */
+}
+
+.hist-fill {
+    background: #a29bfe; /* สีหลอดพลังงานม่วง */
+}

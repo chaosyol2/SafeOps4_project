@@ -81,15 +81,14 @@
             <img id="cctv-frame" src="./static/images/phone11.png" style="width:100%; height:100%; object-fit: cover;" alt="AI Analysis Feed">
         </div>
         <div class="metrics-panel">
-            <div class="m-card"><span class="m-label">Walking Viol.</span><div class="m-value" id="val_walk">0.42</div></div>
-            <div class="m-card"><span class="m-label">Unsafe Move.</span><div class="m-value" id="val_move">1.15</div></div>
-            <div class="m-card"><span class="m-label">Tool Improper</span><div class="m-value" id="val_tool">0.88</div></div>
-            <div class="m-card"><span class="m-label">Phone Freq.</span><div class="m-value" id="val_phone">2.10</div></div>
-            <div class="m-card" style="grid-column: span 2; background: rgba(255,204,0,0.1);">
-                <span class="m-label">AI PREDICTED RISK SCORE</span>
-                <div class="m-value" id="live_risk" style="font-size:32px;">42.5%</div>
-            </div>
-        </div>
+    <div class="m-card"><span class="m-label">Walking Viol.</span><div class="m-value" id="val_walk">0.42</div></div>
+    <div class="m-card"><span class="m-label">Unsafe Move.</span><div class="m-value" id="val_move">1.15</div></div>
+    <div class="m-card"><span class="m-label">Tool Improper</span><div class="m-value" id="val_tool">0.88</div></div>
+    <div class="m-card"><span class="m-label">Phone Freq.</span><div class="m-value" id="val_phone">2.80</div></div> <div class="m-card" style="grid-column: span 2; background: rgba(255,204,0,0.1); border: 1px solid var(--neon-yellow);">
+        <span class="m-label">AI PREDICTED RISK SCORE</span>
+        <div class="m-value" id="live_risk" style="font-size:32px; color: var(--neon-yellow);">52.5%</div>
+    </div>
+</div>
     </div>
     <div class="history-panel">
         <h3 style="color:var(--neon-yellow); font-family:'Orbitron'; font-size:12px; margin-top:0;">BEHAVIOR LOG (DETECTION HISTORY)</h3>
@@ -112,46 +111,61 @@
     </div>
 
     <script>
-        const humTable = document.getElementById('humTable');
+    const humTable = document.getElementById('humTable');
 
-        function generateLog() {
-            let rows = '';
-            for(let i=0; i<20; i++) {
-                let h = (19-i < 0 ? 24+(19-i) : 19-i);
-                let time = (h < 10 ? '0'+h : h) + ":15";
+    function generateLog() {
+        let rows = '';
+        // กำหนดค่าคงที่สำหรับแถวแรก (แถวล่าสุด) ให้คำนวณได้ 52.5
+        const targetScore = 52.5;
 
-                let w = (Math.random() * 2).toFixed(2);
-                let m = (Math.random() * 2).toFixed(2);
-                let t = (Math.random() * 2).toFixed(2);
-                let p = (Math.random() * 3).toFixed(2);
+        for(let i=0; i<20; i++) {
+            let h = (19-i < 0 ? 24+(19-i) : 19-i);
+            let time = (h < 10 ? '0'+h : h) + ":15";
 
-                let score = (parseFloat(w) + parseFloat(m) + parseFloat(t) + parseFloat(p)) * 10;
-                let color = score > 50 ? 'var(--neon-red)' : (score > 25 ? 'var(--neon-yellow)' : 'var(--neon-green)');
+            let w, m, t, p, score;
 
-                rows += `<tr>
-                    <td style="color:#568;">${time}</td>
-                    <td>ID-${1040 + i}</td>
-                    <td>${w}</td>
-                    <td>${m}</td>
-                    <td>${t}</td>
-                    <td>${p}</td>
-                    <td style="color:${color}; font-weight:bold;">${score.toFixed(1)}%</td>
-                </tr>`;
+            if (i === 0) {
+                // แถวแรก: ล็อกค่าให้ได้ 52.5 พอดี
+                w = 0.42;
+                m = 1.15;
+                t = 0.88;
+                p = 2.80;
+                score = targetScore;
 
-                if(i === 0) {
-                    document.getElementById('val_walk').innerText = w;
-                    document.getElementById('val_move').innerText = m;
-                    document.getElementById('val_tool').innerText = t;
-                    document.getElementById('val_phone').innerText = p;
-                    document.getElementById('live_risk').innerText = score.toFixed(1) + "%";
-                    document.getElementById('live_risk').style.color = color;
-                }
+                // อัปเดตตัวเลขใน Metrics Card ด้านบน
+                document.getElementById('val_walk').innerText = w;
+                document.getElementById('val_move').innerText = m;
+                document.getElementById('val_tool').innerText = t;
+                document.getElementById('val_phone').innerText = p;
+                document.getElementById('live_risk').innerText = score.toFixed(1) + "%";
+                document.getElementById('live_risk').style.color = 'var(--neon-yellow)';
+            } else {
+                // แถวอื่นๆ: สุ่มค่าตามปกติ
+                w = (Math.random() * 1.5).toFixed(2);
+                m = (Math.random() * 1.5).toFixed(2);
+                t = (Math.random() * 1.5).toFixed(2);
+                p = (Math.random() * 2).toFixed(2);
+                score = (parseFloat(w) + parseFloat(m) + parseFloat(t) + parseFloat(p)) * 10;
             }
-            humTable.innerHTML = rows;
-        }
 
-        generateLog();
-    </script>
+            let color = score > 60 ? 'var(--neon-red)' : (score > 40 ? 'var(--neon-yellow)' : 'var(--neon-green)');
+
+            rows += `<tr>
+                <td style="color:#568;">${time}</td>
+                <td>ID-${1040 + i}</td>
+                <td>${w}</td>
+                <td>${m}</td>
+                <td>${t}</td>
+                <td>${p}</td>
+                <td style="color:${color}; font-weight:bold;">${score.toFixed(1)}%</td>
+            </tr>`;
+        }
+        humTable.innerHTML = rows;
+    }
+
+    generateLog();
+</script>
+
 </body>
 </html>
 
